@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   h_minishell.h                                      :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 21:56:46 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/04 01:21:47 by kharuya          ###   ########.fr       */
+/*   Created: 2024/12/16 23:01:35 by kharuya           #+#    #+#             */
+/*   Updated: 2025/03/12 23:04:47 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef H_MINISHELL_H
-# define H_MINISHELL_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-// includes
-# include "../libraries/libft.h"
+// include
+# include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
-# include <stdbool.h>
+# include <fcntl.h>
+# include "libft.h"
 
-// prototypes builtins
-int		ft_cd(char *path);
-int		ft_echo(char **args);
-int		ft_env(void);
-void	ft_exit(char **args);
-int		ft_export(char **argv);
-int		ft_pwd(void);
-int		ft_unset(char **args);
+// buffer
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
-//prototypes exec
-int		ft_exec_builtin(char **args);
-int		ft_check_redirection(t_node *node);
+// prototype
+char	*get_next_line(int fd);
 
 #endif
