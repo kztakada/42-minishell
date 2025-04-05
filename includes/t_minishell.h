@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/05 17:24:44 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:09:19 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,11 @@ typedef struct s_token
 	struct s_token		*next;
 	struct s_token		*prev;
 }						t_token;
+
+// tokenize.c
+t_token					*tokenize(char *input);
+
+// parse.c
+t_node					*parse(t_token *tokens, t_parse_error *error);
 
 #endif
