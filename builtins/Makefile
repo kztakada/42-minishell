@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: katakada <katakada@student.42.fr>          +#+  +:+       +#+         #
+#    By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 15:59:55 by katakada          #+#    #+#              #
-#    Updated: 2025/04/06 11:16:57 by katakada         ###   ########.fr        #
+#    Updated: 2025/04/03 20:15:55 by kharuya          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,14 @@ CFLAGS			=	-Wall -Wextra -Werror
 
 INCS			=	-I includes/ -I $(LIBFT_DIR)
 
-LIBFT_DIR		=	libraries/
-LIBFT			=	$(LIBFT_DIR)libft.a
-
-SRC_PATH		=	src/
+SRC_PATH		=	
 SRCS			=	$(wildcard $(SRC_PATH)*.c)
 
+LIBFT_DIR		=	../libraries/
+LIBFT			=	$(LIBFT_DIR)libft.a
+
 OBJS_PATH		=	objs/
-OBJS			=	$(SRCS:src/%.c=objs/%.o)
+OBJS			=	$(SRCS:%.c=objs/%.o)
 
 ISDEBUG = 0
 
@@ -36,8 +36,8 @@ endif
 
 
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCS) $(OBJS) -o $(NAME) -lreadline
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(INCS) $(OBJS) $(LIBFT) -o $(NAME)
 
 $(OBJS_PATH)%.o : $(SRC_PATH)%.c
 	mkdir -p $(@D)
@@ -46,10 +46,9 @@ $(OBJS_PATH)%.o : $(SRC_PATH)%.c
 $(LIBFT):
 	make bonus -C $(LIBFT_DIR)
 
-
 all:	$(NAME)
 
-debug:
+debug: 
 	$(MAKE) ISDEBUG=1 all
 
 
