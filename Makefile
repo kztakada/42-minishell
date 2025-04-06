@@ -6,7 +6,7 @@
 #    By: katakada <katakada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 15:59:55 by katakada          #+#    #+#              #
-#    Updated: 2025/04/06 11:16:57 by katakada         ###   ########.fr        #
+#    Updated: 2025/04/06 11:20:51 by katakada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,11 @@ INCS			=	-I includes/ -I $(LIBFT_DIR)
 LIBFT_DIR		=	libraries/
 LIBFT			=	$(LIBFT_DIR)libft.a
 
-SRC_PATH		=	src/
+SRC_PATH		=	
 SRCS			=	$(wildcard $(SRC_PATH)*.c)
 
 OBJS_PATH		=	objs/
-OBJS			=	$(SRCS:src/%.c=objs/%.o)
+OBJS			=	$(SRCS:%.c=objs/%.o)
 
 ISDEBUG = 0
 
