@@ -6,7 +6,7 @@
 #    By: katakada <katakada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 15:59:55 by katakada          #+#    #+#              #
-#    Updated: 2025/04/06 11:20:51 by katakada         ###   ########.fr        #
+#    Updated: 2025/04/15 17:31:42 by katakada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,8 @@ endif
 
 
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCS) $(OBJS) -o $(NAME) -lreadline
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(INCS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
 
 $(OBJS_PATH)%.o : $(SRC_PATH)%.c
 	mkdir -p $(@D)
