@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/15 18:19:27 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:30:21 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,8 @@ typedef struct s_dict_out
 	char	*nx_str;
 	char	*error;
 }			t_dict_out;
+
+// dictionary.c
+t_dict_out	lookup_dict(char *subject, char *dict);
 
 #endif
