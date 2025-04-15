@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/06 11:16:12 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:19:27 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,23 @@ typedef enum e_bool
 {
 	FALSE = 0,
 	TRUE = 1,
-}	t_bool;
+}			t_bool;
+
+// for dictionary
+// dictionary format: 1st char is separator in the dictionary
+# define OPERATORS_DICT " << >> && || | < > ; ( )"
+# define SPACE_DICT "_ _\t_\n_\v_\f_\r"
+# define NUM_DICT "_0 1 2 3 4 5 6 7 8 9"
+# define NO_MATCH_DICT "no match in dictionary"
+# define INVALID_DICT "invalid dictionary"
+# define INVALID_SUBJECT "invalid subject"
+
+typedef struct s_dict_out
+{
+	t_bool	in_d;
+	int		d_index;
+	char	*nx_str;
+	char	*error;
+}			t_dict_out;
 
 #endif
