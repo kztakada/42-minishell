@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/14 22:26:10 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:30:15 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,6 @@
 # include "minishell.h"
 
 # define PROMPT "minishell$ "
-
-// for dictionary
-// dictionary format: 1st char is separator in the dictionary
-# define OPERATORS_DICT " << >> && || | < > ; ( )"
-# define SPACE_DICT "_ _\t_\n_\v_\f_\r"
-# define NUM_DICT "_0 1 2 3 4 5 6 7 8 9"
-# define NO_MATCH_DICT "no match in dictionary"
-# define INVALID_DICT "invalid dictionary"
-# define INVALID_SUBJECT "invalid subject"
-
-typedef struct s_dict_out
-{
-	t_bool				in_d;
-	int					d_index;
-	char				*nx_str;
-	char				*error;
-}						t_dict_out;
 
 // for parse
 typedef enum e_node_type
@@ -124,6 +107,4 @@ t_token					*tokenize(char *input);
 // parse.c
 t_node					*parse(t_token *tokens, t_parse_error *error);
 
-// dictionary.c
-t_dict_out				lookup_dict(char *subject, char *dict);
 #endif

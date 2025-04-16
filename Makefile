@@ -6,7 +6,7 @@
 #    By: katakada <katakada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 15:59:55 by katakada          #+#    #+#              #
-#    Updated: 2025/04/15 17:31:42 by katakada         ###   ########.fr        #
+#    Updated: 2025/04/16 19:35:03 by katakada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBFT_DIR		=	libraries/
 LIBFT			=	$(LIBFT_DIR)libft.a
 
 SRC_PATH		=	
-SRCS			=	$(wildcard $(SRC_PATH)*.c)
+SRCS			=	$(wildcard *.c) $(wildcard utils/*.c)
 
 OBJS_PATH		=	objs/
 OBJS			=	$(SRCS:%.c=objs/%.o)
