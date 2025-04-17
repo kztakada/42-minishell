@@ -6,21 +6,135 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:47:32 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/05 17:50:46 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/18 00:21:40 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
 
-t_token	*tokenize(char *input)
+static int	is_space(char c)
 {
-	t_token	*tokens;
+	if (lookup_dict(&c, SPACE_DICT).in_d)
+		return (TRUE);
+	return (FALSE);
+}
 
-	tokens = malloc(sizeof(t_token));
-	if (tokens == NULL)
-		return (NULL);
-	tokens->type = T_IDENTIFIER;
-	tokens->str = input;
-	tokens->next = NULL;
-	return (tokens);
+static int	is_operator(char *str)
+{
+	if (lookup_dict(str, OPERATORS_DICT).in_d)
+		return (TRUE);
+	return (FALSE);
+}
+
+static t_list	*get_new_listable_token(t_token_type token_type,
+		char *token_content)
+{
+	t_token	*new_token;
+	t_list	*new_listable_token;
+
+	new_token = (t_token *)ft_calloc(1, sizeof(t_token));
+	if (!new_token)
+		return (perror(ERROR_MALLOC), NULL);
+	new_token->type = token_type;
+	new_token->content = token_content;
+	new_listable_token = ft_lstnew(new_token);
+	if (!new_listable_token)
+	{
+		free(new_token);
+		return (perror(ERROR_MALLOC), NULL);
+	}
+	return (new_listable_token);
+}
+
+int	add_operator_token_to_list(char *input, t_list **token_list)
+{
+	t_list	*new_listable_token;
+	int		token_type;
+	char	*token_content;
+
+	if (!input || !*input)
+		return (FAILURE);
+	token_type = lookup_dict(input, OPERATORS_DICT).d_index;
+	token_content = get_dict_word(token_type, OPERATORS_DICT);
+	new_listable_token = get_new_listable_token(token_type, token_content);
+	if (!new_listable_token)
+		return (FAILURE);
+	ft_lstadd_back(token_list, new_listable_token);
+	return (ft_strlen(token_content));
+}
+
+int	get_operand_len(char *input)
+{
+	int	operand_len;
+
+	operand_len = 0;
+	while (input[operand_len] && !is_operator(input + operand_len))
+	{
+		operand_len++;
+	}
+	return (operand_len);
+}
+
+int	add_operand_token_to_list(char *input, t_list **token_list)
+{
+	t_list	*new_listable_token;
+	char	*token_content;
+	int		token_content_len;
+
+	if (!input || !*input)
+		return (FAILURE);
+	token_content_len = get_operand_len(input);
+	token_content = ft_substr(input, 0, token_content_len);
+	if (!token_content)
+		return (perror(ERROR_MALLOC), FAILURE);
+	new_listable_token = get_new_listable_token(T_OPERAND_STR, token_content);
+	if (!new_listable_token)
+	{
+		free(token_content);
+		return (FAILURE);
+	}
+	ft_lstadd_back(token_list, new_listable_token);
+	return (token_content_len);
+}
+
+void	delete_token(void *target)
+{
+	t_token	*token;
+
+	token = (t_token *)target;
+	if (token)
+	{
+		free(token->content);
+		free(token);
+	}
+}
+
+// Noted: operand is the string sandwiched between operators
+t_list	*tokenize(char *input)
+{
+	t_list	*token_list;
+	int		content_len;
+
+	token_list = NULL;
+	content_len = 0;
+	while (*input)
+	{
+		if (is_space(*input))
+			input++;
+		else if (is_operator(input))
+		{
+			content_len = add_operator_token_to_list(input, &token_list);
+			if (content_len == FAILURE)
+				return (ft_lstclear(&token_list, delete_token), NULL);
+			input += content_len;
+		}
+		else
+		{
+			content_len = add_operand_token_to_list(input, &token_list);
+			if (content_len == FAILURE)
+				return (ft_lstclear(&token_list, delete_token), NULL);
+			input += content_len;
+		}
+	}
+	return (token_list);
 }

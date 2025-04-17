@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/15 18:30:15 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/18 00:03:36 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "minishell.h"
 
 # define PROMPT "minishell$ "
+
+# define FAILURE 0
 
 // for parse
 typedef enum e_node_type
@@ -80,29 +82,28 @@ typedef struct s_parse_error
 // for tokenize
 typedef enum e_token_type
 {
-	T_IDENTIFIER, // identifier
-	T_LESS,       // <
-	T_GREAT,      // >
-	T_DLESS,      // <<
-	T_DGREAT,     // >>
-	T_PIPE,       // |
-	T_O_PARENT,   // (
-	T_C_PARENT,   // )
-	T_AND,        // &&
-	T_OR,         // ||
-	T_NL,         // \n
+	T_DLESS,       // <<
+	T_DGREAT,      // >>
+	T_AND,         // &&
+	T_OR,          // ||
+	T_PIPE,        // |
+	T_LESS,        // <
+	T_GREAT,       // >
+	T_O_PARENT,    // (
+	T_C_PARENT,    // )
+	T_NL,          // \n
+	T_OPERAND_STR, // identifier
 }						t_token_type;
 
 typedef struct s_token
 {
 	t_token_type		type;
-	char				*str;
-	struct s_token		*next;
-	struct s_token		*prev;
+	char				*content;
 }						t_token;
 
 // tokenize.c
-t_token					*tokenize(char *input);
+t_list					*tokenize(char *input);
+void					delete_token(void *target);
 
 // parse.c
 t_node					*parse(t_token *tokens, t_parse_error *error);

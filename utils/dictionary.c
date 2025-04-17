@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 01:10:10 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/15 00:21:24 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/17 23:26:53 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,31 @@ t_dict_out	lookup_dict(char *subject, char *dict)
 		d_out.error = NO_MATCH_DICT;
 	}
 	return (d_out);
+}
+
+// 辞書のインデックス番号と辞書を引数に代入すると、該当の辞書ワードをft_substrで複製した文字列を返す関数
+char	*get_dict_word(int d_index, char *dict)
+{
+	char	*dict_nx_str;
+	char	separator;
+	int		i;
+
+	if (d_index < 0 || d_index > (int)ft_strlen(dict))
+		return (NULL);
+	i = 0;
+	separator = dict[0];
+	dict++;
+	dict_nx_str = dict;
+	while (*dict_nx_str)
+	{
+		dict = dict_nx_str;
+		while (*dict_nx_str && *dict_nx_str != separator)
+			dict_nx_str++;
+		if (i == d_index)
+			return (ft_substr(dict, 0, dict_nx_str - dict));
+		while (*dict_nx_str && *dict_nx_str == separator)
+			dict_nx_str++;
+		i++;
+	}
+	return (NULL);
 }
