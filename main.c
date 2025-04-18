@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/18 00:25:13 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/18 20:02:51 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,9 @@ int	app_main(void)
 		if (*input)
 			add_history(input);
 		token_list = tokenize(input);
+		free(input);
 		if (token_list == NULL)
-		{
-			free(input);
 			continue ;
-		}
 		print_token_list(token_list);
 		ft_lstclear(&token_list, delete_token);
 		// as_tree = parse(tokens, &error); //未実装

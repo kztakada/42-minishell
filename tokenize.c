@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:47:32 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/18 00:21:40 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/18 20:02:13 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	add_operand_token_to_list(char *input, t_list **token_list)
 	token_content = ft_substr(input, 0, token_content_len);
 	if (!token_content)
 		return (perror(ERROR_MALLOC), FAILURE);
-	new_listable_token = get_new_listable_token(T_OPERAND_STR, token_content);
+	new_listable_token = get_new_listable_token(OPERAND_TEXT, token_content);
 	if (!new_listable_token)
 	{
 		free(token_content);
@@ -113,27 +113,27 @@ void	delete_token(void *target)
 t_list	*tokenize(char *input)
 {
 	t_list	*token_list;
-	int		content_len;
+	int		append_len;
 
 	token_list = NULL;
-	content_len = 0;
+	append_len = 0;
 	while (*input)
 	{
 		if (is_space(*input))
 			input++;
 		else if (is_operator(input))
 		{
-			content_len = add_operator_token_to_list(input, &token_list);
-			if (content_len == FAILURE)
+			append_len = add_operator_token_to_list(input, &token_list);
+			if (append_len == FAILURE)
 				return (ft_lstclear(&token_list, delete_token), NULL);
-			input += content_len;
+			input += append_len;
 		}
 		else
 		{
-			content_len = add_operand_token_to_list(input, &token_list);
-			if (content_len == FAILURE)
+			append_len = add_operand_token_to_list(input, &token_list);
+			if (append_len == FAILURE)
 				return (ft_lstclear(&token_list, delete_token), NULL);
-			input += content_len;
+			input += append_len;
 		}
 	}
 	return (token_list);
