@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/18 20:01:25 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/19 23:00:07 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,41 +26,45 @@ typedef enum e_parse_err_type
 {
 	E_MEM = 1,
 	E_SYNTAX
-}						t_parse_err_type;
+}							t_parse_err_type;
 
 // コンテントリスト
-typedef enum e_io_type
-{
-	IO_IN,
-	IO_OUT,
-	IO_HEREDOC,
-	IO_APPEND
-}						t_io_type;
-typedef struct s_io_node
-{
-	t_io_type			type;
-	char				*value;
-	char				**expanded_value;
-	int					here_doc;
-}						t_io_node;
+
 
 // 2分木構造
-typedef struct s_node	t_node;
-typedef enum e_node_type
+typedef struct s_abs_node	t_abs_node;
+typedef enum e_abs_node_type
 {
-	N_PIPE,
-	N_AND,
-	N_OR,
-	N_CMD
-}						t_node_type;
-struct					s_node
+	B_OP_AND,
+	B_OP_OR,
+	B_OP_PIPE,
+	REDIRECT,
+	COMMAND
+}							t_abs_node_type;
+
+typedef enum e_io_cmd_type
 {
-	t_node_type			type;
-	t_list				*io_list;
-	char				*args;
-	char				**expanded_args;
-	t_node				*left;
-	t_node				*right;
+	IO_HEREDOC,
+	IO_APPEND,
+	IO_IN,
+	IO_OUT
+}							t_io_cmd_type;
+typedef struct s_io_cmd
+{
+	t_io_cmd_type			cmd_type;
+	char					*value;
+	char					**expanded_value;
+	int						here_doc;
+}							t_io_cmd;
+
+struct						s_abs_node
+{
+	t_abs_node_type			node_type;
+	t_list					*io_cmd_list;
+	char					*cmd_args;
+	char					**expanded_args;
+	t_abs_node				*left;
+	t_abs_node				*right;
 };
 
 typedef enum e_parse_error_code
@@ -70,14 +74,14 @@ typedef enum e_parse_error_code
 	PARSE_UNEXPECTED_EOF,
 	PARSE_UNMATCHED_PARENTHESIS,
 	PARSE_INVALID_SYNTAX,
-}						t_parse_error_code;
+}							t_parse_error_code;
 
 typedef struct s_parse_error
 {
-	t_parse_error_code	code;
-	int					line;
-	int					column;
-}						t_parse_error;
+	t_parse_error_code		code;
+	int						line;
+	int						column;
+}							t_parse_error;
 
 // for tokenize
 typedef enum e_token_type
@@ -93,19 +97,19 @@ typedef enum e_token_type
 	OP_CLOSE_SUBSHELL,  // )
 	TERMINATOR,         // \n
 	OPERAND_TEXT,       // identifier
-}						t_token_type;
+}							t_token_type;
 
 typedef struct s_token
 {
-	t_token_type		type;
-	char				*content;
-}						t_token;
+	t_token_type			type;
+	char					*content;
+}							t_token;
 
 // tokenize.c
-t_list					*tokenize(char *input);
-void					delete_token(void *target);
+t_list						*tokenize(char *input);
+void						delete_token(void *target);
 
 // parse.c
-t_node					*parse(t_token *tokens, t_parse_error *error);
+t_abs_node					*parse(t_token *token_list);
 
 #endif
