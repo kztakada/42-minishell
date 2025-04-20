@@ -6,145 +6,236 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:10 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/15 15:34:36 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/04/18 14:59:30 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-static t_env *make_env_list(char **envp)
-{
-	int	i;
-	char	*key;
-	char	*value;
-	t_env	*env_lst;
-
-	env_lst = NULL;
-	i = 0;
-	while (envp[i])
-	{
-		key = ft_extract_key(envp[i]);
-		value = ft_extract_value(envp[i]);
-		ft_update_env_lst(key, value, true, &env_lst);
-		i++;
-	}
-	return (env_lst);
-}
-
-static t_minishell minishell_init(char **envp)
-{
-	t_minishell minishell;
-
-	ft_memset(&minishell, 0, sizeof(t_minishell));
-	minishell.env_lst = make_env_list(envp);
-	return (minishell);
-}
-
 #ifndef TEST
 
-int	main(int argc, char *argv[], char *envp[])
-{
-	(void)argc;
-	(void)argv;
+// // pwdコマンド
+// int main(void)
+// {
+// 	ft_pwd();
+// 	return (0);
+// }
 
-	// // pwdコマンド
-	// ft_pwd();
-	// return (0);
+// // echoコマンド
+// int main()
+// {
+// 	// normal case
+// 	char *test_1[] = {"echo", "-n", "Hello", "World", NULL};
+// 	ft_echo(test_1);
 
-	// // echoコマンド
-	// // normal case
-	// char *test_1[] = {"echo", "-n", "Hello", "World", NULL};
-	// ft_echo(test_1);
-	// // n_flag case
-	// char *test_2[] = {"echo", "-n", "-n", NULL};
-	// ft_echo(test_2);
-	// // complex case
-	// char *test_3[] = {"echo", "-n", "-n", "-nHello", "-n", NULL};
-	// ft_echo(test_3);
+// 	// n_flag case
+// 	char *test_2[] = {"echo", "-n", "-n", NULL};
+// 	ft_echo(test_2);
 
-	// // cdコマンド
-	// // home
-	// char *path = NULL;
-	// t_minishell minishell = minishell_init(envp);
-	// ft_cd(path, &minishell);
-	// ft_pwd();
-	// ft_env(&minishell);
-	// return (0);
-	// normal
-	// char *path = "objs";
-	// t_minishell minishell = minishell_init(envp);
-	// ft_cd(path, &minishell);
-	// ft_pwd();
-	// ft_env(&minishell);
-	// return (0);
-	// // error
-	// char *path = "HHHH";
-	// t_minishell minishell = minishell_init(envp);
-	// ft_cd(path, &minishell);
-	// ft_pwd();
-	// ft_env(&minishell);
-	// while (minishell.env_lst)
-	// {
-	// 	printf("key:%s value:%s\n", minishell.env_lst->key, minishell.env_lst->value);
-	// 	minishell.env_lst = minishell.env_lst->next;
+// 	// complex case
+// 	char *test_3[] = {"echo", "-n", "-n", "-nHello", "-n", NULL};
+// 	ft_echo(test_3);
+
+// }
+
+
+// // // cdコマンド
+// int main(int ac, char *av[], char *envp[])
+// {
+// 	(void)ac;
+// 	(void)av;
+// 	// home
+// 	char *path = NULL;
+// 	t_minishell minishell = minishell_init(envp);
+// 	ft_cd(path, &minishell);
+// 	ft_pwd();
+// 	ft_env(&minishell);
+// 	return (0);
+
+// 	// normal
+// 	char *path = "objs";
+// 	t_minishell minishell = minishell_init(envp);
+// 	ft_cd(path, &minishell);
+// 	ft_pwd();
+// 	ft_env(&minishell);
+// 	return (0);
+
+// 	// error
+// 	char *path = "HHHH";
+// 	t_minishell minishell = minishell_init(envp);
+// 	ft_cd(path, &minishell);
+// 	ft_pwd();
+// 	ft_env(&minishell);
+// 	return (0);
+// }
+
+// // envコマンド
+// int main(void)
+// {
+// 	t_minishell minishell = minishell_init(envp);
+// 	ft_env(&minishell);
+// 	return (0);
+// }
+
+// // exportコマンド
+// int main(int ac, char *av[], char *envp[])
+// {
+// 	(void)ac;
+// 	(void)av;
+// 	// // no argument
+// 	// char **expo;
+
+// 	// expo = (char **)malloc(sizeof(char *) * (2 + 1));
+// 	// expo[0] = "export";
+// 	// expo[1] = NULL;
+// 	// expo[2] = NULL;
+// 	// t_minishell minishell = minishell_init(envp);
+// 	// ft_export(expo, &minishell);
+// 	// free(expo);
+
+// 	// // normal (already exist)
+// 	// char **expo;
+
+// 	// expo = (char **)malloc(sizeof(char *) * (2 + 1));
+// 	// expo[0] = "export";
+// 	// expo[1] = "TEST=HELLO";
+// 	// expo[2] = NULL;
+// 	// t_minishell minishell = minishell_init(envp);
+// 	// ft_export(expo, &minishell);
+// 	// ft_env(&minishell);
+// 	// free (expo);
+
+// 	// // normal (key has no value)
+// 	// char **expo;
+
+// 	// expo = (char **)malloc(sizeof(char *) * (2 + 1));
+// 	// expo[0] = "export";
+// 	// expo[1] = "TEST";
+// 	// expo[2] = NULL;
+// 	// t_minishell minishell = minishell_init(envp);
+// 	// ft_export(expo, &minishell);
+// 	// ft_env(&minishell);
+// 	// free (expo);
+
+// 	// // several argument
+// 	// char **expo;
+
+// 	// expo = (char **)malloc(sizeof(char *) * (4 + 1));
+// 	// expo[0] = "export";
+// 	// expo[1] = "A";
+// 	// expo[2] = "B=1";
+// 	// expo[3] = "C=2";
+// 	// expo[4] = NULL;
+// 	// t_minishell minishell = minishell_init(envp);
+// 	// ft_export(expo, &minishell);
+// 	// ft_env(&minishell);
+// 	// free (expo);
+
+// 	// // error
+// 	// char **expo;
+
+// 	// expo = (char **)malloc(sizeof(char *) * (2 + 1));
+// 	// expo[0] = "export";
+// 	// expo[1] = "TEST = HELLO";
+// 	// expo[2] = NULL;
+// 	// t_minishell minishell = minishell_init(envp);
+// 	// ft_export(expo, &minishell);
+// 	// free (expo);
+// }
+
+
+// // unset
+// int main(int ac, char *av[], char *envp[])
+// {
+// 	(void)ac;
+// 	(void)av;
+// 	// normal
+// 	char **expo;
+// 	char **unset;
+
+// 	expo = (char **)malloc(sizeof(char *) * (2 + 1));
+// 	unset = (char **)malloc(sizeof(char *) * (2 + 1));
+// 	expo[0] = "export";
+// 	expo[1] = "A=1";
+// 	expo[2] = NULL;
+// 	unset[0] = "unset";
+// 	unset[1] = "A";
+// 	unset[2] = NULL;
+// 	t_minishell minishell = minishell_init(envp);
+// 	ft_export(expo, &minishell);
+// 	ft_env(&minishell);
+// 	printf("\n-----------------------------------------------------------------------------\n\n");
+// 	ft_unset(unset, &minishell);
+// 	ft_env(&minishell);
+// 	free(expo);
+// 	free(unset);
+
+// 	// no match
+// 	char **unset;
+
+// 	unset = (char **)malloc(sizeof(char *) * (2 + 1));
+// 	unset[0] = "unset";
+// 	unset[1] = "NNNNN";
+// 	unset[2] = NULL;
+// 	t_minishell minishell = minishell_init(envp);
+// 	ft_unset(unset, &minishell);
+// 	ft_env(&minishell);
+// 	free(unset);
+
+// 	// format error
+// 	char **unset;
+
+// 	unset = (char **)malloc(sizeof(char *) * (2 + 1));
+// 	unset[0] = "unset";
+// 	unset[1] = "1TEST";
+// 	unset[2] = NULL;
+// 	t_minishell minishell = minishell_init(envp);
+// 	ft_unset(unset, &minishell);
+// 	ft_env(&minishell);
+// 	free(unset);
+// }
+
+// // exit
+// void check_exit(void) // mainが終了したら呼び出される
+// {
+// 	printf("success exit\n");
+// }
+
+// int main(int ac, char *av[], char *envp[])
+// {
+	// int i;
+	// char **args;
+
+
+	// (void)ac;
+	// (void)av;
+	// i = atexit(check_exit); // 正常終了時に呼び出される関数を設定
+	// if (i != 0) {
+	// 	fprintf(stderr, "cannot set exit function\n");
+	// 	exit(EXIT_FAILURE);
 	// }
-	// return (0);
-
-	// // envコマンド
-	// // normal
 	// t_minishell minishell = minishell_init(envp);
-	// ft_env(&minishell);
-	// return (0);
+	// // normal (using last exit status)
+	// args = (char **)malloc(sizeof(char *) * (2 + 1));
+	// args[0] = "exit";
+	// args[1] = NULL;
+	// args[2] = NULL;
+	// ft_exit(args, &minishell);
 
-	// // exportコマンド
-	// no argument
-	char **expo1;
-	char **expo2;
+	// // error (too argument)
+	// args = (char **)malloc(sizeof(char *) * (3 + 1));
+	// args[0] = "exit";
+	// args[1] = "3";
+	// args[2] = "EEE";
+	// args[3] = NULL;
+	// ft_exit(args, &minishell);
 
-	expo1 = (char **)malloc(sizeof(char *) * (2 + 1));
-	expo2 = (char **)malloc(sizeof(char *) * (2 + 1));
-	expo1[0] = "export";
-	expo1[1] = "PWD_CPY=$PWD";
-	expo1[2] = NULL;
-	expo2[0] = "export";
-	expo2[1] = NULL;
-	expo2[2] = NULL;
-	t_minishell minishell = minishell_init(envp);
-	ft_export(expo1, &minishell);
-	ft_export(expo2, &minishell);
-	free(expo1);
-	free(expo2);
-	// // normal (do or do not already exist)
-	// char **expo;
+	// // error (not valid second argument)
+	// args = (char **)malloc(sizeof(char *) * (2 + 1));
+	// args[0] = "exit";
+	// args[1] = "HHH";
+	// args[3] = NULL;
+	// ft_exit(args, &minishell);
+// }
 
-	// expo = (char **)malloc(sizeof(char *) * (2 + 1));
-	// expo[0] = "export";
-	// expo[1] = "TEST=HELLO";
-	// expo[2] = NULL;
-	// t_minishell minishell = minishell_init(envp);
-	// ft_export(expo, &minishell);
-	// ft_env(&minishell);
-	// free (expo);
-	// // normal (key has no value)
-	// char **expo;
-
-	// expo = (char **)malloc(sizeof(char *) * (2 + 1));
-	// expo[0] = "export";
-	// expo[1] = "TEST";
-	// expo[2] = NULL;
-	// t_minishell minishell = minishell_init(envp);
-	// ft_export(expo, &minishell);
-	// ft_env(&minishell);
-	// free (expo);
-	// // error
-	// char **expo;
-
-	// expo = (char **)malloc(sizeof(char *) * (2 + 1));
-	// expo[0] = "export";
-	// expo[1] = "TEST = HELLO";
-	// expo[2] = NULL;
-	// t_minishell minishell = minishell_init(envp);
-	// ft_export(expo, &minishell);
-	// free (expo);
-}
 #endif // TEST
