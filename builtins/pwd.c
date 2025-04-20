@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:41 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/03 21:53:43 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/04/17 18:23:06 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_pwd(void)
 
 	path = getcwd(NULL, 0);
 	if (path == NULL)
-		return (1);
+		return (EXIT_FAILURE);
 	printf("%s\n", path);
-	return (0);
+	return (EXIT_SUCCESS);
 }
