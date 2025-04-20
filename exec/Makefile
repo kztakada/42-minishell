@@ -6,21 +6,22 @@
 #    By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 15:59:55 by katakada          #+#    #+#              #
-#    Updated: 2025/04/18 15:47:16 by kharuya          ###   ########.fr        #
+#    Updated: 2025/04/18 15:50:15 by kharuya          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			=	builtins
+NAME			=	exec
 
 CC				=	cc
 DEBUG_CC		=	cc -D IS_DEBUG=1 -g -fsanitize=address
 
 CFLAGS			=	-Wall -Wextra -Werror
 
-INCS			=	../includes/h_minishell.h ../includes/minishell.h -I $(LIBFT_DIR)
+INCS			=	-I ../includes/h_minishell.h -I ../includes/minishell.h -I $(LIBFT_DIR)
 
-SRC_PATH		=	
-SRCS			=	$(wildcard $(SRC_PATH)*.c) ../utils/dictionary.c
+EXEC_PATH		=	
+BUILTINS_PATH	=	../builtins/
+SRCS			=	$(wildcard $(EXEC_PATH)*.c) $(wildcard $(BUILTINS_PATH)*.c) ../utils/dictionary.c
 
 LIBFT_DIR		=	../libraries/
 LIBFT			=	$(LIBFT_DIR)libft.a
@@ -58,8 +59,7 @@ clean:
 
 fclean:
 	make fclean -C $(LIBFT_DIR)
-	rm -rf objs
-	rm -rf utils
+	rm -rf $(OBJS_PATH)
 	rm -f $(NAME)
 
 re:		fclean all

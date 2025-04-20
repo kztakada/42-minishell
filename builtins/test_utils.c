@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_utils.c                                       :+:      :+:    :+:   */
+/*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:43:00 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/08 16:23:43 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/04/18 15:05:34 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ t_env	*ft_env_lst_new(char *key, char *value)
 	new->next = NULL;
 	return (new);
 }
+
 void	ft_update_env_lst(char *key, char *value, bool create, t_env **env_lst)
 {
     t_env	*new_node;
@@ -122,4 +123,33 @@ void	ft_update_env_lst(char *key, char *value, bool create, t_env **env_lst)
         new_node->next = *env_lst;
         *env_lst = new_node;
     }
+}
+
+t_env *make_env_list(char **envp)
+{
+	int	i;
+	char	*key;
+	char	*value;
+	t_env	*env_lst;
+
+	env_lst = NULL;
+	i = 0;
+	while (envp[i])
+	{
+		key = ft_extract_key(envp[i]);
+		value = ft_extract_value(envp[i]);
+		ft_update_env_lst(key, value, true, &env_lst);
+		i++;
+	}
+	return (env_lst);
+}
+
+t_minishell minishell_init(char **envp)
+{
+	t_minishell minishell;
+
+	ft_memset(&minishell, 0, sizeof(t_minishell));
+	minishell.env_lst = make_env_list(envp);
+	minishell.exit_s = EXIT_SUCCESS;
+	return (minishell);
 }

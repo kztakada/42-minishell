@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_simple_cmd.c                               :+:      :+:    :+:   */
+/*   test_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/04 01:17:57 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/18 17:51:20 by kharuya          ###   ########.fr       */
+/*   Created: 2025/04/18 16:14:40 by kharuya           #+#    #+#             */
+/*   Updated: 2025/04/19 15:15:17 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-static int	ft_exec_child(t_node *node, t_minishell *minishell)
+t_node	*node_init(void)
 {
-	pid_t	pid;
-	t_path	path;
-
-	minishell->sig_child = TRUE;
-	pid = fork();
-	// 子プロセスの処理
-	if (!pid)
-	{
-		// リダイレクトの実装は後回し
-		path = ft_get_path(node->expanded_args[0]);
-	}
-	minishell->sig_child = FALSE;
-	return (EXIT_SUCCESS);
+	t_node	*node;
+	node = (t_node *)malloc(sizeof(t_node) * 1);
+	node->expanded_args = (char **)malloc(sizeof(char *) * (2 + 1));
+	node->expanded_args[0] = "/bin/ls";
+	node->expanded_args[1] = "-l";
+	node->expanded_args[2] = NULL;
+	node->type = N_CMD;
+	node->args = "/bin/ls -l";
+	node->io_list = NULL;
+	node->left = NULL;
+	node->right = NULL;
+	return (node);
 }

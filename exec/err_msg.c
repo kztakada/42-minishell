@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_simple_cmd.c                               :+:      :+:    :+:   */
+/*   err_msg.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/04 01:17:57 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/18 17:51:20 by kharuya          ###   ########.fr       */
+/*   Created: 2025/04/19 15:56:37 by kharuya           #+#    #+#             */
+/*   Updated: 2025/04/20 17:14:52 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-static int	ft_exec_child(t_node *node, t_minishell *minishell)
+int	ft_err_msg(t_err err)
 {
-	pid_t	pid;
-	t_path	path;
-
-	minishell->sig_child = TRUE;
-	pid = fork();
-	// 子プロセスの処理
-	if (!pid)
-	{
-		// リダイレクトの実装は後回し
-		path = ft_get_path(node->expanded_args[0]);
-	}
-	minishell->sig_child = FALSE;
-	return (EXIT_SUCCESS);
+	(void)err;
+	return ;
 }
