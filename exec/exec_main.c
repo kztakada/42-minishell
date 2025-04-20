@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_simple_cmd.c                               :+:      :+:    :+:   */
+/*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/04 01:17:57 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/18 17:51:20 by kharuya          ###   ########.fr       */
+/*   Created: 2025/04/18 14:55:16 by kharuya           #+#    #+#             */
+/*   Updated: 2025/04/19 15:18:55 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-static int	ft_exec_child(t_node *node, t_minishell *minishell)
+// ft_exec_child
+int main(int ac, char *av[], char *envp[])
 {
-	pid_t	pid;
-	t_path	path;
-
-	minishell->sig_child = TRUE;
-	pid = fork();
-	// 子プロセスの処理
-	if (!pid)
-	{
-		// リダイレクトの実装は後回し
-		path = ft_get_path(node->expanded_args[0]);
-	}
-	minishell->sig_child = FALSE;
-	return (EXIT_SUCCESS);
+	(void)ac;
+	(void)av;
+	t_minishell minishell = minishell_init(envp);
+	t_node		*node = node_init();
+	ft_exec_child(t_node *node, t_minishell *minishell);
+	free (node->expanded_args);
+	free (node);
 }
