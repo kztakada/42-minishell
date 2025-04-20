@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:19 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/15 15:18:56 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/04/17 18:20:52 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_env(t_minishell *minishell)
 {
-	t_env *env;
+	t_env	*env;
 
 	env = minishell->env_lst;
 	while (env)
@@ -23,5 +23,5 @@ int	ft_env(t_minishell *minishell)
 			printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
