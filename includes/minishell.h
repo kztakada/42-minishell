@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/18 00:16:59 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/18 20:15:45 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum e_bool
 }			t_bool;
 
 // error messages
-# define ERROR_MALLOC "Error: Memory allocation failed"
+# define ERROR_MALLOC "Error: Memory allocation failed\n"
 
 // for dictionary
 // dictionary format: 1st char is separator in the dictionary
