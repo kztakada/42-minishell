@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/15 18:30:21 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:39:38 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef enum e_bool
 // dictionary format: 1st char is separator in the dictionary
 # define OPERATORS_DICT " << >> && || | < > ; ( )"
 # define SPACE_DICT "_ _\t_\n_\v_\f_\r"
-# define NUM_DICT "_0 1 2 3 4 5 6 7 8 9"
+# define NUM_DICT " 0 1 2 3 4 5 6 7 8 9"
 # define NO_MATCH_DICT "no match in dictionary"
 # define INVALID_DICT "invalid dictionary"
 # define INVALID_SUBJECT "invalid subject"
