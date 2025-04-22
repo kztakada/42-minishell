@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:47:32 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/18 20:02:13 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:39:30 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	delete_token(void *target)
 }
 
 // Noted: operand is the string sandwiched between operators
-t_list	*tokenize(char *input)
+t_list	*lexer(char *input)
 {
 	t_list	*token_list;
 	int		append_len;

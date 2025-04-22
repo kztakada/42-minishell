@@ -6,85 +6,62 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/18 20:02:51 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:40:18 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
-int	sum(int a, int b)
-{
-	return (a + b);
-}
-
-// void	all_free(char *input, t_token *tokens, t_node *as_tree)
-// {
-// 	if (input)
-// 		free(input);
-// 	if (tokens)
-// 		free(tokens);
-// 	if (as_tree)
-// 		free(as_tree);
-// }
-// void	handle_parse_error(t_parse_error error)
-// {
-// 	if (error.code == E_MEM)
-// 	{
-// 		fprintf(stderr, "Memory allocation error\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	else if (error.code == E_SYNTAX)
-// 	{
-// 		fprintf(stderr, "Syntax error\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// }
 
 // トークナイザーの出力テスト用
-void	print_token_list(t_list *token_list)
-{
-	t_list	*current;
-	t_token	*token;
+// void	print_token_list(t_list *token_list)
+// {
+// 	t_list	*current;
+// 	t_token	*token;
 
-	current = token_list;
-	while (current)
+// 	current = token_list;
+// 	while (current)
+// 	{
+// 		token = (t_token *)current->content;
+// 		printf("Token type: %d, content: %s\n", token->type, token->content);
+// 		current = current->next;
+// 	}
+// }
+
+static t_bool	safe_add_history(char *input)
+{
+	if (input == NULL)
+		return (exit(EXIT_FAILURE), FALSE);
+	if (*input)
+		add_history(input);
+	else
 	{
-		token = (t_token *)current->content;
-		printf("Token type: %d, content: %s\n", token->type, token->content);
-		current = current->next;
+		free(input);
+		return (FALSE);
 	}
+	return (TRUE);
 }
 
 int	app_main(void)
 {
-	char	*input;
-	t_list	*token_list;
+	char		*input;
+	t_list		*token_list;
+	t_abs_node	*abs_tree;
 
-	// t_parse_error	error;
-	// t_node			*as_tree;
 	while (TRUE)
 	{
 		input = readline(PROMPT);
-		if (input == NULL)
-			exit(EXIT_FAILURE);
-		if (*input)
-			add_history(input);
-		token_list = tokenize(input);
+		if (safe_add_history(input) == FALSE)
+			continue ;
+		token_list = lexer(input);
 		free(input);
 		if (token_list == NULL)
 			continue ;
-		print_token_list(token_list);
+		// print_token_list(token_list);
+		abs_tree = parse(token_list); //未実装
 		ft_lstclear(&token_list, delete_token);
-		// as_tree = parse(tokens, &error); //未実装
-		// if (error.code != PARSE_NO_ERROR)
-		// {
-		// 	handle_parse_error(error); //未実装
-		// 	free(input);
-		// 	free(tokens);
-		// 	continue ;
-		// }
-		// printf("as_tree->args: %s\n", as_tree->args);
-		// // exec_(as_tree); //未実装
-		// all_free(input, tokens, as_tree);
+		if (abs_tree == NULL)
+			continue ;
+		exec_(abs_tree); //未実装
 	}
 	return (0);
 }
