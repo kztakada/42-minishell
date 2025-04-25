@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize.c                                         :+:      :+:    :+:   */
+/*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:47:32 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/22 18:39:30 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/25 23:36:37 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
 
-static int	is_space(char c)
+static int	is_ifs(char c)
 {
-	if (lookup_dict(&c, SPACE_DICT).in_d)
+	if (lookup_dict(&c, IFS_DICT).in_d)
 		return (TRUE);
 	return (FALSE);
 }
@@ -119,7 +119,7 @@ t_list	*lexer(char *input)
 	append_len = 0;
 	while (*input)
 	{
-		if (is_space(*input))
+		if (is_ifs(*input))
 			input++;
 		else if (is_operator(input))
 		{

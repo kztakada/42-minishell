@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/20 17:24:07 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/25 23:36:49 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef enum e_bool
 
 // for dictionary
 // dictionary format: 1st char is separator in the dictionary
+# define IFS_DICT "_ _\t_\n"
 # define OPERATORS_DICT " << >> && || | < > ( )"
 # define SPACE_DICT "_ _\t_\n_\v_\f_\r"
 # define NUM_DICT " 0 1 2 3 4 5 6 7 8 9"
