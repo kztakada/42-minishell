@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/22 18:39:41 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:27:50 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,30 @@
 # define PROMPT "minishell$ "
 
 # define FAILURE -1
+# define SUCCESS 0
+
+// for tokenize
+typedef enum e_token_type
+{
+	OP_HEREDOC,   // <<
+	OP_APPEND,    // >>
+	OP_AND,       // &&
+	OP_OR,        // ||
+	OP_PIPE,      // |
+	OP_INPUT,     // <
+	OP_OUTPUT,    // >
+	OP_OPEN,      // (
+	OP_CLOSE,     // )
+	TERMINATOR,   // \n
+	OPERAND_TEXT, // identifier
+}							t_token_type;
+
+typedef struct s_token		t_token;
+struct						s_token
+{
+	t_token_type			type;
+	char					*content;
+};
 
 // for parse
 
@@ -27,6 +51,12 @@ typedef enum e_parse_err_type
 	E_MEM = 1,
 	E_SYNTAX
 }							t_parse_err_type;
+
+typedef struct s_env_var
+{
+	char					*name;
+	char					*value;
+}							t_env_var;
 
 // コンテントリスト
 
@@ -73,28 +103,6 @@ typedef struct s_parse_error
 	int						line;
 	int						column;
 }							t_parse_error;
-
-// for tokenize
-typedef enum e_token_type
-{
-	OP_HEREDOC,   // <<
-	OP_APPEND,    // >>
-	OP_AND,       // &&
-	OP_OR,        // ||
-	OP_PIPE,      // |
-	OP_INPUT,     // <
-	OP_OUTPUT,    // >
-	OP_OPEN,      // (
-	OP_CLOSE,     // )
-	TERMINATOR,   // \n
-	OPERAND_TEXT, // identifier
-}							t_token_type;
-
-typedef struct s_token
-{
-	t_token_type			type;
-	char					*content;
-}							t_token;
 
 // tokenize.c
 t_list						*lexer(char *input);
