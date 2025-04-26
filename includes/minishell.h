@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/25 23:36:49 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/26 19:30:13 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "./for_test.h" // for test
+# include "lexing.h"
 # include <dirent.h>
 # include <fcntl.h>
 # include <limits.h>
@@ -32,6 +33,13 @@ typedef enum e_bool
 	TRUE = 1,
 }			t_bool;
 
+// for env
+typedef struct s_env_var
+{
+	char	*name;
+	char	*value;
+}			t_env_var;
+
 // error messages
 # define ERROR_MALLOC "Error: Memory allocation failed\n"
 
@@ -39,6 +47,7 @@ typedef enum e_bool
 // dictionary format: 1st char is separator in the dictionary
 # define IFS_DICT "_ _\t_\n"
 # define OPERATORS_DICT " << >> && || | < > ( )"
+# define TOKEN_TYPE_DICT " << >> && || | < > ( ) ' \" \n"
 # define SPACE_DICT "_ _\t_\n_\v_\f_\r"
 # define NUM_DICT " 0 1 2 3 4 5 6 7 8 9"
 # define QUOTE_DICT " \" ' "
