@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:14:39 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 21:16:55 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/28 00:13:00 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,9 @@ t_token	*get_token(t_list *current_token)
 
 	token = (t_token *)current_token->content;
 	return (token);
+}
+
+t_bool	is_in(t_token *testing_token, char *dict)
+{
+	return (lookup_dict(testing_token->value, dict).in_d);
 }
