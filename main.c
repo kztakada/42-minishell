@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/25 19:24:12 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 19:18:00 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	print_token_list(t_list *token_list)
 	while (current)
 	{
 		token = (t_token *)current->content;
-		printf("Token type: %d, content: %s\n", token->type, token->content);
+		printf("Token type: %d, count:%zu, content: %s\n", token->type,
+			ft_strlen(token->value), token->value);
 		current = current->next;
 	}
 }
@@ -173,17 +174,23 @@ static t_bool	safe_add_history(char *input)
 
 static int	execute_command(char *input)
 {
-	t_list	*token_list;
+	t_list		*token_list;
+	t_list		*abs_tree;
+	static int	exit_status = 0;
 
-	token_list = lexer(input);
+	// TODO: lexerでエラーした時にexit_statusは何番を返せば良いか？
+	token_list = NULL;
+	exit_status = lexer(input, &token_list);
 	free(input);
-	if (token_list == NULL)
+	if (exit_status != 0)
 		return (FAILURE);
-	print_token_list(token_list);
-	// abs_tree = parse(token_list); //未実装
-	ft_lstclear(&token_list, delete_token);
-	// if (abs_tree == NULL)
-	// 	return (FAILURE);
+	// print_token_list(token_list); // テスト用
+	abs_tree = NULL;
+	exit_status = parse(token_list, &abs_tree); //未実装
+	ft_lstclear(&token_list, free_token);
+	if (exit_status != 0)
+		return (FAILURE);
+	ft_lstclear(&abs_tree, free_abs_node);
 	// exec_(abs_tree); //未実装
 	return (SUCCESS);
 }
@@ -198,9 +205,8 @@ int	app_main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	env_lists = init_envlst(env);
-	// print_env_list(env_lists);
+	// print_env_list(env_lists); // テスト用
 	ft_lstclear(&env_lists, free_env_var);
-	// t_abs_node	*abs_tree;
 	if (is_interactive)
 	{
 		while (TRUE)
@@ -235,18 +241,6 @@ int	app_main(int argc, char **argv, char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-	// t_dict_out	d_out;
-	// d_out = lookup_dict("<<", OPERATORS_DICT);
-	// printf("in_d: %d\n", d_out.in_d);
-	// printf("d_index: %d\n", d_out.d_index);
-	// printf("nx_str: %s\n", d_out.nx_str);
-	// printf("error: %s\n", d_out.error);
-	// d_out = lookup_dict("&&", OPERATORS_DICT);
-	// printf("in_d: %d\n", d_out.in_d);
-	// printf("d_index: %d\n", d_out.d_index);
-	// printf("nx_str: %s\n", d_out.nx_str);
-	// printf("error: %s\n", d_out.error);
-	// return (0);
 	return (app_main(argc, argv, env));
 }
 #endif // TEST

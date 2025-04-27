@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/26 23:29:49 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 20:25:08 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define T_MINISHELL_H
 
 # include "../libraries/libft.h"
-# include "lexing.h"
 # include "minishell.h"
+# include "parsing.h"
 
 # define PROMPT "minishell$ "
 
@@ -75,8 +75,5 @@ typedef struct s_parse_error
 	int						line;
 	int						column;
 }							t_parse_error;
-
-// parse.c
-t_abs_node					*parse(t_token *token_list);
 
 #endif

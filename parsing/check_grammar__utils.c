@@ -1,0 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_grammar__utils.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/27 20:14:39 by katakada          #+#    #+#             */
+/*   Updated: 2025/04/27 21:16:55 by katakada         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "t_minishell.h"
+
+void	forward_token_list(t_list **current_token_list)
+{
+	*current_token_list = (*current_token_list)->next;
+}
+
+t_token	*get_token(t_list *current_token)
+{
+	t_token	*token;
+
+	token = (t_token *)current_token->content;
+	return (token);
+}
