@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:47:32 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 14:05:14 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 15:32:04 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,26 @@ static int	lexicize_input(char *input, t_list **token_list)
 	return (lexicized_size);
 }
 
-t_list	*lexer(char *input)
+int	lexer(char *input, t_list **token_list)
 {
-	t_list	*token_list;
-	int		lexicized_size;
+	int	lexicized_size;
 
 	if (input == NULL)
-		return (NULL);
-	token_list = NULL;
+		return (EXIT_S_FAILURE);
 	while (*input)
 	{
 		if (is_ifs(*input))
 			input++;
 		else
 		{
-			lexicized_size = lexicize_input(input, &token_list);
+			lexicized_size = lexicize_input(input, token_list);
 			if (lexicized_size == FAILURE)
-				return (ft_lstclear(&token_list, free_token), NULL);
+				return (ft_lstclear(token_list, free_token), EXIT_S_FAILURE);
 			input += lexicized_size;
 		}
 	}
-	lexicized_size = append_terminator(&token_list);
+	lexicized_size = append_terminator(token_list);
 	if (lexicized_size == FAILURE)
-		return (ft_lstclear(&token_list, free_token), NULL);
-	return (token_list);
+		return (ft_lstclear(token_list, free_token), EXIT_S_FAILURE);
+	return (EXIT_S_SUCCESS);
 }

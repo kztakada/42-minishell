@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/26 19:30:13 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 15:19:30 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ typedef struct s_env_var
 	char	*name;
 	char	*value;
 }			t_env_var;
+
+// exit status
+# define EXIT_S_SUCCESS 0
+# define EXIT_S_FAILURE 1
+# define EXIT_S_SYNTAX_ERROR 2
+# define EXIT_S_CMD_FAILURE 126
+# define EXIT_S_CMD_NOT_FOUND 127
+# define EXIT_S_INVALID_ARG 128
 
 // error messages
 # define ERROR_MALLOC "Error: Memory allocation failed\n"

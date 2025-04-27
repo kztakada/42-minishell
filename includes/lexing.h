@@ -28,7 +28,7 @@ struct					s_token
 };
 
 // lexer.c
-t_list					*lexer(char *input);
+int						lexer(char *input, t_list **token_list);
 
 // lexicize_func_sign.c
 int						add_token_to_list(t_token *token, t_list **token_list);
