@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:47:32 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 12:05:36 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 14:05:14 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ t_list	*lexer(char *input)
 	t_list	*token_list;
 	int		lexicized_size;
 
+	if (input == NULL)
+		return (NULL);
 	token_list = NULL;
 	while (*input)
 	{
@@ -76,5 +78,8 @@ t_list	*lexer(char *input)
 			input += lexicized_size;
 		}
 	}
+	lexicized_size = append_terminator(&token_list);
+	if (lexicized_size == FAILURE)
+		return (ft_lstclear(&token_list, free_token), NULL);
 	return (token_list);
 }

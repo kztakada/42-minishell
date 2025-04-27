@@ -33,6 +33,7 @@ t_list					*lexer(char *input);
 // lexicize_func_sign.c
 int						add_token_to_list(t_token *token, t_list **token_list);
 int						lexicize_func_sign(char *input, t_list **token_list);
+int						append_terminator(t_list **token_list);
 
 // lexicize_text.c
 int						lexicize_operand(char *input, t_list **token_list);
