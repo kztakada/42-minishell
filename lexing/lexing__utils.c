@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:32:36 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 12:05:36 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 19:19:15 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_token(void *target)
 	token = (t_token *)target;
 	if (token)
 	{
-		free(token->content);
+		free(token->value);
 		free(token);
 	}
 }

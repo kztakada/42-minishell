@@ -24,7 +24,7 @@ typedef struct s_token	t_token;
 struct					s_token
 {
 	t_token_type		type;
-	char				*content;
+	char				*value;
 };
 
 // lexer.c

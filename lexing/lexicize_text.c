@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 01:11:52 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 17:28:42 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 19:19:10 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static t_token	*get_text_token(char *input, int text_len)
 	if (allocated_token == NULL)
 		return (perror(ERROR_MALLOC), NULL);
 	allocated_token->type = OPERAND_TEXT;
-	allocated_token->content = ft_substr(input, 0, text_len);
-	if (allocated_token->content == NULL)
+	allocated_token->value = ft_substr(input, 0, text_len);
+	if (allocated_token->value == NULL)
 	{
 		free(allocated_token);
 		return (perror(ERROR_MALLOC), NULL);
