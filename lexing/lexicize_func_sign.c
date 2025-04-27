@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 01:10:29 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 01:10:30 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 12:05:36 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	lexicize_func_sign(char *input, t_list **token_list)
 	lexicized_size = add_token_to_list(token, token_list);
 	if (lexicized_size == FAILURE)
 	{
-		delete_token(token);
+		free_token(token);
 		return (FAILURE);
 	}
 	return (lexicized_size);

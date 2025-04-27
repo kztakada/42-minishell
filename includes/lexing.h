@@ -43,6 +43,6 @@ int						lexicize_text_in_quote(char *input, t_list **token_list,
 int						is_ifs(char c);
 int						is_quote(char c);
 int						is_operator(char *str);
-void					delete_token(void *target);
+void					free_token(void *target);
 
 #endif

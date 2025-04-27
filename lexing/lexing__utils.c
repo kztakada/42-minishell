@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:32:36 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/26 19:34:15 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 12:05:36 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_operator(char *str)
 	return (FALSE);
 }
 
-void	delete_token(void *target)
+void	free_token(void *target)
 {
 	t_token	*token;
 
