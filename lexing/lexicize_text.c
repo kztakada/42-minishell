@@ -6,19 +6,19 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 01:11:52 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 12:05:36 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:28:42 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
 
-static int	get_operand_len(char *input)
+static int	get_text_len(char *input)
 {
 	int	operand_len;
 
 	operand_len = 0;
 	while (input[operand_len] && !is_operator(input + operand_len)
-		&& !is_quote(input[operand_len]) && !is_ifs(input[operand_len]))
+		&& !is_quote(input[operand_len]))
 	{
 		operand_len++;
 	}
@@ -56,7 +56,7 @@ static t_token	*get_text_token(char *input, int text_len)
 	return (allocated_token);
 }
 
-int	lexicize_operand(char *input, t_list **token_list)
+int	lexicize_text(char *input, t_list **token_list)
 {
 	t_token	*token;
 	int		text_len;
@@ -64,7 +64,7 @@ int	lexicize_operand(char *input, t_list **token_list)
 
 	if (!input || !*input)
 		return (FAILURE);
-	text_len = get_operand_len(input);
+	text_len = get_text_len(input);
 	token = get_text_token(input, text_len);
 	if (!token)
 		return (FAILURE);

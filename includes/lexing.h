@@ -36,7 +36,7 @@ int						lexicize_func_sign(char *input, t_list **token_list);
 int						append_terminator(t_list **token_list);
 
 // lexicize_text.c
-int						lexicize_operand(char *input, t_list **token_list);
+int						lexicize_text(char *input, t_list **token_list);
 int						lexicize_text_in_quote(char *input, t_list **token_list,
 							char quote);
 

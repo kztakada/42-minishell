@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:47:32 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 15:32:04 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:37:11 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,31 @@ static int	lexicize_operator(char *input, t_list **token_list)
 	return (lexicize_func_sign(input, token_list));
 }
 
+static int	lexicize_operand(char *input, t_list **token_list)
+{
+	int		lexicized_size;
+	char	*ptr_input;
+
+	ptr_input = input;
+	while (*ptr_input && !is_operator(ptr_input))
+	{
+		if (is_quote(*ptr_input))
+			lexicized_size = lexicize_start_with_quote(ptr_input, token_list);
+		else
+			lexicized_size = lexicize_text(ptr_input, token_list);
+		if (lexicized_size == FAILURE)
+			return (FAILURE);
+		ptr_input += lexicized_size;
+	}
+	return (ptr_input - input);
+}
+
 // Noted: operand is the string sandwiched between operators
 static int	lexicize_input(char *input, t_list **token_list)
 {
 	int	lexicized_size;
 
-	if (is_quote(*input))
-		lexicized_size = lexicize_start_with_quote(input, token_list);
-	else if (is_operator(input))
+	if (is_operator(input))
 		lexicized_size = lexicize_operator(input, token_list);
 	else
 		lexicized_size = lexicize_operand(input, token_list);
