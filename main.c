@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 19:18:00 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/28 20:54:39 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,13 +172,14 @@ static t_bool	safe_add_history(char *input)
 	return (TRUE);
 }
 
-static int	execute_command(char *input)
+static int	execute_command(char *input, t_list *env_lists)
 {
-	t_list		*token_list;
-	t_list		*abs_tree;
-	static int	exit_status = 0;
+	t_list					*token_list;
+	t_list					*abs_tree;
+	static t_exit_status	exit_status = 0;
 
 	// TODO: lexerでエラーした時にexit_statusは何番を返せば良いか？
+	(void)env_lists;
 	token_list = NULL;
 	exit_status = lexer(input, &token_list);
 	free(input);
@@ -191,7 +192,7 @@ static int	execute_command(char *input)
 	if (exit_status != 0)
 		return (FAILURE);
 	ft_lstclear(&abs_tree, free_abs_node);
-	// exec_(abs_tree); //未実装
+	// exit_status = exec_(abs_tree, env_lists); //未実装
 	return (SUCCESS);
 }
 
@@ -214,7 +215,7 @@ int	app_main(int argc, char **argv, char **env)
 			input = readline(PROMPT);
 			if (safe_add_history(input) == FALSE)
 				continue ;
-			execute_command(input);
+			execute_command(input, env_lists);
 		}
 	}
 	else
@@ -229,7 +230,7 @@ int	app_main(int argc, char **argv, char **env)
 			if (newline)
 				*newline = '\0';
 			// printf("%s\n", input); // テスト用
-			execute_command(input);
+			execute_command(input, env_lists);
 			input = get_next_line(STDIN_FILENO);
 		}
 		free(input);

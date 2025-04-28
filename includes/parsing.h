@@ -34,49 +34,49 @@
 // 	t_abs_node				*right;
 // };
 
-typedef int	(*t_gram_shell_term)(t_list **, int *);
-typedef int	(*t_gram_operator)(t_list **);
+typedef int		(*t_gram_shell_term)(t_list **, int *);
+typedef int		(*t_gram_operator)(t_list **);
 
 // check_grammar.c
-int			check_tokens_grammar(t_list **token_list, int *subshell_count);
+int				check_tokens_grammar(t_list **token_list, int *subshell_count);
 
 // grammar__follower.c
-int			grammar_next_token(t_token *test_token, t_list **next_tokens,
-				int *subshell_count);
+int				grammar_next_token(t_token *test_token, t_list **next_tokens,
+					int *subshell_count);
 
 // grammar__prefix.c
-int			grammar_prefix(t_token *test_token);
+int				grammar_prefix(t_token *test_token);
 
 // grammar__utils.c
-void		forward_token_list(t_list **current_token_list);
-t_token		*get_token(t_list *current_token);
-t_bool		is_in(char *dict, t_token *test_token);
-t_bool		is_operand_text(t_token *test_token);
-int			gf(t_token *testing_token, char *dict);
+void			forward_token_list(t_list **current_token_list);
+t_token			*get_token(t_list *current_token);
+t_bool			is_in(char *dict, t_token *test_token);
+t_bool			is_operand_text(t_token *test_token);
+int				gf(t_token *testing_token, char *dict);
 
 // grammar_binop_pipe.c
-int			grammar_binop_and(t_list **next_tokens);
-int			grammar_binop_or(t_list **next_tokens);
-int			grammar_pipe(t_list **next_tokens);
+int				grammar_binop_and(t_list **next_tokens);
+int				grammar_binop_or(t_list **next_tokens);
+int				grammar_pipe(t_list **next_tokens);
 
 // grammar_redirect.c
-int			grammar_heredoc(t_list **next_tokens);
-int			grammar_re_append(t_list **next_tokens);
-int			grammar_re_input(t_list **next_tokens);
-int			grammar_re_output(t_list **next_tokens);
+int				grammar_heredoc(t_list **next_tokens);
+int				grammar_re_append(t_list **next_tokens);
+int				grammar_re_input(t_list **next_tokens);
+int				grammar_re_output(t_list **next_tokens);
 
 // grammar_subshell.c
-int			grammar_sub_open(t_list **next_tokens, int *subshell_count);
-int			grammar_sub_close(t_list **next_tokens, int *subshell_count);
-int			grammar_terminator(t_list **next_tokens, int *subshell_count);
+int				grammar_sub_open(t_list **next_tokens, int *subshell_count);
+int				grammar_sub_close(t_list **next_tokens, int *subshell_count);
+int				grammar_terminator(t_list **next_tokens, int *subshell_count);
 
 // grammar_text.c
-int			grammar_quote_single(t_list **next_tokens);
-int			grammar_quote_double(t_list **next_tokens);
-int			grammar_operand_text(t_token *test_token, t_list **next_tokens);
+int				grammar_quote_single(t_list **next_tokens);
+int				grammar_quote_double(t_list **next_tokens);
+int				grammar_operand_text(t_token *test_token, t_list **next_tokens);
 
 // parse.c
-int			parse(t_list *token_list, t_list **abs_tree);
-void		free_abs_node(void *target);
+t_exit_status	parse(t_list *token_list, t_list **abs_tree);
+void			free_abs_node(void *target);
 
 #endif

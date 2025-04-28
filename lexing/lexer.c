@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:47:32 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 20:53:07 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/28 20:51:43 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	lexicize_input(char *input, t_list **token_list)
 	return (lexicized_size);
 }
 
-int	lexer(char *input, t_list **token_list)
+t_exit_status	lexer(char *input, t_list **token_list)
 {
 	int	lexicized_size;
 

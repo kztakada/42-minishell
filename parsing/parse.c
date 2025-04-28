@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:57:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 23:39:23 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/28 20:49:56 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	put_syntax_err(t_token *token)
 	ft_putstr_fd("'\n", STDERR_FILENO);
 }
 
-int	parse(t_list *token_list, t_list **abs_tree)
+t_exit_status	parse(t_list *token_list, t_list **abs_tree)
 {
 	int	subshell_count;
 
