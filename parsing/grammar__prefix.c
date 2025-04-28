@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:28:18 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/28 18:22:34 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/28 20:40:48 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static t_bool	can_use_as_first_token(t_token *test_token)
 
 int	grammar_prefix(t_token *test_token)
 {
+	if (test_token->id != 0)
+		return (OK);
 	if (test_token == NULL)
 		return (FALSE);
 	if (can_use_as_first_token(test_token) == FALSE)

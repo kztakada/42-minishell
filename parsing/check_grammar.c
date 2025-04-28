@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/28 18:19:09 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/28 20:42:43 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	check_tokens_grammar(t_list **current_tokens, int *subshell_count)
 	if (current_tokens == NULL || *current_tokens == NULL)
 		return (NG);
 	if (grammar_prefix(get_token(*current_tokens)) == NG)
-		// TODO: idが０番の時だけ処理させる
 		return (NG);
 	while (*current_tokens)
 	{
@@ -30,6 +29,6 @@ int	check_tokens_grammar(t_list **current_tokens, int *subshell_count)
 		if (grammar_next_token(test_token, current_tokens,
 				subshell_count) == NG)
 			return (NG);
-	};
+	}
 	return (grammar_terminator(current_tokens, subshell_count));
 }
