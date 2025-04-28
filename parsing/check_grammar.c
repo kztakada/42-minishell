@@ -6,31 +6,30 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/28 15:30:01 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:19:09 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
 
-
-
-int	check_tokens_grammar(t_list **token_list, int *subshell_count)
+int	check_tokens_grammar(t_list **current_tokens, int *subshell_count)
 {
-	t_token	*testing_token;
+	t_token	*test_token;
 
-	if (token_list == NULL || *token_list == NULL)
+	if (current_tokens == NULL || *current_tokens == NULL)
 		return (NG);
-	if (grammar_prefix(get_token(*token_list)) == NG)
+	if (grammar_prefix(get_token(*current_tokens)) == NG)
 		// TODO: idが０番の時だけ処理させる
 		return (NG);
-	while (*token_list)
+	while (*current_tokens)
 	{
-		testing_token = get_token(*token_list);
-		if (testing_token->type == TERMINATOR)
+		test_token = get_token(*current_tokens);
+		if (test_token->type == TERMINATOR)
 			break ;
-		forward_token_list(token_list);
-		if (grammar_follower(testing_token, token_list, subshell_count) == NG)
+		forward_token_list(current_tokens);
+		if (grammar_next_token(test_token, current_tokens,
+				subshell_count) == NG)
 			return (NG);
 	};
-	return (grammar_terminator(token_list, subshell_count));
+	return (grammar_terminator(current_tokens, subshell_count));
 }
