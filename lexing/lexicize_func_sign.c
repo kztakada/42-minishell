@@ -6,16 +6,28 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 01:10:29 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 19:18:55 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/28 20:32:24 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
 
-static t_list	*get_listable_token(t_token *token)
+static t_list	*get_listable_token(t_token *token, t_list **token_list)
 {
-	t_list	*listable_token;
+	t_list			*listable_token;
+	unsigned int	token_id;
 
+	if (*token_list == NULL)
+		token_id = 0;
+	else
+	{
+		token_id = ((t_token *)(ft_lstlast(*token_list)->content))->id;
+		if (token_id == UINT_MAX)
+			return (perror("Token ID overflow"), NULL);
+		else
+			token_id++;
+	}
+	token->id = token_id;
 	listable_token = ft_lstnew(token);
 	if (listable_token == NULL)
 		return (perror(ERROR_MALLOC), NULL);
@@ -27,7 +39,7 @@ int	add_token_to_list(t_token *token, t_list **token_list)
 	t_list	*listable_token;
 	int		lexicized_size;
 
-	listable_token = get_listable_token(token);
+	listable_token = get_listable_token(token, token_list);
 	if (listable_token == NULL)
 		return (FAILURE);
 	ft_lstadd_back(token_list, listable_token);
