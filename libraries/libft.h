@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 21:55:04 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/03 21:42:53 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/04/24 03:45:43 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 
 // add
-int	ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
+void	ft_free_char2(char **tofree);
+char	*ft_strjoin_3(char *s1, char *s2, char *s3);
+long	ft_atol(const char *str, int *overflow);
 
 #endif
