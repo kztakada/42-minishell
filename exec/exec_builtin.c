@@ -6,13 +6,13 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:54:38 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/18 16:05:02 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/04/22 20:23:39 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-int	ft_exec_builtin(char **args, t_minishell *minishell)
+int	exec_builtin(char **args, t_minishell *minishell)
 {
 	if (ft_strcmp(args[0], "cd") == 0)
 		return (ft_cd(args[1], minishell));
