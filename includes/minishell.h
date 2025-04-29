@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/28 20:49:43 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/30 01:25:25 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_env_var
 }			t_env_var;
 
 // exit status
-typedef enum e_exit_status
+enum		e_exit_status
 {
 	EXIT_S_SUCCESS = 0,
 	EXIT_S_FAILURE = 1,
@@ -49,7 +49,7 @@ typedef enum e_exit_status
 	EXIT_S_CMD_FAILURE = 126,
 	EXIT_S_CMD_NOT_FOUND = 127,
 	EXIT_S_INVALID_ARG = 128,
-}			t_exit_status;
+};
 
 // error messages
 # define ERROR_MALLOC "Error: Memory allocation failed\n"
