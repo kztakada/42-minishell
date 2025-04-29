@@ -6,7 +6,7 @@
 #    By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 15:59:55 by katakada          #+#    #+#              #
-#    Updated: 2025/04/18 15:47:16 by kharuya          ###   ########.fr        #
+#    Updated: 2025/04/21 18:29:35 by kharuya          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,11 @@ DEBUG_CC		=	cc -D IS_DEBUG=1 -g -fsanitize=address
 
 CFLAGS			=	-Wall -Wextra -Werror
 
-INCS			=	../includes/h_minishell.h ../includes/minishell.h -I $(LIBFT_DIR)
+INCS			=	-I ../includes/ -I $(LIBFT_DIR)
 
 SRC_PATH		=	
-SRCS			=	$(wildcard $(SRC_PATH)*.c) ../utils/dictionary.c
+UTILS_PATH		=	../utils/
+SRCS			=	$(wildcard $(SRC_PATH)*.c) $(wildcard $(UTILS_PATH)*.c)
 
 LIBFT_DIR		=	../libraries/
 LIBFT			=	$(LIBFT_DIR)libft.a
