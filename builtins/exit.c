@@ -6,28 +6,11 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:27 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/17 18:15:56 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/04/24 03:44:15 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
-
-static int	get_exit_s(char *arg)
-{
-	int	num;
-
-	num = ft_atoi(arg);
-	if (num >= 0 && num < 255)
-		return (num);
-	else if (num > 255)
-		return (num % 256);
-	else
-	{
-		if (-255 > num)
-			num %= 256;
-		return (256 + num);
-	}
-}
 
 static	int	is_digit(char *arg)
 {
@@ -54,6 +37,30 @@ static void	format_err_msg(void)
 	ft_putendl_fd("exit", 2);
 	ft_putendl_fd("bash: exit: too many arguments", 2);
 	return ;
+}
+
+static int	get_exit_s(char *arg)
+{
+	int		num;
+	int		overflow_flag;
+
+	overflow_flag = false;
+	num = ft_atol(arg, &overflow_flag);
+	if (overflow_flag)
+	{
+		digit_err_msg(arg);
+		return (255);
+	}
+	else if (num >= 0 && num < 255)
+		return (num);
+	else if (num > 255)
+		return (num % 256);
+	else
+	{
+		if (-255 > num)
+			num %= 256;
+		return (256 + num);
+	}
 }
 
 int	ft_exit(char **args, t_minishell *minishell)
