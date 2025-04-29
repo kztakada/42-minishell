@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:56:46 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/18 18:00:43 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/04/25 07:27:12 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@
 # include "minishell.h"
 # include <unistd.h>
 # include <stdio.h>
+# include <sys/wait.h>
 
 // test includes
 #include <stdbool.h>
 
 typedef enum e_err_msg
 {
+	NONE,
 	ERRMSG_CMD_NOT_FOUND,
 	ERRMSG_NO_SUCH_FILE,
 	ERRMSG_PERM_DENIED,
-	ERRMSG_AMBIGUOUS,
-	ERRMSG_TOO_MANY_ARGS,
-	ERRMSG_NUMERIC_REQUI
+	ERRMSG_AMBIGUOUS
 }	t_err_msg;
 
 typedef enum e_err_no
@@ -102,6 +102,7 @@ typedef struct s_node
 typedef struct s_minishell
 {
 	t_env	*env_lst;
+	char	**envp;
 	int		exit_s;
 	int		sig_child;
 }	t_minishell;
@@ -130,8 +131,10 @@ void		ft_env_lst_back(t_env *new, t_env *env_lst);
 t_env		*ft_env_lst_new(char *key, char *value);
 
 //prototypes exec
-int		ft_exec_builtin(char **args, t_minishell *minishell);
-t_path	ft_get_path(char *cmd);
+int			exec_external(t_node *node, t_minishell *minishell);
+int			exec_builtin(char **args, t_minishell *minishell);
+t_path		get_path(char *cmd);
+int			err_msg(t_err err);
 
 //test_utils (exec)
 t_node		*node_init(void);
