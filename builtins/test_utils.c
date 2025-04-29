@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_init.c                                   :+:      :+:    :+:   */
+/*   test_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:43:00 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/18 15:05:34 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/04/22 21:46:49 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ t_minishell minishell_init(char **envp)
 	t_minishell minishell;
 
 	ft_memset(&minishell, 0, sizeof(t_minishell));
+	minishell.envp = envp;
 	minishell.env_lst = make_env_list(envp);
 	minishell.exit_s = EXIT_SUCCESS;
 	return (minishell);
