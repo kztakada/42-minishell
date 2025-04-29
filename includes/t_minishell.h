@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/19 23:00:07 by katakada         ###   ########.fr       */
+/*   Updated: 2025/04/27 20:25:08 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 
 # include "../libraries/libft.h"
 # include "minishell.h"
+# include "parsing.h"
 
 # define PROMPT "minishell$ "
 
 # define FAILURE -1
+# define SUCCESS 0
 
 // for parse
 
@@ -30,37 +32,28 @@ typedef enum e_parse_err_type
 
 // コンテントリスト
 
-
 // 2分木構造
 typedef struct s_abs_node	t_abs_node;
 typedef enum e_abs_node_type
 {
-	B_OP_AND,
-	B_OP_OR,
-	B_OP_PIPE,
+	BINARY_OP,
 	REDIRECT,
+	SUBSHELL,
 	COMMAND
 }							t_abs_node_type;
 
-typedef enum e_io_cmd_type
+typedef struct s_redirection
 {
-	IO_HEREDOC,
-	IO_APPEND,
-	IO_IN,
-	IO_OUT
-}							t_io_cmd_type;
-typedef struct s_io_cmd
-{
-	t_io_cmd_type			cmd_type;
 	char					*value;
 	char					**expanded_value;
 	int						here_doc;
-}							t_io_cmd;
+}							t_redirection;
 
 struct						s_abs_node
 {
 	t_abs_node_type			node_type;
-	t_list					*io_cmd_list;
+	t_token					*token;
+	t_list					*redirection_list;
 	char					*cmd_args;
 	char					**expanded_args;
 	t_abs_node				*left;
@@ -82,34 +75,5 @@ typedef struct s_parse_error
 	int						line;
 	int						column;
 }							t_parse_error;
-
-// for tokenize
-typedef enum e_token_type
-{
-	OP_HEREDOC,         // <<
-	OP_APPEND_REDIRECT, // >>
-	OP_AND,             // &&
-	OP_OR,              // ||
-	OP_PIPE,            // |
-	OP_INPUT_REDIRECT,  // <
-	OP_OUTPUT_REDIRECT, // >
-	OP_OPEN_SUBSHELL,   // (
-	OP_CLOSE_SUBSHELL,  // )
-	TERMINATOR,         // \n
-	OPERAND_TEXT,       // identifier
-}							t_token_type;
-
-typedef struct s_token
-{
-	t_token_type			type;
-	char					*content;
-}							t_token;
-
-// tokenize.c
-t_list						*tokenize(char *input);
-void						delete_token(void *target);
-
-// parse.c
-t_abs_node					*parse(t_token *token_list);
 
 #endif
