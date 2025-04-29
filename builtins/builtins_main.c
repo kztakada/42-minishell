@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:10 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/18 14:59:30 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/04/21 18:36:50 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,18 +203,18 @@
 
 // int main(int ac, char *av[], char *envp[])
 // {
-	// int i;
-	// char **args;
+// 	int i;
+// 	char **args;
 
 
-	// (void)ac;
-	// (void)av;
-	// i = atexit(check_exit); // 正常終了時に呼び出される関数を設定
-	// if (i != 0) {
-	// 	fprintf(stderr, "cannot set exit function\n");
-	// 	exit(EXIT_FAILURE);
-	// }
-	// t_minishell minishell = minishell_init(envp);
+// 	(void)ac;
+// 	(void)av;
+// 	i = atexit(check_exit); // 正常終了時に呼び出される関数を設定
+// 	if (i != 0) {
+// 		fprintf(stderr, "cannot set exit function\n");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	t_minishell minishell = minishell_init(envp);
 	// // normal (using last exit status)
 	// args = (char **)malloc(sizeof(char *) * (2 + 1));
 	// args[0] = "exit";
@@ -234,6 +234,13 @@
 	// args = (char **)malloc(sizeof(char *) * (2 + 1));
 	// args[0] = "exit";
 	// args[1] = "HHH";
+	// args[3] = NULL;
+	// ft_exit(args, &minishell);
+
+	// // error (argument overflow)
+	// args = (char **)malloc(sizeof(char *) * (2 + 1));
+	// args[0] = "exit";
+	// args[1] = "-9223372036854775809";
 	// args[3] = NULL;
 	// ft_exit(args, &minishell);
 // }
