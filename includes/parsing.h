@@ -8,7 +8,6 @@
 # define NG 0
 
 // grammar dictionary
-# define NG_USE_FIRST " && || |"
 # define REDIRECT_OP " << >> < >"
 # define SUBSHELL_OP " ( )"
 # define BINARY_OP_PIPE " && || |"
@@ -35,7 +34,7 @@
 // };
 
 typedef int		(*t_gram_shell_term)(t_list **, int *);
-typedef int		(*t_gram_operator)(t_list **);
+typedef int		(*t_gram_operator)(t_list **, int);
 
 // check_grammar.c
 int				check_tokens_grammar(t_list **token_list, int *subshell_count);
@@ -45,7 +44,7 @@ int				grammar_next_token(t_token *test_token, t_list **next_tokens,
 					int *subshell_count);
 
 // grammar__prefix.c
-int				grammar_prefix(t_token *test_token);
+int				grammar_prefix(t_token *test_token, int subshell_count);
 
 // grammar__utils.c
 void			forward_token_list(t_list **current_token_list);
@@ -55,15 +54,15 @@ t_bool			is_operand_text(t_token *test_token);
 int				gf(t_token *testing_token, char *dict);
 
 // grammar_binop_pipe.c
-int				grammar_binop_and(t_list **next_tokens);
-int				grammar_binop_or(t_list **next_tokens);
-int				grammar_pipe(t_list **next_tokens);
+int				grammar_binop_and(t_list **next_tokens, int subshell_count);
+int				grammar_binop_or(t_list **next_tokens, int subshell_count);
+int				grammar_pipe(t_list **next_tokens, int subshell_count);
 
 // grammar_redirect.c
-int				grammar_heredoc(t_list **next_tokens);
-int				grammar_re_append(t_list **next_tokens);
-int				grammar_re_input(t_list **next_tokens);
-int				grammar_re_output(t_list **next_tokens);
+int				grammar_heredoc(t_list **next_tokens, int subshell_count);
+int				grammar_re_append(t_list **next_tokens, int subshell_count);
+int				grammar_re_input(t_list **next_tokens, int subshell_count);
+int				grammar_re_output(t_list **next_tokens, int subshell_count);
 
 // grammar_subshell.c
 int				grammar_sub_open(t_list **next_tokens, int *subshell_count);
@@ -71,9 +70,10 @@ int				grammar_sub_close(t_list **next_tokens, int *subshell_count);
 int				grammar_terminator(t_list **next_tokens, int *subshell_count);
 
 // grammar_text.c
-int				grammar_quote_single(t_list **next_tokens);
-int				grammar_quote_double(t_list **next_tokens);
-int				grammar_operand_text(t_token *test_token, t_list **next_tokens);
+int				grammar_quote_single(t_list **next_tokens, int subshell_count);
+int				grammar_quote_double(t_list **next_tokens, int subshell_count);
+int				grammar_operand_text(t_token *test_token, t_list **next_tokens,
+					int subshell_count);
 
 // parse.c
 t_exit_status	parse(t_list *token_list, t_list **abs_tree);

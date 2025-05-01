@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/28 20:42:43 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/02 00:55:18 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_tokens_grammar(t_list **current_tokens, int *subshell_count)
 
 	if (current_tokens == NULL || *current_tokens == NULL)
 		return (NG);
-	if (grammar_prefix(get_token(*current_tokens)) == NG)
+	if (grammar_prefix(get_token(*current_tokens), *subshell_count) == NG)
 		return (NG);
 	while (*current_tokens)
 	{
