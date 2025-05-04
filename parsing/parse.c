@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:57:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/04 19:52:17 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/04 23:44:30 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,21 @@ static void	put_syntax_err(t_list *token_list)
 t_exit_status	parse(t_list *token_list, t_list **abs_tree)
 {
 	int	subshell_count;
+	int	result;
 
 	subshell_count = 0;
 	if (token_list == NULL)
 		return (EXIT_S_FAILURE);
-	if (check_tokens_grammar(&token_list, &subshell_count) == NG)
-		return (put_syntax_err(token_list), EXIT_S_SYNTAX_ERROR);
+	// printf("subshell_count: %d\n", subshell_count);
+	while (token_list)
+	{
+		result = check_tokens_grammar(&token_list, &subshell_count);
+		// printf("result: %d  subshell_count: %d\n", result, subshell_count);
+		if (result == NG)
+			return (put_syntax_err(token_list), EXIT_S_SYNTAX_ERROR);
+		if (((t_token *)(token_list->content))->type == TERMINATOR)
+			break ;
+	}
 	*abs_tree = ft_lstnew(NULL);
 	if (abs_tree == NULL)
 		return (EXIT_S_FAILURE);

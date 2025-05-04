@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:03:18 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/04 20:17:14 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/04 23:20:49 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 int	grammar_sub_open(t_list **next_tokens, int *subshell_count)
 {
 	if (is_in(NG_NEXT_TO_S_OPEN, get_token(*next_tokens)))
+		return (NG);
+	if (get_token(*next_tokens)->type == TERMINATOR)
 		return (NG);
 	(*subshell_count)++;
 	return (OK);
