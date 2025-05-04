@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:01:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/02 01:09:05 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:42:25 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 // binary operators
 int	grammar_binop_and(t_list **next_tokens, int subshell_count)
 {
+	(void)subshell_count;
 	if (is_in(NG_NEXT_TO_B_AND, get_token(*next_tokens)))
 		return (NG);
 	if (get_token(*next_tokens)->type == TERMINATOR)
@@ -31,6 +32,7 @@ int	grammar_binop_and(t_list **next_tokens, int subshell_count)
 
 int	grammar_binop_or(t_list **next_tokens, int subshell_count)
 {
+	(void)subshell_count;
 	if (is_in(NG_NEXT_TO_B_OR, get_token(*next_tokens)))
 		return (NG);
 	if (get_token(*next_tokens)->type == TERMINATOR)
@@ -43,6 +45,7 @@ int	grammar_binop_or(t_list **next_tokens, int subshell_count)
 // pipe
 int	grammar_pipe(t_list **next_tokens, int subshell_count)
 {
+	(void)subshell_count;
 	if (is_in(NG_NEXT_TO_PIPE, get_token(*next_tokens)))
 		return (NG);
 	if (get_token(*next_tokens)->type == TERMINATOR)

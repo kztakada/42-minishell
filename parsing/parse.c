@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:57:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/28 20:49:56 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:52:17 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,62 @@ static char	*replase_first_ifs_with_null(char *str)
 	return (str);
 }
 
-static void	put_syntax_err(t_token *token)
+static void	put_quoted_content(t_list *token_list)
+{
+	t_token	*first_token;
+	t_token	*second_token;
+	t_token	*third_token;
+
+	if (token_list == NULL)
+		return ;
+	if (token_list->next == NULL)
+		return ;
+	if (token_list->next->next == NULL)
+		return ;
+	first_token = (t_token *)(token_list->content);
+	second_token = (t_token *)(token_list->next->content);
+	third_token = (t_token *)(token_list->next->next->content);
+	if (second_token->type == OPERAND_TEXT
+		&& first_token->type == third_token->type)
+	{
+		ft_putstr_fd(second_token->value, STDERR_FILENO);
+		ft_putstr_fd(third_token->value, STDERR_FILENO);
+	}
+}
+
+static void	put_quoted_syntax_err(t_list *token_list)
+{
+	t_token	*first_token;
+
+	if (token_list == NULL)
+		return ;
+	first_token = (t_token *)(token_list->content);
+	ft_putstr_fd(ERROR_SYNTAX, STDERR_FILENO);
+	ft_putstr_fd(first_token->value, STDERR_FILENO);
+	put_quoted_content(token_list);
+	ft_putstr_fd("'\n", STDERR_FILENO);
+}
+
+static void	put_syntax_err(t_list *token_list)
 {
 	char	*err_token;
+	t_token	*token;
 
+	token = (t_token *)(token_list->content);
 	if (!token)
 		return ;
+	if (token->type == QUOTE_DOUBLE || token->type == QUOTE_SINGLE)
+	{
+		put_quoted_syntax_err(token_list);
+		return ;
+	}
 	if (token->type == TERMINATOR)
 		err_token = "newline";
 	else if (token->type == OPERAND_TEXT)
 		err_token = replase_first_ifs_with_null(token->value);
 	else
 		err_token = token->value;
-	ft_putstr_fd("minishell: syntax error near unexpected token `",
-		STDERR_FILENO);
+	ft_putstr_fd(ERROR_SYNTAX, STDERR_FILENO);
 	ft_putstr_fd(err_token, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
 }
@@ -69,7 +111,7 @@ t_exit_status	parse(t_list *token_list, t_list **abs_tree)
 	if (token_list == NULL)
 		return (EXIT_S_FAILURE);
 	if (check_tokens_grammar(&token_list, &subshell_count) == NG)
-		return (put_syntax_err(token_list->content), EXIT_S_SYNTAX_ERROR);
+		return (put_syntax_err(token_list), EXIT_S_SYNTAX_ERROR);
 	*abs_tree = ft_lstnew(NULL);
 	if (abs_tree == NULL)
 		return (EXIT_S_FAILURE);

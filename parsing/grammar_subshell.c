@@ -6,13 +6,13 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:03:18 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/02 01:00:24 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:45:13 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
 #define NG_NEXT_TO_S_OPEN " ) && || |"
-#define NG_NEXT_TO_S_CLOSE " ( "
+#define NG_NEXT_TO_S_CLOSE " ( ' \""
 
 int	grammar_sub_open(t_list **next_tokens, int *subshell_count)
 {
