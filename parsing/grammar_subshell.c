@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:03:18 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/04 18:45:13 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/04 20:17:14 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	grammar_sub_close(t_list **next_tokens, int *subshell_count)
 	if (*subshell_count == 1 && get_token(*next_tokens)->type == OP_CLOSE)
 		return (NG);
 	(*subshell_count)--;
+	if (is_in(REDIRECT_OP, get_token(*next_tokens)))
+		return (grammar_sub_close_to_redirect(next_tokens));
 	return (OK);
 }
 

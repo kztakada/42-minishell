@@ -64,6 +64,9 @@ int				grammar_re_append(t_list **next_tokens, int subshell_count);
 int				grammar_re_input(t_list **next_tokens, int subshell_count);
 int				grammar_re_output(t_list **next_tokens, int subshell_count);
 
+// grammar_subshell__util.c
+int				grammar_sub_close_to_redirect(t_list **next_tokens);
+
 // grammar_subshell.c
 int				grammar_sub_open(t_list **next_tokens, int *subshell_count);
 int				grammar_sub_close(t_list **next_tokens, int *subshell_count);
