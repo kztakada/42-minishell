@@ -6,15 +6,16 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:05:51 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/28 18:55:40 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:20:34 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
 
-void	forward_token_list(t_list **current_token_list)
+t_list	**forward_token_list(t_list **current_token_list)
 {
 	*current_token_list = (*current_token_list)->next;
+	return (current_token_list);
 }
 
 t_token	*get_token(t_list *current_token)
