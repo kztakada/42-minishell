@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:04:44 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/06 01:04:32 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/07 00:34:16 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	check_strict_2nd_arg(t_list **next_tokens, t_bool *strict_mode)
 }
 
 int	grammar_operand_text(t_token *testing_token, t_list **next_tokens,
-		int subshell_count, t_bool *strict_mode)
+		int subshell_depth, t_bool *strict_mode)
 {
 	(void)testing_token;
 	if (*strict_mode == TRUE)
@@ -68,7 +68,7 @@ int	grammar_operand_text(t_token *testing_token, t_list **next_tokens,
 	}
 	if (is_in(NG_NEXT_TO_O_TEXT, get_token(*next_tokens)))
 		return (NG);
-	if (subshell_count == 0 && get_token(*next_tokens)->type == OP_CLOSE)
+	if (subshell_depth == 0 && get_token(*next_tokens)->type == OP_CLOSE)
 		return (NG);
 	return (OK);
 }

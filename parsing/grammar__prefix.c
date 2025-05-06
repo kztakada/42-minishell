@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:28:18 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/02 00:54:35 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/07 00:34:16 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_bool	can_use_as_first_token(t_token *test_token)
 	return (TRUE);
 }
 
-int	grammar_prefix(t_token *test_token, int subshell_count)
+int	grammar_prefix(t_token *test_token, int subshell_depth)
 {
 	if (test_token->id != 0)
 		return (OK);
@@ -28,7 +28,7 @@ int	grammar_prefix(t_token *test_token, int subshell_count)
 		return (FALSE);
 	if (can_use_as_first_token(test_token) == FALSE)
 		return (NG);
-	if (subshell_count == 0 && test_token->type == OP_CLOSE)
+	if (subshell_depth == 0 && test_token->type == OP_CLOSE)
 		return (NG);
 	return (OK);
 }

@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/06 00:56:19 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/07 00:34:16 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_list	**setup_check_config(t_token *test_token,
 // strict_mode:
 // bash only strictly checks the second argument
 // if the subshell is followed by a redirect.
-int	check_tokens_grammar(t_list **current_tokens, int *subshell_count)
+int	check_tokens_grammar(t_list **current_tokens, int *subshell_depth)
 {
 	static t_bool	strict_mode = FALSE;
 	t_token			*test_token;
@@ -45,17 +45,17 @@ int	check_tokens_grammar(t_list **current_tokens, int *subshell_count)
 
 	if (current_tokens == NULL || *current_tokens == NULL)
 		return (flush_config(&strict_mode), NG);
-	if (grammar_prefix(get_token(*current_tokens), *subshell_count) == NG)
+	if (grammar_prefix(get_token(*current_tokens), *subshell_depth) == NG)
 		return (flush_config(&strict_mode), NG);
 	test_token = get_token(*current_tokens);
 	next_tokens = setup_check_config(test_token, current_tokens, &strict_mode);
-	if (grammar_next_token(test_token, next_tokens, subshell_count,
+	if (grammar_next_token(test_token, next_tokens, subshell_depth,
 			&strict_mode) == NG)
 		return (flush_config(&strict_mode), NG);
 	if (get_token(*next_tokens)->type == TERMINATOR)
 	{
 		flush_config(&strict_mode);
-		return (grammar_terminator(next_tokens, subshell_count));
+		return (grammar_terminator(next_tokens, subshell_depth));
 	}
 	return (OK);
 }

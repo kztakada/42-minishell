@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:57:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/06 00:56:00 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/07 00:35:48 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ void	free_abs_node(void *target)
 
 t_exit_status	parse(t_list *token_list, t_list **abs_tree)
 {
-	int	subshell_count;
+	int	subshell_depth;
 	int	result;
 
-	subshell_count = 0;
+
 	if (token_list == NULL)
 		return (EXIT_S_FAILURE);
-	// printf("subshell_count: %d\n", subshell_count);
-	while (token_list)
+		subshell_depth = 0;
+		while (token_list)
 	{
-		result = check_tokens_grammar(&token_list, &subshell_count);
-		// printf("result: %d  subshell_count: %d\n", result, subshell_count);
+		result = check_tokens_grammar(&token_list, &subshell_depth);
+		// printf("result: %d  subshell_depth: %d\n", result, subshell_depth);
 		if (result == NG)
 			return (put_syntax_err(token_list), EXIT_S_SYNTAX_ERROR);
 		if (((t_token *)(token_list->content))->type == TERMINATOR)
