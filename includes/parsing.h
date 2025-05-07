@@ -4,6 +4,12 @@
 # include "../libraries/libft.h"
 # include "minishell.h"
 
+// grammar dictionary
+# define REDIRECT_OP " << >> < >"
+# define SUBSHELL_OP " ( )"
+# define BINARY_OP_PIPE " && || |"
+# define G_OPERATORS " && || | ' \""
+
 typedef enum e_grammar
 {
 	OK_G = 1,
@@ -16,80 +22,73 @@ typedef enum e_loop_status
 	CONTINUE = 1,
 }							t_loop_status;
 
-// grammar dictionary
-# define REDIRECT_OP " << >> < >"
-# define SUBSHELL_OP " ( )"
-# define BINARY_OP_PIPE " && || |"
-# define G_OPERATORS " && || | ' \""
-
-// struct						s_abs_node
-// {
-// 	t_abs_node_type			node_type;
-// 	t_token					*token; // token->typeで演算子を識別できます
-// 	t_list						*cmd_args; // 対象となるコマンドブロックのtoken_listを持ちます
-// 	char					**expanded_args;
-// node_typeがHEREDOCの場合、０番目にファイルディスクリプター番号がstringを入れておいて、パイプライン処理の時にその番号を使う
-// 	t_abs_node				*left;
-// 	t_abs_node				*right;
-// };
-
-// abs_node ****************************************************
-typedef struct s_abs_node	t_abs_node;
-// t_abs_node_type
-typedef enum e_abs_node_type
+// t_parsed_text **********************************************
+typedef enum e_parsed_text_type
 {
-	BINARY_OP,
-	PIPE,
-	COMMAND
-}							t_abs_node_type;
-
-// for redirection_list
-typedef enum e_re_operation_type
+	PLAIN_TEXT,
+	DOUBLE_QUOTED,
+	SINGLE_QUOTED,
+}							t_parsed_text_type;
+typedef struct s_parsed_text
+{
+	t_parsed_text_type		type;
+	char					*text;
+}							t_parsed_text;
+// t_redirection ***********************************************
+typedef enum e_redirect_op_type
 {
 	RE_OP_HEREDOC,
 	RE_OP_APPEND,
 	RE_OP_INPUT,
 	RE_OP_OUTPUT,
-}							t_re_operation_type;
-struct						s_redirection
+}							t_redirect_op_type;
+// filename is t_parsed_text list
+typedef struct s_redirection
 {
+	t_redirect_op_type		type;
 	int						fd;
-	t_re_operation_type		type;
-	char					*file_name;
+	t_list					*file_name;
 	char					*expanded_file_name;
-
 }							t_redirection;
-// t_abs_node
+// abs_node ****************************************************
+typedef struct s_abs_node	t_abs_node;
+typedef enum e_abs_node_type
+{
+	BINOP_AND,
+	BINOP_OR,
+	PIPE,
+	COMMAND
+}							t_abs_node_type;
+// command_args is list of t_parsed_text
+// redirection_list is list of t_redirection
 struct						s_abs_node
 {
-	t_abs_node_type			node_type;
-	t_token					*token;
-	t_list					*redirection_list;
-	char					*cmd_args;
+	t_abs_node_type			type;
+	t_list					*command_args;
 	char					**expanded_args;
+	t_list					*redirection_list;
 	t_abs_node				*left;
 	t_abs_node				*right;
 };
-
-// for parser handling ******************************************
+// for parse_token handling *************************************
 typedef enum s_parse_status
 {
 	LEFT,
 	B_OP_RIGHT,
 	PIPE_RIGHT,
 }							t_parse_status;
-
+// heredoc_list is list of t_redirection of heredoc only
 typedef struct s_parse_log
 {
 	int						subshell_depth;
 	t_parse_status			status;
 	t_list					*heredoc_list;
 }							t_parse_log;
-
+//**************************************************************/
 typedef int					(*t_gram_shell_term)(t_list **, int *);
 typedef int					(*t_gram_operator)(t_list **, int);
 typedef int					(*t_gram_redirect)(t_list **, int, t_bool *);
-//**************************************************************/
+
 // check_grammar.c
 int							check_tokens_grammar(t_list **token_list,
 								int *subshell_depth);
@@ -155,10 +154,13 @@ int							grammar_operand_text(t_token *test_token,
 								t_bool *strict_mode);
 
 // parse_heredoc.c
+t_exit_status				parse_heredoc(t_list *input_tokens,
+								t_list *next_tokens, t_abs_node **abs_tree,
+								t_parse_log *perse_log);
 void						call_heredoc(t_parse_log *perse_log);
 
 // parse_token.c
-int							parse_token(t_list *input_tokens,
+t_exit_status				parse_token(t_list *input_tokens,
 								t_list *next_tokens, t_abs_node **abs_tree,
 								t_parse_log *perse_log);
 

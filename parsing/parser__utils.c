@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 21:25:06 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 21:46:32 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/08 02:31:42 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	free_abs_node(t_abs_node *abs_node)
 {
 	if (abs_node)
 	{
-		free(abs_node->cmd_args);
+		free(abs_node->command_args);
 		free(abs_node->expanded_args);
-		free(abs_node->token);
+		free(abs_node->redirection_list);
 	}
 }
 

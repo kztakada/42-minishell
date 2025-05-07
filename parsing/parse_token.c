@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 04:36:53 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 19:50:09 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/08 02:30:02 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,23 @@ t_abs_node	*init_abs_node(void)
 	abs_node = (t_abs_node *)malloc(sizeof(t_abs_node));
 	if (abs_node == NULL)
 		return (NULL);
-	abs_node->cmd_args = NULL;
+	abs_node->type = COMMAND;
+	abs_node->command_args = NULL;
 	abs_node->expanded_args = NULL;
-	abs_node->token = NULL;
+	abs_node->redirection_list = NULL;
 	abs_node->left = NULL;
 	abs_node->right = NULL;
 	return (abs_node);
 }
 
-int	parse_token(t_list *input_tokens, t_list *next_tokens,
+t_exit_status	parse_token(t_list *input_tokens, t_list *next_tokens,
 		t_abs_node **abs_tree, t_parse_log *perse_log)
 {
-	t_list	*heredoc;
-
 	(void)next_tokens;
 	*abs_tree = init_abs_node();
 	if (abs_tree == NULL)
-		return (FAILURE);
+		return (EXIT_FAILURE);
 	if (get_token(input_tokens)->type == OP_HEREDOC)
-	{
-		heredoc = ft_lstnew(get_token(input_tokens));
-		if (heredoc == NULL)
-			return (FAILURE);
-		ft_lstadd_back(&(perse_log->heredoc_list), heredoc);
-	}
-	return (SUCCESS);
+		return (parse_heredoc(input_tokens, next_tokens, abs_tree, perse_log));
+	return (EXIT_S_SUCCESS);
 }
