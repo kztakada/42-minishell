@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/06 01:27:40 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:31:16 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ int	grammar_subshell_to_redirect(t_list **next_tokens, t_bool *strict_mode)
 		if (is_in(QUOTE_DICT, get_token(*next_tokens)))
 		{
 			if (check_strict_quoting(next_tokens, strict_mode) == STOP)
-				return (NG);
+				return (NG_G);
 		}
 		else
 		{
 			if (check_strict_text(next_tokens) == STOP)
-				return (OK);
+				return (OK_G);
 		}
 	}
 	*strict_mode = FALSE;
-	return (OK);
+	return (OK_G);
 }

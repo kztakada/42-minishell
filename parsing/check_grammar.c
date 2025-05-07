@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 00:34:16 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:28:59 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ int	check_tokens_grammar(t_list **current_tokens, int *subshell_depth)
 	t_list			**next_tokens;
 
 	if (current_tokens == NULL || *current_tokens == NULL)
-		return (flush_config(&strict_mode), NG);
-	if (grammar_prefix(get_token(*current_tokens), *subshell_depth) == NG)
-		return (flush_config(&strict_mode), NG);
+		return (flush_config(&strict_mode), NG_G);
+	if (grammar_prefix(get_token(*current_tokens), *subshell_depth) == NG_G)
+		return (flush_config(&strict_mode), NG_G);
 	test_token = get_token(*current_tokens);
 	next_tokens = setup_check_config(test_token, current_tokens, &strict_mode);
 	if (grammar_next_token(test_token, next_tokens, subshell_depth,
-			&strict_mode) == NG)
-		return (flush_config(&strict_mode), NG);
+			&strict_mode) == NG_G)
+		return (flush_config(&strict_mode), NG_G);
 	if (get_token(*next_tokens)->type == TERMINATOR)
 	{
 		flush_config(&strict_mode);
 		return (grammar_terminator(next_tokens, subshell_depth));
 	}
-	return (OK);
+	return (OK_G);
 }

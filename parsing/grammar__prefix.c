@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:28:18 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 00:34:16 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:29:22 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static t_bool	can_use_as_first_token(t_token *test_token)
 int	grammar_prefix(t_token *test_token, int subshell_depth)
 {
 	if (test_token->id != 0)
-		return (OK);
+		return (OK_G);
 	if (test_token == NULL)
 		return (FALSE);
 	if (can_use_as_first_token(test_token) == FALSE)
-		return (NG);
+		return (NG_G);
 	if (subshell_depth == 0 && test_token->type == OP_CLOSE)
-		return (NG);
-	return (OK);
+		return (NG_G);
+	return (OK_G);
 }

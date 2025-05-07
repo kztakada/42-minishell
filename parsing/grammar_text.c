@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:04:44 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 00:34:16 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:31:55 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ static int	check_strict_2nd_arg(t_list **next_tokens, t_bool *strict_mode)
 {
 	*strict_mode = FALSE;
 	if (could_remove_1st_arg(get_token(*next_tokens)) == TRUE)
-		return (NG);
+		return (NG_G);
 	forward_token_list(next_tokens);
 	if (is_in(QUOTE_DICT, get_token(*next_tokens)))
-		return (NG);
+		return (NG_G);
 	else
-		return (OK);
+		return (OK_G);
 }
 
 int	grammar_operand_text(t_token *testing_token, t_list **next_tokens,
@@ -63,12 +63,12 @@ int	grammar_operand_text(t_token *testing_token, t_list **next_tokens,
 	(void)testing_token;
 	if (*strict_mode == TRUE)
 	{
-		if (check_strict_2nd_arg(next_tokens, strict_mode) == NG)
-			return (NG);
+		if (check_strict_2nd_arg(next_tokens, strict_mode) == NG_G)
+			return (NG_G);
 	}
 	if (is_in(NG_NEXT_TO_O_TEXT, get_token(*next_tokens)))
-		return (NG);
+		return (NG_G);
 	if (subshell_depth == 0 && get_token(*next_tokens)->type == OP_CLOSE)
-		return (NG);
-	return (OK);
+		return (NG_G);
+	return (OK_G);
 }

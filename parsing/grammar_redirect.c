@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:01:34 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 00:34:16 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:31:04 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	grammar_heredoc(t_list **next_tokens, int subshell_depth,
 {
 	(void)subshell_depth;
 	if (is_in(NG_NEXT_TO_HEREDOC, get_token(*next_tokens)))
-		return (NG);
+		return (NG_G);
 	if (is_in(QUOTE_DICT, get_token(*next_tokens))
 		&& get_token((*next_tokens)->next)->type == TERMINATOR)
-		return (NG);
+		return (NG_G);
 	if (*strict_mode == TRUE)
 		return (grammar_subshell_to_redirect(next_tokens, strict_mode));
-	return (OK);
+	return (OK_G);
 }
 
 int	grammar_re_append(t_list **next_tokens, int subshell_depth,
@@ -37,13 +37,13 @@ int	grammar_re_append(t_list **next_tokens, int subshell_depth,
 {
 	(void)subshell_depth;
 	if (is_in(NG_NEXT_TO_R_APPEND, get_token(*next_tokens)))
-		return (NG);
+		return (NG_G);
 	if (is_in(QUOTE_DICT, get_token(*next_tokens))
 		&& get_token((*next_tokens)->next)->type == TERMINATOR)
-		return (NG);
+		return (NG_G);
 	if (*strict_mode == TRUE)
 		return (grammar_subshell_to_redirect(next_tokens, strict_mode));
-	return (OK);
+	return (OK_G);
 }
 
 int	grammar_re_input(t_list **next_tokens, int subshell_depth,
@@ -51,13 +51,13 @@ int	grammar_re_input(t_list **next_tokens, int subshell_depth,
 {
 	(void)subshell_depth;
 	if (is_in(NG_NEXT_TO_R_INPUT, get_token(*next_tokens)))
-		return (NG);
+		return (NG_G);
 	if (is_in(QUOTE_DICT, get_token(*next_tokens))
 		&& get_token((*next_tokens)->next)->type == TERMINATOR)
-		return (NG);
+		return (NG_G);
 	if (*strict_mode == TRUE)
 		return (grammar_subshell_to_redirect(next_tokens, strict_mode));
-	return (OK);
+	return (OK_G);
 }
 
 int	grammar_re_output(t_list **next_tokens, int subshell_depth,
@@ -65,11 +65,11 @@ int	grammar_re_output(t_list **next_tokens, int subshell_depth,
 {
 	(void)subshell_depth;
 	if (is_in(NG_NEXT_TO_R_OUTPUT, get_token(*next_tokens)))
-		return (NG);
+		return (NG_G);
 	if (is_in(QUOTE_DICT, get_token(*next_tokens))
 		&& get_token((*next_tokens)->next)->type == TERMINATOR)
-		return (NG);
+		return (NG_G);
 	if (*strict_mode == TRUE)
 		return (grammar_subshell_to_redirect(next_tokens, strict_mode));
-	return (OK);
+	return (OK_G);
 }

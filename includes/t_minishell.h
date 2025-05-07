@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/27 20:25:08 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:29:49 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,17 @@ typedef enum e_parse_err_type
 // コンテントリスト
 
 // 2分木構造
-typedef struct s_abs_node	t_abs_node;
-typedef enum e_abs_node_type
-{
-	BINARY_OP,
-	REDIRECT,
-	SUBSHELL,
-	COMMAND
-}							t_abs_node_type;
 
-typedef struct s_redirection
-{
-	char					*value;
-	char					**expanded_value;
-	int						here_doc;
-}							t_redirection;
 
-struct						s_abs_node
-{
-	t_abs_node_type			node_type;
-	t_token					*token;
-	t_list					*redirection_list;
-	char					*cmd_args;
-	char					**expanded_args;
-	t_abs_node				*left;
-	t_abs_node				*right;
-};
+
+// typedef struct s_redirection
+// {
+// 	char					*value;
+// 	char					**expanded_value;
+// 	int						here_doc;
+// }							t_redirection;
+
+
 
 typedef enum e_parse_error_code
 {

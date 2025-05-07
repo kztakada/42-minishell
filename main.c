@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/28 20:54:39 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:22:09 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ static t_bool	safe_add_history(char *input)
 static int	execute_command(char *input, t_list *env_lists)
 {
 	t_list					*token_list;
-	t_list					*abs_tree;
+	t_abs_node				*abs_tree;
 	static t_exit_status	exit_status = 0;
 
 	// TODO: lexerでエラーした時にexit_statusは何番を返せば良いか？
@@ -187,12 +187,12 @@ static int	execute_command(char *input, t_list *env_lists)
 		return (FAILURE);
 	// print_token_list(token_list); // テスト用
 	abs_tree = NULL;
-	exit_status = parse(token_list, &abs_tree); //未実装
+	exit_status = parser(token_list, &abs_tree);
 	ft_lstclear(&token_list, free_token);
 	if (exit_status != 0)
 		return (FAILURE);
-	ft_lstclear(&abs_tree, free_abs_node);
-	// exit_status = exec_(abs_tree, env_lists); //未実装
+	free_abs_tree(abs_tree);
+	// exit_status = exec_(abs_tree, env_lists, exit_status); //未実装
 	return (SUCCESS);
 }
 
