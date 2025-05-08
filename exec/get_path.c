@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:51:35 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/25 08:55:27 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/06 14:33:01 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ static t_path	create_t_path(char *cmd, int err_no, int err_msg, char *err_cause)
 static t_path	check_exec(char *path, char *cmd)
 {
 	if ((access(path, X_OK) == 0))
-	{
-		printf("break point\n");
 		return (create_t_path(path, ENO_SUCCESS, NONE, NULL));
-	}
 	else
 		return (create_t_path(NULL, ENO_CANT_EXEC, ERRMSG_PERM_DENIED, cmd));
 }
