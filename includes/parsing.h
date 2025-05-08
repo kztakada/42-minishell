@@ -10,6 +10,10 @@
 # define BINARY_OP_PIPE " && || |"
 # define G_OPERATORS " && || | ' \""
 
+// grammar dictionary for phrasing
+# define CMD_MEMBER_OP " << >> < > ' \""
+# define NOT_CMD_MEMBER_OP " && || | ( ) \n"
+
 typedef enum e_grammar
 {
 	OK_G = 1,
@@ -90,7 +94,7 @@ typedef int					(*t_gram_operator)(t_list **, int);
 typedef int					(*t_gram_redirect)(t_list **, int, t_bool *);
 
 // check_grammar.c
-int							check_tokens_grammar(t_list **token_list,
+int							check_tokens_phrase_grammar(t_list **current_tokens,
 								int *subshell_depth);
 
 // grammar__follower.c

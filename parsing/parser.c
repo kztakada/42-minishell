@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:57:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 22:13:34 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/08 20:56:13 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static t_exit_status	proc_persing(t_list *input_tokens, t_list **next_tokens,
 {
 	t_grammar	g_result;
 
-	g_result = check_tokens_grammar(next_tokens, &(parse_log->subshell_depth));
+	g_result = check_tokens_phrase_grammar(next_tokens,
+			&(parse_log->subshell_depth));
 	if (g_result == NG_G)
 	{
 		put_syntax_err(*next_tokens);

@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 20:28:59 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/08 20:55:03 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static t_list	**setup_check_config(t_token *test_token,
 // strict_mode:
 // bash only strictly checks the second argument
 // if the subshell is followed by a redirect.
-int	check_tokens_grammar(t_list **current_tokens, int *subshell_depth)
+static int	check_atomic_token_grammar(t_list **current_tokens,
+		int *subshell_depth)
 {
 	static t_bool	strict_mode = FALSE;
 	t_token			*test_token;
@@ -58,4 +59,40 @@ int	check_tokens_grammar(t_list **current_tokens, int *subshell_depth)
 		return (grammar_terminator(next_tokens, subshell_depth));
 	}
 	return (OK_G);
+}
+
+static t_loop_status	can_keep_phrasing_tokens(t_token *phrase_top_token,
+		t_token *next_token)
+{
+	if (next_token->type == TERMINATOR)
+		return (STOP);
+	if (is_in(CMD_MEMBER_OP, phrase_top_token)
+		|| phrase_top_token->type == OPERAND_TEXT)
+	{
+		if (is_in(NOT_CMD_MEMBER_OP, next_token))
+			return (STOP);
+	}
+	else
+		return (STOP);
+	return (CONTINUE);
+}
+
+// "phrase" is the smallest unit of an abstract syntax tree
+int	check_tokens_phrase_grammar(t_list **current_tokens, int *subshell_depth)
+{
+	t_grammar	g_result;
+	t_token		*phrase_top_token;
+
+	phrase_top_token = get_token(*current_tokens);
+	g_result = check_atomic_token_grammar(current_tokens, subshell_depth);
+	if (g_result == NG_G)
+		return (NG_G);
+	while (can_keep_phrasing_tokens(phrase_top_token,
+			get_token(*current_tokens)) == CONTINUE)
+	{
+		g_result = check_atomic_token_grammar(current_tokens, subshell_depth);
+		if (g_result == NG_G)
+			return (NG_G);
+	}
+	return (g_result);
 }
