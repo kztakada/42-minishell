@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 18:29:49 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:10:37 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,44 +21,5 @@
 
 # define FAILURE -1
 # define SUCCESS 0
-
-// for parse
-
-typedef enum e_parse_err_type
-{
-	E_MEM = 1,
-	E_SYNTAX
-}							t_parse_err_type;
-
-// コンテントリスト
-
-// 2分木構造
-
-
-
-// typedef struct s_redirection
-// {
-// 	char					*value;
-// 	char					**expanded_value;
-// 	int						here_doc;
-// }							t_redirection;
-
-
-
-typedef enum e_parse_error_code
-{
-	PARSE_NO_ERROR = 0,
-	PARSE_UNEXPECTED_TOKEN,
-	PARSE_UNEXPECTED_EOF,
-	PARSE_UNMATCHED_PARENTHESIS,
-	PARSE_INVALID_SYNTAX,
-}							t_parse_error_code;
-
-typedef struct s_parse_error
-{
-	t_parse_error_code		code;
-	int						line;
-	int						column;
-}							t_parse_error;
 
 #endif
