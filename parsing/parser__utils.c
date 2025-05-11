@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 21:25:06 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/08 02:31:42 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/11 22:50:05 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,21 @@
 
 static void	free_abs_node(t_abs_node *abs_node)
 {
+	int	i;
+
 	if (abs_node)
 	{
-		free(abs_node->command_args);
-		free(abs_node->expanded_args);
-		free(abs_node->redirection_list);
+		ft_lstclear(&abs_node->command_args, free_parsed_text);
+		ft_lstclear(&abs_node->redirection_list, free_redirection);
+		if (abs_node->expanded_args != NULL)
+		{
+			i = 0;
+			while (abs_node->expanded_args[i] != NULL)
+			{
+				free(abs_node->expanded_args[i]);
+				i++;
+			}
+		}
 	}
 }
 
