@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/08 20:55:03 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/11 23:00:42 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static t_loop_status	can_keep_phrasing_tokens(t_token *phrase_top_token,
 }
 
 // "phrase" is the smallest unit of an abstract syntax tree
-int	check_tokens_phrase_grammar(t_list **current_tokens, int *subshell_depth)
+int	check_one_phrase_grammar(t_list **current_tokens, int *subshell_depth)
 {
 	t_grammar	g_result;
 	t_token		*phrase_top_token;

@@ -83,6 +83,7 @@ typedef enum e_abs_node_type
 // redirection_list is list of t_redirection
 struct						s_abs_node
 {
+	t_bool					is_subshell;
 	t_abs_node_type			type;
 	t_list					*command_args;
 	char					**expanded_args;
@@ -98,7 +99,7 @@ typedef enum s_node_pos
 	PIPE_RIGHT,
 }							t_node_pos;
 // heredoc_list is list of t_redirection of heredoc only
-typedef struct s_parse_log
+typedef struct s_parsing_state
 {
 	int						subshell_depth;
 	t_abs_node				*tree_top_node;
@@ -112,7 +113,7 @@ typedef int					(*t_gram_operator)(t_list **, int);
 typedef int					(*t_gram_redirect)(t_list **, int, t_bool *);
 
 // check_grammar.c
-int							check_tokens_phrase_grammar(t_list **current_tokens,
+int							check_one_phrase_grammar(t_list **current_tokens,
 								int *subshell_depth);
 
 // grammar__follower.c
@@ -184,17 +185,12 @@ void						no_del(void *target);
 t_exit_status				parser(t_list *input_tokens, t_abs_node **abs_tree);
 t_parsing					parse_subshell_input(t_list **input_tokens,
 								t_abs_node **abs_tree,
-								t_parsing_state *parse_log);
+								t_parsing_state *parsing_state);
 
 // put_syntax_err.c
 void						put_syntax_err(t_list *token_list);
 
-// treeing__add_content_to_working_abs_node.c
-t_binary_result				add_content_to_working_abs_node(t_list *tokens_begin,
-								t_list *tokens_end,
-								t_parsing_state *parsing_state);
-
-// treeing__append_to_parsed_texts.c
+// treeing__tokens_to_abs_tree__add_command__utils.c
 t_binary_result				append_quoted_to_parsed_texts(t_list **current_tokens,
 								t_list **parsed_texts);
 t_binary_result				append_plain_text_to_parsed_texts(t_list **current_tokens,
@@ -204,8 +200,13 @@ t_binary_result				append_only1st_text_to_parsed_texts(t_list **current_tokens,
 t_binary_result				append_chaintexts_to_file_name(t_list **current_tokens,
 								t_token *end_token, t_list **file_name);
 
-// treeing__convert_into_abs_tree.c
-t_binary_result				convert_into_abs_tree(t_list *tokens_begin,
+// treeing__tokens_to_abs_tree__add_command.c
+t_binary_result				add_command_to_working_abs_node(t_list *tokens_begin,
+								t_list *tokens_end,
+								t_parsing_state *parsing_state);
+
+// treeing__tokens_to_abs_tree.c
+t_binary_result				tokens_to_abs_tree(t_list *tokens_begin,
 								t_list *tokens_end, t_abs_node **abs_tree,
 								t_parsing_state *parsing_state);
 t_abs_node					*init_abs_node(t_parsing_state *parsing_state);

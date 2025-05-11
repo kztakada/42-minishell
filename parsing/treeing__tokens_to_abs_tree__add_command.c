@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   treeing__add_content_to_working_abs_node.c         :+:      :+:    :+:   */
+/*   treeing__tokens_to_abs_tree__add_command.c         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 01:44:53 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/11 20:42:28 by katakada         ###   ########.fr       */
+/*   Created: 2025/05/11 22:28:30 by katakada          #+#    #+#             */
+/*   Updated: 2025/05/11 22:28:30 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static t_binary_result	add_command_args_to_working_abs_node(t_list **current_tok
 	return (SUCCESS_BIN_R);
 }
 
-t_binary_result	add_content_to_working_abs_node(t_list *tokens_begin,
+t_binary_result	add_command_to_working_abs_node(t_list *tokens_begin,
 		t_list *tokens_end, t_parsing_state *parsing_state)
 {
 	t_list			*current_tokens;

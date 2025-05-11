@@ -6,54 +6,54 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:57:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/11 21:08:51 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/11 23:04:40 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
 
-static void	call_heredoc(t_parsing_state *parse_log)
+static void	call_heredoc(t_parsing_state *parsing_state)
 {
 	t_list	*current;
 
-	current = parse_log->heredoc_list;
+	current = parsing_state->heredoc_list;
 	while (current)
 	{
 		ft_putstr_fd("heredoc exec\n", STDOUT_FILENO);
 		current = current->next;
 	}
-	ft_lstclear(&(parse_log->heredoc_list), no_del);
+	ft_lstclear(&(parsing_state->heredoc_list), no_del);
 }
 
 static t_parsing	parse_one_phrase(t_list *input_tokens, t_list **phrase_end,
-		t_abs_node **abs_tree, t_parsing_state *parse_log)
+		t_abs_node **abs_tree, t_parsing_state *parsing_state)
 {
 	t_grammar		g_result;
-	t_binary_result	convvert_result;
+	t_binary_result	treeing_result;
 	t_list			*phrasing_tokens;
 
 	if (input_tokens == NULL)
 		return (FAILURE_P);
 	phrasing_tokens = input_tokens;
-	g_result = check_tokens_phrase_grammar(&phrasing_tokens,
-			&(parse_log->subshell_depth));
+	g_result = check_one_phrase_grammar(&phrasing_tokens,
+			&(parsing_state->subshell_depth));
 	if (g_result == NG_G)
 	{
 		put_syntax_err(phrasing_tokens);
-		parse_log->subshell_depth = 0;
+		parsing_state->subshell_depth = 0;
 		return (SYNTAX_ERROR_P);
 	}
 	*phrase_end = phrasing_tokens;
-	convvert_result = convert_into_abs_tree(input_tokens, *phrase_end, abs_tree,
-			parse_log);
-	if (convvert_result == SUCCESS_BIN_R)
+	treeing_result = tokens_to_abs_tree(input_tokens, *phrase_end, abs_tree,
+			parsing_state);
+	if (treeing_result == SUCCESS_BIN_R)
 		return (SUCCESS_P);
 	else
 		return (FAILURE_P);
 }
 
 t_parsing	parse_subshell_input(t_list **input_tokens, t_abs_node **abs_tree,
-		t_parsing_state *parse_log)
+		t_parsing_state *parsing_state)
 {
 	t_list		*phrase_end;
 	t_parsing	p_result;
@@ -65,20 +65,20 @@ t_parsing	parse_subshell_input(t_list **input_tokens, t_abs_node **abs_tree,
 		if (get_token(*input_tokens)->type == TERMINATOR)
 			return (SYNTAX_ERROR_P);
 		p_result = parse_one_phrase(*input_tokens, &phrase_end, abs_tree,
-				parse_log);
+				parsing_state);
 		if (p_result != SUCCESS_P)
 			return (p_result);
 		*input_tokens = phrase_end;
 	}
 	p_result = parse_one_phrase(*input_tokens, &phrase_end, abs_tree,
-			parse_log);
+			parsing_state);
 	if (p_result == SUCCESS_P)
 		*input_tokens = phrase_end;
 	return (p_result);
 }
 
 static t_parsing	parse_input(t_list *input_tokens, t_abs_node **abs_tree,
-		t_parsing_state *parse_log)
+		t_parsing_state *parsing_state)
 {
 	t_list		*phrase_end;
 	t_parsing	p_result;
@@ -88,16 +88,17 @@ static t_parsing	parse_input(t_list *input_tokens, t_abs_node **abs_tree,
 	while (get_token(input_tokens)->type != TERMINATOR && p_result == SUCCESS_P)
 	{
 		p_result = parse_one_phrase(input_tokens, &phrase_end, abs_tree,
-				parse_log);
+				parsing_state);
 		if (p_result == FAILURE_P)
 			break ;
-		if (parse_log->heredoc_list != NULL && parse_log->subshell_depth == 0)
-			call_heredoc(parse_log);
+		if (parsing_state->heredoc_list != NULL
+			&& parsing_state->subshell_depth == 0)
+			call_heredoc(parsing_state);
 		if (p_result == SUCCESS_P)
 			input_tokens = phrase_end;
 	}
-	if (parse_log->heredoc_list != NULL)
-		ft_lstclear(&(parse_log->heredoc_list), no_del);
+	if (parsing_state->heredoc_list != NULL)
+		ft_lstclear(&(parsing_state->heredoc_list), no_del);
 	return (p_result);
 }
 
@@ -178,13 +179,11 @@ t_exit_status	parser(t_list *input_tokens, t_abs_node **abs_tree)
 	if (p_result == FAILURE_P)
 	{
 		free_abs_tree(*abs_tree);
-		*abs_tree = NULL;
 		return (EXIT_S_FAILURE);
 	}
 	else if (p_result == SYNTAX_ERROR_P)
 	{
 		free_abs_tree(*abs_tree);
-		*abs_tree = NULL;
 		return (EXIT_S_SYNTAX_ERROR);
 	}
 	else
