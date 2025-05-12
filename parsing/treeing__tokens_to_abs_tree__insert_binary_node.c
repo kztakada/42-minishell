@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:41:22 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/12 20:19:53 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:39:27 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,22 @@ t_binary_result	insert_binary_node_to_abs_tree(t_list *tokens_begin,
 	if (abs_tree && abs_tree == parsing_state->tree_top_node)
 		*abs_tree = new_node;
 	*(parsing_state->tree_top_node) = new_node;
+	return (SUCCESS_BIN_R);
+}
+
+t_binary_result	insert_pipe_node_to_abs_tree(t_abs_node **abs_tree,
+		t_parsing_state *parsing_state)
+{
+	t_abs_node	*new_node;
+
+	new_node = init_abs_node(PIPE);
+	if (new_node == NULL)
+		return (FAILURE_BIN_R);
+	new_node->left = get_working_node(parsing_state);
+	*(parsing_state->working_node) = new_node;
+	parsing_state->working_node = &(new_node->right);
+	parsing_state->working_node_pos = PIPE_RIGHT;
+	if (abs_tree && abs_tree == parsing_state->working_node)
+		*abs_tree = new_node;
 	return (SUCCESS_BIN_R);
 }

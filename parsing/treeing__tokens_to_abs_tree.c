@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 22:24:21 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/12 20:26:43 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:39:52 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ static t_bool	is_command_abs_node_content(t_list *tokens)
 	return (FALSE);
 }
 
-// static t_bool	is_pipe(t_list *tokens)
-// {
-// 	if (get_token(tokens)->type == OP_PIPE)
-// 		return (TRUE);
-// 	return (FALSE);
-// }
+static t_bool	is_pipe(t_list *tokens)
+{
+	if (get_token(tokens)->type == OP_PIPE)
+		return (TRUE);
+	return (FALSE);
+}
 
 static void	init_parsing_state_only_1st_time(t_abs_node **abs_tree,
 		t_parsing_state *parsing_state)
@@ -71,9 +71,8 @@ t_binary_result	tokens_to_abs_tree(t_list *tokens_begin, t_list *tokens_end,
 	else if (is_in(BIN_OP, get_token(tokens_begin)))
 		return (insert_binary_node_to_abs_tree(tokens_begin, abs_tree,
 				parsing_state));
-	// else if (is_pipe(tokens_begin))
-	// 	return (insert_pipe_node_to_abs_tree(tokens_begin, abs_tree,
-	// 			parsing_state));
+	else if (is_pipe(tokens_begin))
+		return (insert_pipe_node_to_abs_tree(abs_tree, parsing_state));
 	// else if (is_in(SUBSHELL_OP, get_token(tokens_begin)))
 	// 	return (insert_subshell_node_to_abs_tree(tokens_begin, abs_tree,
 	// 			parsing_state));
