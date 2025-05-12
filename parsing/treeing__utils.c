@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:18:10 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/12 19:25:11 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:00:33 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,11 @@ t_abs_node	*get_working_node(t_parsing_state *parsing_state)
 	if (parsing_state->working_node == NULL)
 		return (NULL);
 	return (*(parsing_state->working_node));
+}
+
+t_abs_node	*get_tree_top_node(t_parsing_state *parsing_state)
+{
+	if (parsing_state->tree_top_node == NULL)
+		return (NULL);
+	return (*(parsing_state->tree_top_node));
 }

@@ -222,5 +222,6 @@ t_binary_result				add_back_new_list(void *content,
 void						free_parsed_text(void *content);
 void						free_redirection(void *content);
 t_abs_node					*get_working_node(t_parsing_state *parsing_state);
+t_abs_node					*get_tree_top_node(t_parsing_state *parsing_state);
 
 #endif
