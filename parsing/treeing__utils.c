@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:18:10 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/11 20:43:02 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:25:11 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,18 @@ void	free_redirection(void *content)
 	if (redirection->file_name != NULL)
 		ft_lstclear(&(redirection->file_name), free_parsed_text);
 	free(redirection);
+}
+
+// t_abs_node	*get_abs_node(t_abs_node **abs_tree)
+// {
+// 	if (*abs_tree == NULL)
+// 		return (NULL);
+// 	return (*abs_tree);
+// }
+
+t_abs_node	*get_working_node(t_parsing_state *parsing_state)
+{
+	if (parsing_state->working_node == NULL)
+		return (NULL);
+	return (*(parsing_state->working_node));
 }

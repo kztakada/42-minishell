@@ -102,8 +102,8 @@ typedef enum s_node_pos
 typedef struct s_parsing_state
 {
 	int						subshell_depth;
-	t_abs_node				*tree_top_node;
-	t_abs_node				*working_node;
+	t_abs_node				**tree_top_node;
+	t_abs_node				**working_node;
 	t_node_pos				working_node_pos;
 	t_list					*heredoc_list;
 }							t_parsing_state;
@@ -205,17 +205,22 @@ t_binary_result				add_command_to_working_abs_node(t_list *tokens_begin,
 								t_list *tokens_end,
 								t_parsing_state *parsing_state);
 
+// treeing__tokens_to_abs_tree__insert_binary_node.c
+t_binary_result				insert_binary_node_to_abs_tree(t_list *tokens_begin,
+								t_abs_node **abs_tree,
+								t_parsing_state *parsing_state);
+
 // treeing__tokens_to_abs_tree.c
 t_binary_result				tokens_to_abs_tree(t_list *tokens_begin,
 								t_list *tokens_end, t_abs_node **abs_tree,
 								t_parsing_state *parsing_state);
-t_abs_node					*init_abs_node(t_abs_node_type abs_node_type,
-								t_parsing_state *parsing_state);
+t_abs_node					*init_abs_node(t_abs_node_type abs_node_type);
 
 // treeing__utils.c
 t_binary_result				add_back_new_list(void *content,
 								t_list **existing_list, void (*del)(void *));
 void						free_parsed_text(void *content);
 void						free_redirection(void *content);
+t_abs_node					*get_working_node(t_parsing_state *parsing_state);
 
 #endif

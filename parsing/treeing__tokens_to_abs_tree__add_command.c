@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 22:28:30 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/11 22:28:30 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:41:08 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static t_binary_result	add_redirection_to_working_abs_node(t_list **current_toke
 			redirection);
 	if (result == SUCCESS_BIN_R)
 		result = add_back_new_list((void *)redirection,
-				&parsing_state->working_node->redirection_list,
+				&(get_working_node(parsing_state)->redirection_list),
 				free_redirection);
 	if (redirection->type == RE_OP_HEREDOC)
 		result = add_back_new_list((void *)redirection,
@@ -98,13 +98,13 @@ static t_binary_result	add_command_args_to_working_abs_node(t_list **current_tok
 			break ;
 		else if (is_in(QUOTE_DICT, get_token(*current_tokens)))
 			result = append_quoted_to_parsed_texts(current_tokens,
-					&(parsing_state->working_node->command_args));
+					&(get_working_node(parsing_state)->command_args));
 		else
 			result = append_plain_text_to_parsed_texts(current_tokens,
-					&(parsing_state->working_node->command_args));
+					&(get_working_node(parsing_state)->command_args));
 	}
 	if (result == FAILURE_BIN_R)
-		return (ft_lstclear(&parsing_state->working_node->command_args,
+		return (ft_lstclear(&(*(parsing_state->working_node))->command_args,
 				free_parsed_text), FAILURE_BIN_R);
 	return (SUCCESS_BIN_R);
 }
@@ -116,6 +116,10 @@ t_binary_result	add_command_to_working_abs_node(t_list *tokens_begin,
 	t_token			*end_token;
 	t_binary_result	parse_result;
 
+	if (get_working_node(parsing_state) == NULL)
+		*(parsing_state->working_node) = init_abs_node(COMMAND);
+	if (get_working_node(parsing_state) == NULL)
+		return (FAILURE_BIN_R);
 	current_tokens = tokens_begin;
 	end_token = get_token(tokens_end);
 	parse_result = SUCCESS_BIN_R;
