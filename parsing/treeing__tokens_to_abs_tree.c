@@ -6,13 +6,14 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 22:24:21 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/11 22:55:00 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:39:34 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
 
-t_abs_node	*init_abs_node(t_parsing_state *parsing_state)
+t_abs_node	*init_abs_node(t_abs_node_type abs_node_type,
+		t_parsing_state *parsing_state)
 {
 	t_abs_node	*abs_node;
 
@@ -20,7 +21,7 @@ t_abs_node	*init_abs_node(t_parsing_state *parsing_state)
 	if (abs_node == NULL)
 		return (NULL);
 	abs_node->is_subshell = FALSE;
-	abs_node->type = COMMAND;
+	abs_node->type = abs_node_type;
 	abs_node->command_args = NULL;
 	abs_node->expanded_args = NULL;
 	abs_node->redirection_list = NULL;
@@ -49,18 +50,25 @@ static t_bool	is_command_abs_node_content(t_list *tokens)
 // 	return (FALSE);
 // }
 
+static t_abs_node	*init_abs_node_only_1st_time(t_abs_node **abs_tree,
+		t_parsing_state *parsing_state)
+{
+	if (*abs_tree == NULL)
+		*abs_tree = init_abs_node(COMMAND, parsing_state);
+	return (*abs_tree);
+}
+
 t_binary_result	tokens_to_abs_tree(t_list *tokens_begin, t_list *tokens_end,
 		t_abs_node **abs_tree, t_parsing_state *parsing_state)
 {
 	if (get_token(tokens_begin)->type == TERMINATOR)
 		return (SUCCESS_BIN_R);
-	if (*abs_tree == NULL)
-		*abs_tree = init_abs_node(parsing_state);
+	*abs_tree = init_abs_node_only_1st_time(abs_tree, parsing_state);
 	if (abs_tree == NULL)
 		return (FAILURE_BIN_R);
-	if (is_command_abs_node_content(tokens_begin))
-		return (add_command_to_working_abs_node(tokens_begin, tokens_end,
-				parsing_state));
+	// if (is_command_abs_node_content(tokens_begin))
+	// 	return (add_command_to_working_abs_node(tokens_begin, tokens_end,
+	// 			parsing_state));
 	// else if (is_in(BIN_OP, get_token(tokens_begin)))
 	// 	return (insert_binary_node_to_abs_tree(tokens_begin, abs_tree,
 	// 			parsing_state));

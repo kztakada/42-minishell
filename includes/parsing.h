@@ -209,7 +209,8 @@ t_binary_result				add_command_to_working_abs_node(t_list *tokens_begin,
 t_binary_result				tokens_to_abs_tree(t_list *tokens_begin,
 								t_list *tokens_end, t_abs_node **abs_tree,
 								t_parsing_state *parsing_state);
-t_abs_node					*init_abs_node(t_parsing_state *parsing_state);
+t_abs_node					*init_abs_node(t_abs_node_type abs_node_type,
+								t_parsing_state *parsing_state);
 
 // treeing__utils.c
 t_binary_result				add_back_new_list(void *content,
