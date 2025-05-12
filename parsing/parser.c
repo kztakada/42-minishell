@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:57:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/11 23:04:40 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/13 00:37:42 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ static void	call_heredoc(t_parsing_state *parsing_state)
 	ft_lstclear(&(parsing_state->heredoc_list), no_del);
 }
 
-static t_parsing	parse_one_phrase(t_list *input_tokens, t_list **phrase_end,
+// one sequence means one of the following
+// one subshell block | one command node | one binary node | one pipe node
+t_parsing	parse_one_sequence(t_list *input_tokens, t_list **sequence_end,
 		t_abs_node **abs_tree, t_parsing_state *parsing_state)
 {
 	t_grammar		g_result;
@@ -43,8 +45,11 @@ static t_parsing	parse_one_phrase(t_list *input_tokens, t_list **phrase_end,
 		parsing_state->subshell_depth = 0;
 		return (SYNTAX_ERROR_P);
 	}
-	*phrase_end = phrasing_tokens;
-	treeing_result = tokens_to_abs_tree(input_tokens, *phrase_end, abs_tree,
+	*sequence_end = phrasing_tokens;
+	if (is_in(SUBSHELL_OP, get_token(input_tokens)))
+		return (subshell_tokens_to_abs_tree(input_tokens, sequence_end,
+				abs_tree, parsing_state));
+	treeing_result = tokens_to_abs_tree(input_tokens, *sequence_end, abs_tree,
 			parsing_state);
 	if (treeing_result == SUCCESS_BIN_R)
 		return (SUCCESS_P);
@@ -52,42 +57,17 @@ static t_parsing	parse_one_phrase(t_list *input_tokens, t_list **phrase_end,
 		return (FAILURE_P);
 }
 
-t_parsing	parse_subshell_input(t_list **input_tokens, t_abs_node **abs_tree,
-		t_parsing_state *parsing_state)
-{
-	t_list		*phrase_end;
-	t_parsing	p_result;
-
-	p_result = SUCCESS_P;
-	phrase_end = NULL;
-	while (get_token(*input_tokens)->type != OP_CLOSE && p_result == SUCCESS_P)
-	{
-		if (get_token(*input_tokens)->type == TERMINATOR)
-			return (SYNTAX_ERROR_P);
-		p_result = parse_one_phrase(*input_tokens, &phrase_end, abs_tree,
-				parsing_state);
-		if (p_result != SUCCESS_P)
-			return (p_result);
-		*input_tokens = phrase_end;
-	}
-	p_result = parse_one_phrase(*input_tokens, &phrase_end, abs_tree,
-			parsing_state);
-	if (p_result == SUCCESS_P)
-		*input_tokens = phrase_end;
-	return (p_result);
-}
-
 static t_parsing	parse_input(t_list *input_tokens, t_abs_node **abs_tree,
 		t_parsing_state *parsing_state)
 {
-	t_list		*phrase_end;
+	t_list		*sequence_end;
 	t_parsing	p_result;
 
 	p_result = SUCCESS_P;
-	phrase_end = NULL;
+	sequence_end = NULL;
 	while (get_token(input_tokens)->type != TERMINATOR && p_result == SUCCESS_P)
 	{
-		p_result = parse_one_phrase(input_tokens, &phrase_end, abs_tree,
+		p_result = parse_one_sequence(input_tokens, &sequence_end, abs_tree,
 				parsing_state);
 		if (p_result == FAILURE_P)
 			break ;
@@ -95,7 +75,7 @@ static t_parsing	parse_input(t_list *input_tokens, t_abs_node **abs_tree,
 			&& parsing_state->subshell_depth == 0)
 			call_heredoc(parsing_state);
 		if (p_result == SUCCESS_P)
-			input_tokens = phrase_end;
+			input_tokens = sequence_end;
 	}
 	if (parsing_state->heredoc_list != NULL)
 		ft_lstclear(&(parsing_state->heredoc_list), no_del);

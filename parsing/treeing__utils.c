@@ -6,11 +6,28 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:18:10 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/12 20:00:33 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/13 00:28:52 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
+
+t_abs_node	*init_abs_node(t_abs_node_type abs_node_type)
+{
+	t_abs_node	*abs_node;
+
+	abs_node = (t_abs_node *)malloc(sizeof(t_abs_node));
+	if (abs_node == NULL)
+		return (NULL);
+	abs_node->is_subshell = FALSE;
+	abs_node->type = abs_node_type;
+	abs_node->command_args = NULL;
+	abs_node->expanded_args = NULL;
+	abs_node->redirection_list = NULL;
+	abs_node->left = NULL;
+	abs_node->right = NULL;
+	return (abs_node);
+}
 
 t_binary_result	add_back_new_list(void *content, t_list **existing_list,
 		void (*del)(void *))
@@ -51,25 +68,4 @@ void	free_redirection(void *content)
 	if (redirection->file_name != NULL)
 		ft_lstclear(&(redirection->file_name), free_parsed_text);
 	free(redirection);
-}
-
-// t_abs_node	*get_abs_node(t_abs_node **abs_tree)
-// {
-// 	if (*abs_tree == NULL)
-// 		return (NULL);
-// 	return (*abs_tree);
-// }
-
-t_abs_node	*get_working_node(t_parsing_state *parsing_state)
-{
-	if (parsing_state->working_node == NULL)
-		return (NULL);
-	return (*(parsing_state->working_node));
-}
-
-t_abs_node	*get_tree_top_node(t_parsing_state *parsing_state)
-{
-	if (parsing_state->tree_top_node == NULL)
-		return (NULL);
-	return (*(parsing_state->tree_top_node));
 }

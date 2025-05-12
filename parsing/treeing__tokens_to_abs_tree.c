@@ -6,43 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 22:24:21 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/12 20:39:52 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/13 00:36:20 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_minishell.h"
-
-t_abs_node	*init_abs_node(t_abs_node_type abs_node_type)
-{
-	t_abs_node	*abs_node;
-
-	abs_node = (t_abs_node *)malloc(sizeof(t_abs_node));
-	if (abs_node == NULL)
-		return (NULL);
-	abs_node->is_subshell = FALSE;
-	abs_node->type = abs_node_type;
-	abs_node->command_args = NULL;
-	abs_node->expanded_args = NULL;
-	abs_node->redirection_list = NULL;
-	abs_node->left = NULL;
-	abs_node->right = NULL;
-	return (abs_node);
-}
-
-static t_bool	is_command_abs_node_content(t_list *tokens)
-{
-	if (is_in(CMD_MEMBER_OP, get_token(tokens))
-		|| get_token(tokens)->type == OPERAND_TEXT)
-		return (TRUE);
-	return (FALSE);
-}
-
-static t_bool	is_pipe(t_list *tokens)
-{
-	if (get_token(tokens)->type == OP_PIPE)
-		return (TRUE);
-	return (FALSE);
-}
 
 static void	init_parsing_state_only_1st_time(t_abs_node **abs_tree,
 		t_parsing_state *parsing_state)
@@ -73,10 +41,53 @@ t_binary_result	tokens_to_abs_tree(t_list *tokens_begin, t_list *tokens_end,
 				parsing_state));
 	else if (is_pipe(tokens_begin))
 		return (insert_pipe_node_to_abs_tree(abs_tree, parsing_state));
-	// else if (is_in(SUBSHELL_OP, get_token(tokens_begin)))
-	// 	return (insert_subshell_node_to_abs_tree(tokens_begin, abs_tree,
-	// 			parsing_state));
-	// else
-	// 	return (FAILURE_BIN_R);
+	else
+		return (FAILURE_BIN_R);
 	return (SUCCESS_BIN_R);
+}
+
+static t_parsing	parse_subshell_input(t_list **input_tokens,
+		t_abs_node **abs_tree, t_parsing_state *parsing_state)
+{
+	t_list		*sequence_end;
+	t_parsing	p_result;
+
+	p_result = SUCCESS_P;
+	sequence_end = NULL;
+	while (get_token(*input_tokens)->type != OP_CLOSE && p_result == SUCCESS_P)
+	{
+		if (get_token(*input_tokens)->type == TERMINATOR)
+			return (SYNTAX_ERROR_P);
+		p_result = parse_one_sequence(*input_tokens, &sequence_end, abs_tree,
+				parsing_state);
+		if (p_result != SUCCESS_P)
+			return (p_result);
+		*input_tokens = sequence_end;
+	}
+	p_result = parse_one_sequence(*input_tokens, &sequence_end, abs_tree,
+			parsing_state);
+	if (p_result == SUCCESS_P)
+		*input_tokens = sequence_end;
+	return (p_result);
+}
+
+t_parsing	subshell_tokens_to_abs_tree(t_list *tokens_begin,
+		t_list **tokens_end, t_abs_node **abs_tree,
+		t_parsing_state *parsing_state)
+{
+	t_abs_node	**tmp_top_node;
+	t_parsing	p_result;
+
+	if (get_token(tokens_begin)->type == OP_CLOSE)
+		return (SUCCESS_P);
+	if (get_token(tokens_begin)->type != OP_OPEN)
+		return (FAILURE_P);
+	init_parsing_state_only_1st_time(abs_tree, parsing_state);
+	tmp_top_node = parsing_state->tree_top_node;
+	parsing_state->tree_top_node = parsing_state->working_node;
+	p_result = parse_subshell_input(tokens_end, abs_tree, parsing_state);
+	if (p_result == SUCCESS_P && get_tree_top_node(parsing_state))
+		get_tree_top_node(parsing_state)->is_subshell = TRUE;
+	parsing_state->tree_top_node = tmp_top_node;
+	return (p_result);
 }

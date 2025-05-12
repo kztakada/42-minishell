@@ -183,8 +183,8 @@ void						no_del(void *target);
 
 // parser.c
 t_exit_status				parser(t_list *input_tokens, t_abs_node **abs_tree);
-t_parsing					parse_subshell_input(t_list **input_tokens,
-								t_abs_node **abs_tree,
+t_parsing					parse_one_sequence(t_list *input_tokens,
+								t_list **sequence_end, t_abs_node **abs_tree,
 								t_parsing_state *parsing_state);
 
 // put_syntax_err.c
@@ -205,25 +205,32 @@ t_binary_result				add_command_to_working_abs_node(t_list *tokens_begin,
 								t_list *tokens_end,
 								t_parsing_state *parsing_state);
 
-// treeing__tokens_to_abs_tree__insert_binary_node.c
+// treeing__tokens_to_abs_tree__insert_node.c
 t_binary_result				insert_binary_node_to_abs_tree(t_list *tokens_begin,
 								t_abs_node **abs_tree,
 								t_parsing_state *parsing_state);
 t_binary_result				insert_pipe_node_to_abs_tree(t_abs_node **abs_tree,
 								t_parsing_state *parsing_state);
 
+// treeing__tokens_to_abs_tree__utils.c
+t_abs_node					*get_working_node(t_parsing_state *parsing_state);
+t_abs_node					*get_tree_top_node(t_parsing_state *parsing_state);
+t_bool						is_command_abs_node_content(t_list *tokens);
+t_bool						is_pipe(t_list *tokens);
+
 // treeing__tokens_to_abs_tree.c
 t_binary_result				tokens_to_abs_tree(t_list *tokens_begin,
 								t_list *tokens_end, t_abs_node **abs_tree,
 								t_parsing_state *parsing_state);
-t_abs_node					*init_abs_node(t_abs_node_type abs_node_type);
+t_parsing					subshell_tokens_to_abs_tree(t_list *tokens_begin,
+								t_list **tokens_end, t_abs_node **abs_tree,
+								t_parsing_state *parsing_state);
 
 // treeing__utils.c
+t_abs_node					*init_abs_node(t_abs_node_type abs_node_type);
 t_binary_result				add_back_new_list(void *content,
 								t_list **existing_list, void (*del)(void *));
 void						free_parsed_text(void *content);
 void						free_redirection(void *content);
-t_abs_node					*get_working_node(t_parsing_state *parsing_state);
-t_abs_node					*get_tree_top_node(t_parsing_state *parsing_state);
 
 #endif
