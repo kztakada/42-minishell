@@ -2,6 +2,7 @@
 # define PARSING_H
 
 # include "../libraries/libft.h"
+# include "expanding.h"
 # include "minishell.h"
 
 // grammar dictionary
@@ -177,12 +178,23 @@ int							grammar_operand_text(t_token *test_token,
 								t_list **next_tokens, int subshell_depth,
 								t_bool *strict_mode);
 
+// heredoc__utils.c
+t_bool						has_quoted_text(t_list *parsed_texts);
+char						*get_heredoc_delimiter(t_list *parsed_texts);
+char						*e_handle_strjoin_free(char *s1, char *s2);
+char						*e_handle_substr(char *to_expand, int len);
+
+// heredoc.c
+t_binary_result				call_heredoc(t_parsing_state *parsing_state,
+								t_env env);
+
 // parser_utils.c
 void						free_abs_tree(t_abs_node *abs_tree);
 void						no_del(void *target);
 
 // parser.c
-t_exit_status				parser(t_list *input_tokens, t_abs_node **abs_tree);
+t_exit_status				parser(t_list *input_tokens, t_abs_node **abs_tree,
+								t_env env);
 t_parsing					parse_one_sequence(t_list *input_tokens,
 								t_list **sequence_end, t_abs_node **abs_tree,
 								t_parsing_state *parsing_state);

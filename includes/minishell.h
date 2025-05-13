@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/04 19:07:15 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:14:38 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,23 @@ typedef enum e_bool
 {
 	FALSE = 0,
 	TRUE = 1,
-}			t_bool;
+}					t_bool;
 
 // for env
 typedef struct s_env_var
 {
-	char	*name;
-	char	*value;
-}			t_env_var;
+	char			*name;
+	char			*value;
+}					t_env_var;
+
+typedef struct s_env
+{
+	t_list			*env_lists;
+	t_exit_status	*exit_status;
+}					t_env;
 
 // exit status
-enum		e_exit_status
+enum				e_exit_status
 {
 	EXIT_S_SUCCESS = 0,
 	EXIT_S_FAILURE = 1,
@@ -69,14 +75,14 @@ enum		e_exit_status
 
 typedef struct s_dict_out
 {
-	t_bool	in_d;
-	int		d_index;
-	char	*nx_str;
-	char	*error;
-}			t_dict_out;
+	t_bool			in_d;
+	int				d_index;
+	char			*nx_str;
+	char			*error;
+}					t_dict_out;
 
 // dictionary.c
-t_dict_out	lookup_dict(char *subject, char *dict);
-char		*get_dict_word(int d_index, char *dict);
+t_dict_out			lookup_dict(char *subject, char *dict);
+char				*get_dict_word(int d_index, char *dict);
 
 #endif

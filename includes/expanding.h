@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_minishell.h                                      :+:      :+:    :+:   */
+/*   expanding.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/13 20:05:56 by katakada         ###   ########.fr       */
+/*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
+/*   Updated: 2025/05/13 20:02:59 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef T_MINISHELL_H
-# define T_MINISHELL_H
+#ifndef EXPANDING_H
+# define EXPANDING_H
 
 # include "../libraries/libft.h"
-# include "expanding.h"
 # include "minishell.h"
-# include "parsing.h"
 
-# define PROMPT "minishell$ "
-
-# define FAILURE -1
-# define SUCCESS 0
+// expander.c
+char	*get_envlst_val(char *name, t_list *envlst);
 
 #endif
