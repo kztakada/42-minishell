@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 21:45:09 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/25 08:05:26 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/06 13:29:24 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_exit_status(int status)
 	return (WEXITSTATUS(status));
 }
 
-int	exec_external(t_node *node, t_minishell *minishell)
+int	exec_external(t_abs_node *node, t_minishell *minishell)
 {
 	int		status;
 	pid_t	pid;

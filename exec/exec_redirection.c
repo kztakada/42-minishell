@@ -1,35 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_main.c                                        :+:      :+:    :+:   */
+/*   exec_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 14:55:16 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/06 14:34:08 by kharuya          ###   ########.fr       */
+/*   Created: 2025/05/05 19:00:58 by kharuya           #+#    #+#             */
+/*   Updated: 2025/05/06 14:32:04 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-// // exec_external
-// int main(int ac, char *av[], char *envp[])
-// {
-// 	(void)ac;
-// 	(void)av;
-// 	t_minishell minishell = minishell_init(envp);
-// 	t_abs_node		*node = node_init();
-// 	exec_external(node, &minishell);
-// 	free (node->expanded_args);
-// 	free (node);
-// }
-
-// check_redirection
-int main(int ac, char *av[], char *envp[])
+int	exec_redirection(t_abs_node node)
 {
-	(void)ac;
-	(void)av;
-	t_abs_node		*node = node_init();
-	exec_redirection(node);
+	(void)node;
 	return (0);
 }
