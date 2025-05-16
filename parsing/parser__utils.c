@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser__utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 21:25:06 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/08 02:31:42 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:31:10 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	free_abs_node(t_abs_node *abs_node)
 	{
 		free(abs_node->command_args);
 		free(abs_node->expanded_args);
-		free(abs_node->redirection_list);
+		free(abs_node->redirect_list);
 	}
 }
 

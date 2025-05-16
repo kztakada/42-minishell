@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 04:36:53 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/08 02:30:02 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:31:10 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_abs_node	*init_abs_node(void)
 	abs_node->type = COMMAND;
 	abs_node->command_args = NULL;
 	abs_node->expanded_args = NULL;
-	abs_node->redirection_list = NULL;
+	abs_node->redirect_list = NULL;
 	abs_node->left = NULL;
 	abs_node->right = NULL;
 	return (abs_node);
