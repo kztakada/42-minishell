@@ -2,22 +2,42 @@
 # define PARSING_H
 
 # include "../libraries/libft.h"
+# include "expanding.h"
 # include "minishell.h"
 
 // grammar dictionary
 # define REDIRECT_OP " << >> < >"
 # define SUBSHELL_OP " ( )"
-# define BINARY_OP_PIPE " && || |"
+# define BIN_OP " && ||"
 # define G_OPERATORS " && || | ' \""
+
+// grammar dictionary for phrasing
+# define CMD_MEMBER_OP " << >> < > ' \""
+# define NOT_CMD_MEMBER_OP " && || | ( ) \n"
+
+typedef enum e_binary_result
+{
+	FAILURE_BIN_R = -1,
+	SUCCESS_BIN_R = 0,
+}							t_binary_result;
 
 typedef enum e_grammar
 {
-	OK_G = 1,
 	NG_G = 0,
+	OK_G = 1,
 }							t_grammar;
+
+typedef enum e_parsing
+{
+	FAILURE_P = -1,
+	SYNTAX_ERROR_P = 0,
+	SUCCESS_P = 1,
+
+}							t_parsing;
 
 typedef enum e_loop_status
 {
+	MEMORY_ERR = -1,
 	STOP = 0,
 	CONTINUE = 1,
 }							t_loop_status;
@@ -32,7 +52,7 @@ typedef enum e_parsed_text_type
 typedef struct s_parsed_text
 {
 	t_parsed_text_type		type;
-	char					*text;
+	char					*str;
 }							t_parsed_text;
 // t_redirect ***********************************************
 typedef enum e_redirect_op_type
@@ -43,7 +63,8 @@ typedef enum e_redirect_op_type
 	RE_OP_OUTPUT,
 }							t_redirect_op_type;
 // filename is t_parsed_text list
-typedef struct s_redirect
+// if heredoc, filename is EOF
+typedef struct s_redirection
 {
 	t_redirect_op_type		type;
 	int						fd;
@@ -63,6 +84,7 @@ typedef enum e_abs_node_type
 // redirect_list is list of t_redirect
 struct						s_abs_node
 {
+	t_bool					is_subshell;
 	t_abs_node_type			type;
 	t_list					*command_args;
 	char					**expanded_args;
@@ -71,26 +93,28 @@ struct						s_abs_node
 	t_abs_node				*right;
 };
 // for parse_token handling *************************************
-typedef enum s_parse_status
+typedef enum s_node_pos
 {
 	LEFT,
 	B_OP_RIGHT,
 	PIPE_RIGHT,
-}							t_parse_status;
-// heredoc_list is list of t_redirect of heredoc only
-typedef struct s_parse_log
+}							t_node_pos;
+// heredoc_list is list of t_redirection of heredoc only
+typedef struct s_parsing_state
 {
 	int						subshell_depth;
-	t_parse_status			status;
+	t_abs_node				**tree_top_node;
+	t_abs_node				**working_node;
+	t_node_pos				working_node_pos;
 	t_list					*heredoc_list;
-}							t_parse_log;
+}							t_parsing_state;
 //**************************************************************/
 typedef int					(*t_gram_shell_term)(t_list **, int *);
 typedef int					(*t_gram_operator)(t_list **, int);
 typedef int					(*t_gram_redirect)(t_list **, int, t_bool *);
 
 // check_grammar.c
-int							check_tokens_grammar(t_list **token_list,
+int							check_one_phrase_grammar(t_list **current_tokens,
 								int *subshell_depth);
 
 // grammar__follower.c
@@ -138,6 +162,7 @@ int							grammar_re_output(t_list **next_tokens,
 // grammar_subshell_to_redirect.c
 int							grammar_subshell_to_redirect(t_list **next_tokens,
 								t_bool *strict_mode);
+t_bool						has_ifs(char *str);
 
 // grammar_subshell.c
 int							grammar_sub_open(t_list **next_tokens,
@@ -153,27 +178,71 @@ int							grammar_operand_text(t_token *test_token,
 								t_list **next_tokens, int subshell_depth,
 								t_bool *strict_mode);
 
-// parse_heredoc.c
-t_exit_status				parse_heredoc(t_list *input_tokens,
-								t_list *next_tokens, t_abs_node **abs_tree,
-								t_parse_log *perse_log);
-void						call_heredoc(t_parse_log *perse_log);
+// heredoc__utils.c
+t_bool						has_quoted_text(t_list *parsed_texts);
+char						*get_heredoc_delimiter(t_list *parsed_texts);
+char						*e_handle_strjoin_free(char *s1, char *s2);
+char						*e_handle_substr(char *to_expand, int len);
 
-// parse_token.c
-t_exit_status				parse_token(t_list *input_tokens,
-								t_list *next_tokens, t_abs_node **abs_tree,
-								t_parse_log *perse_log);
+// heredoc.c
+t_binary_result				call_heredoc(t_parsing_state *parsing_state,
+								t_env env);
 
 // parser_utils.c
 void						free_abs_tree(t_abs_node *abs_tree);
 void						no_del(void *target);
 
 // parser.c
-t_exit_status				parser(t_list *input_tokens, t_abs_node **abs_tree);
-t_exit_status				parse_subshell_input(t_list **input_tokens,
-								t_abs_node **abs_tree, t_parse_log *parse_log);
+t_exit_status				parser(t_list *input_tokens, t_abs_node **abs_tree,
+								t_env env);
+t_parsing					parse_one_sequence(t_list *input_tokens,
+								t_list **sequence_end, t_abs_node **abs_tree,
+								t_parsing_state *parsing_state);
 
 // put_syntax_err.c
 void						put_syntax_err(t_list *token_list);
+
+// treeing__tokens_to_abs_tree__add_command__utils.c
+t_binary_result				append_quoted_to_parsed_texts(t_list **current_tokens,
+								t_list **parsed_texts);
+t_binary_result				append_plain_text_to_parsed_texts(t_list **current_tokens,
+								t_list **parsed_texts);
+t_binary_result				append_only1st_text_to_parsed_texts(t_list **current_tokens,
+								t_list **parsed_texts);
+t_binary_result				append_chaintexts_to_file_name(t_list **current_tokens,
+								t_token *end_token, t_list **file_name);
+
+// treeing__tokens_to_abs_tree__add_command.c
+t_binary_result				add_command_to_working_abs_node(t_list *tokens_begin,
+								t_list *tokens_end,
+								t_parsing_state *parsing_state);
+
+// treeing__tokens_to_abs_tree__insert_node.c
+t_binary_result				insert_binary_node_to_abs_tree(t_list *tokens_begin,
+								t_abs_node **abs_tree,
+								t_parsing_state *parsing_state);
+t_binary_result				insert_pipe_node_to_abs_tree(t_abs_node **abs_tree,
+								t_parsing_state *parsing_state);
+
+// treeing__tokens_to_abs_tree__utils.c
+t_abs_node					*get_working_node(t_parsing_state *parsing_state);
+t_abs_node					*get_tree_top_node(t_parsing_state *parsing_state);
+t_bool						is_command_abs_node_content(t_list *tokens);
+t_bool						is_pipe(t_list *tokens);
+
+// treeing__tokens_to_abs_tree.c
+t_binary_result				tokens_to_abs_tree(t_list *tokens_begin,
+								t_list *tokens_end, t_abs_node **abs_tree,
+								t_parsing_state *parsing_state);
+t_parsing					subshell_tokens_to_abs_tree(t_list *tokens_begin,
+								t_list **tokens_end, t_abs_node **abs_tree,
+								t_parsing_state *parsing_state);
+
+// treeing__utils.c
+t_abs_node					*init_abs_node(t_abs_node_type abs_node_type);
+t_binary_result				add_back_new_list(void *content,
+								t_list **existing_list, void (*del)(void *));
+void						free_parsed_text(void *content);
+void						free_redirection(void *content);
 
 #endif

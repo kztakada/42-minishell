@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 20:31:16 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/10 03:29:13 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_loop_status	check_strict_quoting(t_list **next_tokens,
 	return (CONTINUE);
 }
 
-static t_bool	has_ifs(char *str)
+t_bool	has_ifs(char *str)
 {
 	int	i;
 

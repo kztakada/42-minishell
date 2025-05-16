@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 21:25:06 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/15 17:31:10 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/16 11:39:08 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,21 @@
 
 static void	free_abs_node(t_abs_node *abs_node)
 {
+	int	i;
+
 	if (abs_node)
 	{
-		free(abs_node->command_args);
-		free(abs_node->expanded_args);
-		free(abs_node->redirect_list);
+		ft_lstclear(&abs_node->command_args, free_parsed_text);
+		ft_lstclear(&abs_node->redirection_list, free_redirection);
+		if (abs_node->expanded_args != NULL)
+		{
+			i = 0;
+			while (abs_node->expanded_args[i] != NULL)
+			{
+				free(abs_node->expanded_args[i]);
+				i++;
+			}
+		}
 	}
 }
 

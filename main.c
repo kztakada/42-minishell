@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 18:22:09 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/13 20:08:43 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,9 +177,11 @@ static int	execute_command(char *input, t_list *env_lists)
 	t_list					*token_list;
 	t_abs_node				*abs_tree;
 	static t_exit_status	exit_status = 0;
+	t_env					env;
 
 	// TODO: lexerでエラーした時にexit_statusは何番を返せば良いか？
-	(void)env_lists;
+	env.env_lists = env_lists;
+	env.exit_status = &exit_status;
 	token_list = NULL;
 	exit_status = lexer(input, &token_list);
 	free(input);
@@ -187,7 +189,7 @@ static int	execute_command(char *input, t_list *env_lists)
 		return (FAILURE);
 	// print_token_list(token_list); // テスト用
 	abs_tree = NULL;
-	exit_status = parser(token_list, &abs_tree);
+	exit_status = parser(token_list, &abs_tree, env);
 	ft_lstclear(&token_list, free_token);
 	if (exit_status != 0)
 		return (FAILURE);
@@ -207,7 +209,6 @@ int	app_main(int argc, char **argv, char **env)
 	(void)argv;
 	env_lists = init_envlst(env);
 	// print_env_list(env_lists); // テスト用
-	ft_lstclear(&env_lists, free_env_var);
 	if (is_interactive)
 	{
 		while (TRUE)
@@ -235,6 +236,7 @@ int	app_main(int argc, char **argv, char **env)
 		}
 		free(input);
 	}
+	ft_lstclear(&env_lists, free_env_var);
 	return (0);
 }
 
