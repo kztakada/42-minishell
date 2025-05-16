@@ -6,30 +6,33 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 14:55:16 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/06 14:34:08 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/15 18:39:36 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-// // exec_external
+// // exec_cmd_external
 // int main(int ac, char *av[], char *envp[])
 // {
 // 	(void)ac;
 // 	(void)av;
 // 	t_minishell minishell = minishell_init(envp);
-// 	t_abs_node		*node = node_init();
-// 	exec_external(node, &minishell);
+// 	t_abs_node		*node = abs_init();
+// 	exec_cmd_external(node, &minishell);
 // 	free (node->expanded_args);
 // 	free (node);
 // }
 
-// check_redirection
+// check_redirect
 int main(int ac, char *av[], char *envp[])
 {
 	(void)ac;
 	(void)av;
-	t_abs_node		*node = node_init();
-	exec_redirection(node);
+	t_abs_node		*abs = abs_init();
+	t_minishell minishell = minishell_init(envp);
+	if (abs->redirect_list)
+		exec_redirect(abs);
+	exec_cmd_builtin(abs->expanded_args, &minishell);
 	return (0);
 }
