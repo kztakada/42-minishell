@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:45 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/17 18:20:02 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/08 16:14:41 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,6 @@ static void	unset_env(char *key, t_minishell **minishell)
 		curr = curr->next;
 	}
 	return ;
-}
-
-static int	unset_err_msg(char *arg)
-{
-	ft_putstr_fd("minishell: unset: ", 2);
-	ft_putstr_fd("`", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putendl_fd("\': not a valid identifier", 2);
-	return (EXIT_FAILURE);
 }
 
 int	ft_unset(char **args, t_minishell *minishell)

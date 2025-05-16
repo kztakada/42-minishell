@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/17 18:22:26 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/08 16:13:48 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,6 @@ static void	update_env_lst(char *arg, t_env *env_lst)
 		create_add_new_env(&env_lst, key, value);
 	free(key);
 	return ;
-}
-
-static int	export_err_msg(char *arg)
-{
-	ft_putstr_fd("minishell: export: ", 2);
-	ft_putstr_fd("`", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putendl_fd("\': not a valid identifier", 2);
-	return (EXIT_FAILURE);
 }
 
 int	ft_export(char **argv, t_minishell *minishell)

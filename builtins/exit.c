@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:27 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/24 03:44:15 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/11 17:01:07 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,6 @@ static	int	is_digit(char *arg)
 	return (1);
 }
 
-static void	digit_err_msg(char *arg)
-{
-	ft_putendl_fd("exit", 2);
-	ft_putstr_fd("bash: exit: ", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putendl_fd(": numeric argument required", 2);
-	return ;
-}
-
-static void	format_err_msg(void)
-{
-	ft_putendl_fd("exit", 2);
-	ft_putendl_fd("bash: exit: too many arguments", 2);
-	return ;
-}
-
 static int	get_exit_s(char *arg)
 {
 	int		num;
@@ -48,8 +32,8 @@ static int	get_exit_s(char *arg)
 	num = ft_atol(arg, &overflow_flag);
 	if (overflow_flag)
 	{
-		digit_err_msg(arg);
-		return (255);
+		exit_err_msg_digit(arg);
+		return (EXIT_S_OUT_OF_RANGE);
 	}
 	else if (num >= 0 && num < 255)
 		return (num);
@@ -70,15 +54,15 @@ int	ft_exit(char **args, t_minishell *minishell)
 	exit_s = minishell->exit_s;
 	if (args[1])
 	{
-		if (args[2])
+		if (!is_digit(args[1]))
 		{
-			format_err_msg();
-			exit(255);
+			exit_err_msg_digit(args[1]);
+			exit(EXIT_S_OUT_OF_RANGE);
 		}
-		else if (!is_digit(args[1]))
+		else if (args[2])
 		{
-			digit_err_msg(args[1]);
-			exit(255);
+			exit_err_msg_format();
+			exit(EXIT_S_FAILURE);
 		}
 		else
 			exit(get_exit_s(args[1]));
