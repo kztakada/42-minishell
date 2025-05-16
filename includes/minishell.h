@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/04 19:07:15 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:00:53 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ enum		e_exit_status
 	EXIT_S_CMD_FAILURE = 126,
 	EXIT_S_CMD_NOT_FOUND = 127,
 	EXIT_S_INVALID_ARG = 128,
+	EXIT_S_OUT_OF_RANGE = 255,
 };
 
 // error messages

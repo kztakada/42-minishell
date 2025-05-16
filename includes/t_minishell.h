@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_minishell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 18:29:49 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:31:10 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ typedef enum e_parse_err_type
 
 
 
-// typedef struct s_redirection
+// typedef struct s_redirect
 // {
 // 	char					*value;
 // 	char					**expanded_value;
 // 	int						here_doc;
-// }							t_redirection;
+// }							t_redirect;
 
 
 

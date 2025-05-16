@@ -34,7 +34,7 @@ typedef struct s_parsed_text
 	t_parsed_text_type		type;
 	char					*text;
 }							t_parsed_text;
-// t_redirection ***********************************************
+// t_redirect ***********************************************
 typedef enum e_redirect_op_type
 {
 	RE_OP_HEREDOC,
@@ -43,13 +43,13 @@ typedef enum e_redirect_op_type
 	RE_OP_OUTPUT,
 }							t_redirect_op_type;
 // filename is t_parsed_text list
-typedef struct s_redirection
+typedef struct s_redirect
 {
 	t_redirect_op_type		type;
 	int						fd;
 	t_list					*file_name;
 	char					*expanded_file_name;
-}							t_redirection;
+}							t_redirect;
 // abs_node ****************************************************
 typedef struct s_abs_node	t_abs_node;
 typedef enum e_abs_node_type
@@ -60,13 +60,13 @@ typedef enum e_abs_node_type
 	COMMAND
 }							t_abs_node_type;
 // command_args is list of t_parsed_text
-// redirection_list is list of t_redirection
+// redirect_list is list of t_redirect
 struct						s_abs_node
 {
 	t_abs_node_type			type;
 	t_list					*command_args;
 	char					**expanded_args;
-	t_list					*redirection_list;
+	t_list					*redirect_list;
 	t_abs_node				*left;
 	t_abs_node				*right;
 };
@@ -77,7 +77,7 @@ typedef enum s_parse_status
 	B_OP_RIGHT,
 	PIPE_RIGHT,
 }							t_parse_status;
-// heredoc_list is list of t_redirection of heredoc only
+// heredoc_list is list of t_redirect of heredoc only
 typedef struct s_parse_log
 {
 	int						subshell_depth;
