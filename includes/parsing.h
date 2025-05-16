@@ -54,23 +54,23 @@ typedef struct s_parsed_text
 	t_parsed_text_type		type;
 	char					*str;
 }							t_parsed_text;
-// t_redirect ***********************************************
-typedef enum e_redirect_op_type
+// t_redirection ***********************************************
+typedef enum e_redirection_op_type
 {
 	RE_OP_HEREDOC,
 	RE_OP_APPEND,
 	RE_OP_INPUT,
 	RE_OP_OUTPUT,
-}							t_redirect_op_type;
+}							t_redirection_op_type;
 // filename is t_parsed_text list
 // if heredoc, filename is EOF
 typedef struct s_redirection
 {
-	t_redirect_op_type		type;
+	t_redirection_op_type		type;
 	int						fd;
 	t_list					*file_name;
 	char					*expanded_file_name;
-}							t_redirect;
+}							t_redirection;
 // abs_node ****************************************************
 typedef struct s_abs_node	t_abs_node;
 typedef enum e_abs_node_type
@@ -81,14 +81,14 @@ typedef enum e_abs_node_type
 	COMMAND
 }							t_abs_node_type;
 // command_args is list of t_parsed_text
-// redirect_list is list of t_redirect
+// redirection_list is list of t_redirection
 struct						s_abs_node
 {
 	t_bool					is_subshell;
 	t_abs_node_type			type;
 	t_list					*command_args;
 	char					**expanded_args;
-	t_list					*redirect_list;
+	t_list					*redirection_list;
 	t_abs_node				*left;
 	t_abs_node				*right;
 };
@@ -111,7 +111,7 @@ typedef struct s_parsing_state
 //**************************************************************/
 typedef int					(*t_gram_shell_term)(t_list **, int *);
 typedef int					(*t_gram_operator)(t_list **, int);
-typedef int					(*t_gram_redirect)(t_list **, int, t_bool *);
+typedef int					(*t_gram_redirection)(t_list **, int, t_bool *);
 
 // check_grammar.c
 int							check_one_phrase_grammar(t_list **current_tokens,
@@ -149,7 +149,7 @@ int							grammar_quote_double(t_list **next_tokens,
 t_bool						is_correct_quoting(t_list *next_to_quote_tokens,
 								t_token_type quote_token_type);
 
-// grammar_redirect.c
+// grammar_redirection.c
 int							grammar_heredoc(t_list **next_tokens,
 								int subshell_depth, t_bool *strict_mode);
 int							grammar_re_append(t_list **next_tokens,
@@ -159,8 +159,8 @@ int							grammar_re_input(t_list **next_tokens,
 int							grammar_re_output(t_list **next_tokens,
 								int subshell_depth, t_bool *strict_mode);
 
-// grammar_subshell_to_redirect.c
-int							grammar_subshell_to_redirect(t_list **next_tokens,
+// grammar_subshell_to_redirection.c
+int							grammar_subshell_to_redirection(t_list **next_tokens,
 								t_bool *strict_mode);
 t_bool						has_ifs(char *str);
 

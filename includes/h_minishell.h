@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:56:46 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/15 19:06:50 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/16 11:53:34 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,21 @@ typedef struct s_env
 }	t_env;
 
 // abs node
-typedef enum e_redirect_op_type
+typedef enum e_redirection_op_type
 {
 	RE_OP_HEREDOC, // <<
 	RE_OP_APPEND, // >>
 	RE_OP_INPUT,  // <
 	RE_OP_OUTPUT, // >
-}							t_redirect_op_type;
+}							t_redirection_op_type;
 // filename is t_parsed_text list
-typedef struct s_redirect
+typedef struct s_redirection
 {
-	t_redirect_op_type		type;
+	t_redirection_op_type		type;
 	int						fd;
 	t_list					*file_name; // こっちはparsingの都合上残してあるだけ
 	char					*expanded_file_name; //こっちしか使わない。
-}							t_redirect;
+}							t_redirection;
 // abs_node ****************************************************
 typedef struct s_abs_node	t_abs_node;
 typedef enum e_abs_node_type
@@ -83,13 +83,13 @@ typedef enum e_abs_node_type
 	COMMAND
 }							t_abs_node_type;
 // command_args is list of t_parsed_text
-// redirect_list is list of t_redirect
+// redirection_list is list of t_redirection
 struct						s_abs_node
 {
 	t_abs_node_type			type;
 	t_list					*command_args;
 	char					**expanded_args;
-	t_list					*redirect_list;
+	t_list					*redirection_list;
 	t_abs_node				*left;
 	t_abs_node				*right;
 };
@@ -118,7 +118,7 @@ int		check_key_error(char *arg);
 //prototypes exec
 int			exec_cmd_external(t_abs_node *node, t_minishell *minishell);
 int			exec_cmd_builtin(char **args, t_minishell *minishell);
-int			exec_redirect(t_abs_node *node);
+int			exec_redirection(t_abs_node *node);
 t_path		get_path(char *cmd);
 t_path		create_t_path(char *cmd, int err_exit_s,
 			int err_msg, char *err_cause);
@@ -143,8 +143,8 @@ int 		msg_is_directory(t_err err);
 // err_msg (lib_func)
 int		err_msg_malloc(void);
 
-// err_msg (redirect)
-int 	err_msg_redirect(char *filename);
+// err_msg (redirection)
+int 	err_msg_redirection(char *filename);
 
 // test_utils (exec)
 t_abs_node		*abs_init(void);

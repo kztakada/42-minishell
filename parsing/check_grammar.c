@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_grammar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/11 23:00:42 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/16 11:53:34 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static t_list	**setup_check_config(t_token *test_token,
 
 // strict_mode:
 // bash only strictly checks the second argument
-// if the subshell is followed by a redirect.
+// if the subshell is followed by a redirection.
 static int	check_atomic_token_grammar(t_list **current_tokens,
 		int *subshell_depth)
 {

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_msg_redirect.c                                 :+:      :+:    :+:   */
+/*   err_msg_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "../includes/h_minishell.h"
 
-static t_err	identify_redirect_error(char *file_name)
+static t_err	identify_redirection_error(char *file_name)
 {
 	struct stat buf;
 
@@ -25,11 +25,11 @@ static t_err	identify_redirect_error(char *file_name)
 		return (create_t_err(EXIT_S_FAILURE, ERRMSG_NO_SUCH_FILE, file_name));
 }
 
-int	err_msg_redirect(char *filename)
+int	err_msg_redirection(char *filename)
 {
 	t_err	err;
 
-	err = identify_redirect_error(filename);
+	err = identify_redirection_error(filename);
 	if (err.msg == ERRMSG_PERM_DENIED)
 		return (msg_perm_denied(err));
 	else if (err.msg == ERRMSG_IS_DIRECTORY)

@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:14:40 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/15 19:27:30 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/16 11:53:34 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // 	node->expanded_args[2] = NULL;
 // 	node->type = COMMAND;
 // 	node->cmd_args = "/bin/ls -l";
-// 	node->redirect_list = NULL;
+// 	node->redirection_list = NULL;
 // 	node->left = NULL;
 // 	node->right = NULL;
 // 	return (node);
@@ -40,7 +40,7 @@
 // 	node->expanded_args[2] = NULL;
 // 	node->type = COMMAND;
 // 	node->cmd_args = "ls -l";
-// 	node->redirect_list = NULL;
+// 	node->redirection_list = NULL;
 // 	node->left = NULL;
 // 	node->right = NULL;
 // 	return (node);
@@ -56,7 +56,7 @@
 // 	node->expanded_args[1] = NULL;
 // 	node->type = COMMAND;
 // 	node->cmd_args = "asd/dfa";
-// 	node->redirect_list = NULL;
+// 	node->redirection_list = NULL;
 // 	node->left = NULL;
 // 	node->right = NULL;
 // 	return (node);
@@ -72,7 +72,7 @@
 // 	node->expanded_args[1] = NULL;
 // 	node->type = COMMAND;
 // 	node->cmd_args = "dfa";
-// 	node->redirect_list = NULL;
+// 	node->redirection_list = NULL;
 // 	node->left = NULL;
 // 	node->right = NULL;
 // 	return (node);
@@ -88,7 +88,7 @@
 // 	node->expanded_args[1] = NULL;
 // 	node->type = COMMAND;
 // 	node->cmd_args = "/Users/kharuya/test.sh";
-// 	node->redirect_list = NULL;
+// 	node->redirection_list = NULL;
 // 	node->left = NULL;
 // 	node->right = NULL;
 // }
@@ -104,17 +104,17 @@
 // 	node->expanded_args[2] = NULL;
 // 	node->type = COMMAND;
 // 	node->cmd_args = "ls dfa";
-// 	node->redirect_list = NULL;
+// 	node->redirection_list = NULL;
 // 	node->left = NULL;
 // 	node->right = NULL;
 // 	return (node);
 // }
 
-// redirect (builtins)
+// redirection (builtins)
 t_abs_node	*abs_init(void)
 {
     t_abs_node	*node = (t_abs_node *)malloc(sizeof(t_abs_node));
-    t_redirect	*redirect;
+    t_redirection	*redirection;
 
     if (!node)
         return (NULL); // メモリ確保失敗時のエラーハンドリング
@@ -131,8 +131,8 @@ t_abs_node	*abs_init(void)
     node->expanded_args[2] = NULL;
 
     // リダイレクトリストの初期化
-    node->redirect_list = (t_list *)malloc(sizeof(t_list));
-    if (!node->redirect_list)
+    node->redirection_list = (t_list *)malloc(sizeof(t_list));
+    if (!node->redirection_list)
     {
         free(node->expanded_args[0]);
         free(node->expanded_args[1]);
@@ -141,10 +141,10 @@ t_abs_node	*abs_init(void)
         return (NULL);
     }
 
-    redirect = (t_redirect *)malloc(sizeof(t_redirect));
-    if (!redirect)
+    redirection = (t_redirection *)malloc(sizeof(t_redirection));
+    if (!redirection)
     {
-        free(node->redirect_list);
+        free(node->redirection_list);
         free(node->expanded_args[0]);
         free(node->expanded_args[1]);
         free(node->expanded_args);
@@ -152,14 +152,14 @@ t_abs_node	*abs_init(void)
         return (NULL);
     }
 
-    redirect->type = RE_OP_OUTPUT;
-    redirect->fd = 0;
-    redirect->file_name = NULL;
-    redirect->expanded_file_name = strdup(""); // strdupでコピー
-    if (!redirect->expanded_file_name)
+    redirection->type = RE_OP_OUTPUT;
+    redirection->fd = 0;
+    redirection->file_name = NULL;
+    redirection->expanded_file_name = strdup(""); // strdupでコピー
+    if (!redirection->expanded_file_name)
     {
-        free(redirect);
-        free(node->redirect_list);
+        free(redirection);
+        free(node->redirection_list);
         free(node->expanded_args[0]);
         free(node->expanded_args[1]);
         free(node->expanded_args);
@@ -167,8 +167,8 @@ t_abs_node	*abs_init(void)
         return (NULL);
     }
 
-    node->redirect_list->content = redirect;
-    node->redirect_list->next = NULL; // nextをNULLで初期化
+    node->redirection_list->content = redirection;
+    node->redirection_list->next = NULL; // nextをNULLで初期化
 
     // その他のフィールドの初期化
     node->type = COMMAND;
