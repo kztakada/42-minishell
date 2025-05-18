@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:50:07 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/18 14:40:07 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:06:18 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*e_handle_expand_env(char **input, t_env env)
 	*input = *input + i;
 	if (is_ifs(var_name[i]))
 		var_name[i] = '\0';
-	var_value = get_envlst_val(var_name, env.env_lists);
+	var_value = get_envlst_val(var_name, env.env_vars);
 	return (free(var_name), var_value);
 }
 

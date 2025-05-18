@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 15:09:17 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/18 20:17:45 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ typedef enum e_bool
 	FALSE = 0,
 	TRUE = 1,
 }							t_bool;
+
+typedef enum e_binary_result
+{
+	FAILURE_BIN_R = -1,
+	SUCCESS_BIN_R = 0,
+}							t_binary_result;
 // for env    ***************************************************/
 typedef struct s_env_var
 {
@@ -44,7 +50,7 @@ typedef struct s_env_var
 
 typedef struct s_env
 {
-	t_list					*env_lists;
+	t_list					*env_vars;
 	t_exit_status			*exit_status;
 }							t_env;
 // exit status ***************************************************/
@@ -111,6 +117,11 @@ struct						s_token
 // dictionary.c
 t_dict_out					lookup_dict(char *subject, char *dict);
 char						*get_dict_word(int d_index, char *dict);
+
+// free_tools.c
+void						free_str_list(char **str_list);
+void						no_del(void *target);
+;
 
 // predicate_func.c
 int							is_ifs(char c);

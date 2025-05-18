@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 14:56:45 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/18 19:48:41 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,35 @@
 # define FAILURE -1
 # define SUCCESS 0
 
+// t_parsed_word **********************************************
+typedef enum e_parsed_word_type
+{
+	W_PLAIN,
+	W_DOUBLE_QUOTED,
+	W_SINGLE_QUOTED,
+}							t_parsed_word_type;
+typedef struct s_parsed_word
+{
+	t_parsed_word_type		type;
+	char					*str;
+}							t_parsed_word;
+// t_redirection ***********************************************
+typedef enum e_redirect_op_type
+{
+	RE_OP_HEREDOC,
+	RE_OP_APPEND,
+	RE_OP_INPUT,
+	RE_OP_OUTPUT,
+}							t_redirect_op_type;
+// filename is t_parsed_word list
+// if heredoc, filename is EOF
+typedef struct s_redirection
+{
+	t_redirect_op_type		type;
+	int						fd;
+	t_list					*file_name_words;
+	char					*expanded_file_name;
+}							t_redirection;
 // abs_node ****************************************************
 typedef struct s_abs_node	t_abs_node;
 typedef enum e_abs_node_type
@@ -54,6 +83,9 @@ t_exit_status				lexer(char *input, t_list **token_list);
 // parser.c
 t_exit_status				parser(t_list *input_tokens, t_abs_node **abs_tree,
 								t_env env);
+
+// expander.c
+t_exit_status				expander(t_abs_node *abs_tree, t_env env);
 
 // parser_utils.c
 void						free_abs_tree(t_abs_node *abs_tree);

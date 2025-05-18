@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:19:22 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/13 20:21:00 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:06:18 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static t_env_var	*get_env_var(char *env_var_source)
 
 
 
-static t_list	**set_env_ver_to_list(t_list **env_lists, t_env_var *env_var)
+static t_list	**set_env_ver_to_list(t_list **env_vars, t_env_var *env_var)
 {
 	t_list	*new_env_list;
 
@@ -84,34 +84,34 @@ static t_list	**set_env_ver_to_list(t_list **env_lists, t_env_var *env_var)
 		free_env_var((void *)env_var);
 		return (NULL);
 	}
-	ft_lstadd_back(env_lists, new_env_list);
-	return (env_lists);
+	ft_lstadd_back(env_vars, new_env_list);
+	return (env_vars);
 }
 
 t_list	*init_envlst(char **env)
 {
 	int			i;
-	t_list		*env_lists;
+	t_list		*env_vars;
 	t_env_var	*env_var;
 
 	if (!env)
 		return (NULL);
 	i = 0;
-	env_lists = NULL;
+	env_vars = NULL;
 	while (env[i])
 	{
 		env_var = get_env_var(env[i]);
 		if (!env_var)
 		{
-			ft_lstclear(&env_lists, free_env_var);
+			ft_lstclear(&env_vars, free_env_var);
 			return (NULL);
 		}
-		if (!set_env_ver_to_list(&env_lists, env_var))
+		if (!set_env_ver_to_list(&env_vars, env_var))
 		{
-			ft_lstclear(&env_lists, free_env_var);
+			ft_lstclear(&env_vars, free_env_var);
 			return (NULL);
 		}
 		i++;
 	}
-	return (env_lists);
+	return (env_vars);
 }

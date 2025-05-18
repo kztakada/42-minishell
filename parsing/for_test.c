@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:18:59 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/18 14:38:41 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:06:18 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,12 @@ void UNUSED	print_token_list(t_list *token_list)
 }
 
 // envの出力テスト用 *****************************************************
-void UNUSED	print_env_list(t_list *env_lists)
+void UNUSED	print_env_list(t_list *env_vars)
 {
 	t_list		*current;
 	t_env_var	*env_var;
 
-	current = env_lists;
+	current = env_vars;
 	while (current)
 	{
 		env_var = (t_env_var *)current->content;

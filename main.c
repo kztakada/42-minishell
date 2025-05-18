@@ -6,10 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 14:53:45 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:11:27 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "for_test_parsing.h"
 #include "t_minishell.h"
 
 static t_bool	safe_add_history(char *input)
@@ -26,31 +27,43 @@ static t_bool	safe_add_history(char *input)
 	return (TRUE);
 }
 
-static int	execute_command(char *input, t_list *env_lists)
+static void	execute_command(char *input, t_list *env_vars)
 {
 	t_list					*token_list;
 	t_abs_node				*abs_tree;
+	t_exit_status			result;
 	static t_exit_status	exit_status = 0;
 	t_env					env;
 
 	// TODO: lexerでエラーした時にexit_statusは何番を返せば良いか？
-	env.env_lists = env_lists;
+	env.env_vars = env_vars;
 	env.exit_status = &exit_status;
 	token_list = NULL;
-	exit_status = lexer(input, &token_list);
+	result = lexer(input, &token_list);
 	free(input);
-	if (exit_status != 0)
-		return (FAILURE);
+	if (result != 0)
+	{
+		exit_status = result;
+		return ;
+	}
 	// print_token_list(token_list); // テスト用
 	abs_tree = NULL;
-	exit_status = parser(token_list, &abs_tree, env);
+	result = parser(token_list, &abs_tree, env);
 	ft_lstclear(&token_list, free_token);
-	if (exit_status != 0)
-		return (FAILURE);
-	// exit_status = expander(abs_tree, env);
-	// exit_status = exec_(abs_tree, env_lists, exit_status); //未実装
+	if (result != 0)
+	{
+		exit_status = result;
+		return ;
+	}
+	result = expander(abs_tree, env);
+	if (result != 0)
+	{
+		exit_status = result;
+		return (free_abs_tree(abs_tree));
+	}
+	// 空文字入力など、exec_が実行されない場合は、exit_statusを更新しないこと
+	// exec_(abs_tree, &env); //未実装
 	free_abs_tree(abs_tree);
-	return (SUCCESS);
 }
 
 int	app_main(int argc, char **argv, char **env)
@@ -58,12 +71,12 @@ int	app_main(int argc, char **argv, char **env)
 	const int	is_interactive = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO);
 	char		*input;
 	char		*newline;
-	t_list		*env_lists;
+	t_list		*env_vars;
 
 	(void)argc;
 	(void)argv;
-	env_lists = init_envlst(env);
-	// print_env_list(env_lists); // テスト用
+	env_vars = init_envlst(env);
+	// print_env_list(env_vars); // テスト用
 	if (is_interactive)
 	{
 		while (TRUE)
@@ -71,7 +84,7 @@ int	app_main(int argc, char **argv, char **env)
 			input = readline(PROMPT);
 			if (safe_add_history(input) == FALSE)
 				continue ;
-			execute_command(input, env_lists);
+			execute_command(input, env_vars);
 		}
 	}
 	else
@@ -86,12 +99,12 @@ int	app_main(int argc, char **argv, char **env)
 			if (newline)
 				*newline = '\0';
 			// printf("%s\n", input); // テスト用
-			execute_command(input, env_lists);
+			execute_command(input, env_vars);
 			input = get_next_line(STDIN_FILENO);
 		}
 		free(input);
 	}
-	ft_lstclear(&env_lists, free_env_var);
+	ft_lstclear(&env_vars, free_env_var);
 	return (0);
 }
 
