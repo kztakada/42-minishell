@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 21:25:06 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/11 22:50:05 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:27:32 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 
 static void	free_abs_node(t_abs_node *abs_node)
 {
@@ -18,8 +18,8 @@ static void	free_abs_node(t_abs_node *abs_node)
 
 	if (abs_node)
 	{
-		ft_lstclear(&abs_node->command_args, free_parsed_text);
-		ft_lstclear(&abs_node->redirection_list, free_redirection);
+		ft_lstclear(&abs_node->cmd_words, free_parsed_word);
+		ft_lstclear(&abs_node->redirections, free_redirection);
 		if (abs_node->expanded_args != NULL)
 		{
 			i = 0;

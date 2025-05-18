@@ -6,50 +6,50 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:35:21 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/13 19:32:24 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:27:22 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 
-static t_bool	is_quote_parsed_text(t_parsed_text *parsed_text)
+static t_bool	is_quote_parsed_word(t_parsed_word *parsed_word)
 {
-	if (parsed_text == NULL)
+	if (parsed_word == NULL)
 		return (FALSE);
-	if (parsed_text->type == SINGLE_QUOTED
-		|| parsed_text->type == DOUBLE_QUOTED)
+	if (parsed_word->type == W_SINGLE_QUOTED
+		|| parsed_word->type == W_DOUBLE_QUOTED)
 		return (TRUE);
 	return (FALSE);
 }
 
-t_bool	has_quoted_text(t_list *parsed_texts)
+t_bool	has_quoted_text(t_list *parsed_words)
 {
 	t_list			*current;
-	t_parsed_text	*parsed_text;
+	t_parsed_word	*parsed_word;
 
-	current = parsed_texts;
+	current = parsed_words;
 	while (current)
 	{
-		parsed_text = (t_parsed_text *)current->content;
-		if (is_quote_parsed_text(parsed_text))
+		parsed_word = (t_parsed_word *)current->content;
+		if (is_quote_parsed_word(parsed_word))
 			return (TRUE);
 		current = current->next;
 	}
 	return (FALSE);
 }
 
-char	*get_heredoc_delimiter(t_list *parsed_texts)
+char	*get_heredoc_delimiter(t_list *parsed_words)
 {
 	t_list			*current;
-	t_parsed_text	*parsed_text;
+	t_parsed_word	*parsed_word;
 	char			*expanded_str;
 
-	current = parsed_texts;
+	current = parsed_words;
 	expanded_str = "";
 	while (current)
 	{
-		parsed_text = (t_parsed_text *)current->content;
-		expanded_str = ft_strjoin(expanded_str, parsed_text->str);
+		parsed_word = (t_parsed_word *)current->content;
+		expanded_str = ft_strjoin(expanded_str, parsed_word->str);
 		current = current->next;
 	}
 	return (expanded_str);

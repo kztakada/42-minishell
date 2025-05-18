@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 00:27:24 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/13 00:31:15 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:28:06 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 
 t_abs_node	*get_working_node(t_parsing_state *parsing_state)
 {

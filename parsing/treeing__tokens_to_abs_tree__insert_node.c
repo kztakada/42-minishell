@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 00:08:34 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/13 00:08:35 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:28:02 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 
 t_binary_result	insert_binary_node_to_abs_tree(t_list *tokens_begin,
 		t_abs_node **abs_tree, t_parsing_state *parsing_state)
@@ -19,9 +19,9 @@ t_binary_result	insert_binary_node_to_abs_tree(t_list *tokens_begin,
 
 	// 新規ノード作成
 	if (get_token(tokens_begin)->type == OP_AND)
-		new_node = init_abs_node(BINOP_AND);
+		new_node = init_abs_node(ABS_BIN_AND);
 	else
-		new_node = init_abs_node(BINOP_OR);
+		new_node = init_abs_node(ABS_BIN_OR);
 	if (new_node == NULL)
 		return (FAILURE_BIN_R);
 	// 条件分岐
@@ -56,7 +56,7 @@ t_binary_result	insert_pipe_node_to_abs_tree(t_abs_node **abs_tree,
 {
 	t_abs_node	*new_node;
 
-	new_node = init_abs_node(PIPE);
+	new_node = init_abs_node(ABS_PIPE);
 	if (new_node == NULL)
 		return (FAILURE_BIN_R);
 	if (is_subshell_node_state(parsing_state) == TRUE

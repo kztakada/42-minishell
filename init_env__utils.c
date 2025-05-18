@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing__utils.c                                    :+:      :+:    :+:   */
+/*   init_env__utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 19:32:36 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 15:08:30 by katakada         ###   ########.fr       */
+/*   Created: 2025/05/13 20:20:37 by katakada          #+#    #+#             */
+/*   Updated: 2025/05/13 20:21:02 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexing.h"
+#include "t_minishell.h"
 
-int	is_quote(char c)
+void	free_env_var(void *env_var)
 {
-	if (lookup_dict(&c, QUOTE_DICT).in_d)
-		return (TRUE);
-	return (FALSE);
-}
+	t_env_var	*to_free_object;
 
-int	is_operator(char *str)
-{
-	if (lookup_dict(str, OPERATORS_DICT).in_d)
-		return (TRUE);
-	return (FALSE);
-}
-
-void	free_token(void *target)
-{
-	t_token	*token;
-
-	token = (t_token *)target;
-	if (token)
+	to_free_object = (t_env_var *)env_var;
+	if (to_free_object)
 	{
-		free(token->value);
-		free(token);
+		free(to_free_object->name);
+		free(to_free_object->value);
+		free(to_free_object);
 	}
 }

@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 01:01:21 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 20:30:10 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:26:54 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 
 #define NG_NEXT_TO_QUOTE " ("
 

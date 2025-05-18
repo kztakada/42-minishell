@@ -6,58 +6,58 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 22:34:14 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/11 22:34:14 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:27:52 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 
-t_binary_result	append_quoted_to_parsed_texts(t_list **current_tokens,
-		t_list **parsed_texts)
+t_binary_result	append_quoted_to_parsed_words(t_list **current_tokens,
+		t_list **parsed_words)
 {
-	t_parsed_text	*parsed_text;
+	t_parsed_word	*parsed_word;
 
-	parsed_text = (t_parsed_text *)malloc(sizeof(t_parsed_text));
-	if (parsed_text == NULL)
+	parsed_word = (t_parsed_word *)malloc(sizeof(t_parsed_word));
+	if (parsed_word == NULL)
 		return (FAILURE_BIN_R);
 	if (get_token(*current_tokens)->type == QUOTE_SINGLE)
-		parsed_text->type = SINGLE_QUOTED;
+		parsed_word->type = W_SINGLE_QUOTED;
 	else
-		parsed_text->type = DOUBLE_QUOTED;
+		parsed_word->type = W_DOUBLE_QUOTED;
 	forward_token_list(current_tokens);
-	parsed_text->str = strdup(get_token(*current_tokens)->value);
-	if (parsed_text->str == NULL)
+	parsed_word->str = strdup(get_token(*current_tokens)->value);
+	if (parsed_word->str == NULL)
 	{
-		free(parsed_text);
+		free(parsed_word);
 		return (FAILURE_BIN_R);
 	}
 	forward_token_list(current_tokens);
 	forward_token_list(current_tokens);
-	return (add_back_new_list((void *)parsed_text, parsed_texts,
-			free_parsed_text));
+	return (add_back_new_list((void *)parsed_word, parsed_words,
+			free_parsed_word));
 }
 
-t_binary_result	append_plain_text_to_parsed_texts(t_list **current_tokens,
-		t_list **parsed_texts)
+t_binary_result	append_plain_word_to_parsed_words(t_list **current_tokens,
+		t_list **parsed_words)
 {
-	t_parsed_text	*parsed_text;
+	t_parsed_word	*parsed_word;
 
-	parsed_text = (t_parsed_text *)malloc(sizeof(t_parsed_text));
-	if (parsed_text == NULL)
+	parsed_word = (t_parsed_word *)malloc(sizeof(t_parsed_word));
+	if (parsed_word == NULL)
 		return (FAILURE_BIN_R);
-	parsed_text->type = PLAIN_TEXT;
-	parsed_text->str = strdup(get_token(*current_tokens)->value);
-	if (parsed_text->str == NULL)
+	parsed_word->type = W_PLAIN;
+	parsed_word->str = strdup(get_token(*current_tokens)->value);
+	if (parsed_word->str == NULL)
 	{
-		free(parsed_text);
+		free(parsed_word);
 		return (FAILURE_BIN_R);
 	}
 	forward_token_list(current_tokens);
-	return (add_back_new_list((void *)parsed_text, parsed_texts,
-			free_parsed_text));
+	return (add_back_new_list((void *)parsed_word, parsed_words,
+			free_parsed_word));
 }
 
-static t_binary_result	avoid_parsed_text_from_token(t_list **current_tokens,
+static t_binary_result	avoid_parsed_word_from_token(t_list **current_tokens,
 		char *dup_str, int i)
 {
 	char	*tmp;
@@ -76,35 +76,35 @@ static t_binary_result	avoid_parsed_text_from_token(t_list **current_tokens,
 	return (SUCCESS_BIN_R);
 }
 
-t_binary_result	append_only1st_text_to_parsed_texts(t_list **current_tokens,
-		t_list **parsed_texts)
+t_binary_result	append_only1st_word_to_parsed_words(t_list **current_tokens,
+		t_list **parsed_words)
 {
-	t_parsed_text	*parsed_text;
+	t_parsed_word	*parsed_word;
 	char			*dup_str;
 	int				i;
 
-	parsed_text = (t_parsed_text *)malloc(sizeof(t_parsed_text));
-	if (parsed_text == NULL)
+	parsed_word = (t_parsed_word *)malloc(sizeof(t_parsed_word));
+	if (parsed_word == NULL)
 		return (FAILURE_BIN_R);
-	parsed_text->type = PLAIN_TEXT;
+	parsed_word->type = W_PLAIN;
 	dup_str = get_token(*current_tokens)->value;
 	while (is_ifs(dup_str[0]))
 		dup_str++;
 	i = 0;
 	while (dup_str[i] && !is_ifs(dup_str[i]))
 		i++;
-	parsed_text->str = ft_substr(dup_str, 0, i);
-	if (parsed_text->str == NULL)
-		return (free(parsed_text), FAILURE_BIN_R);
-	if (avoid_parsed_text_from_token(current_tokens, dup_str,
+	parsed_word->str = ft_substr(dup_str, 0, i);
+	if (parsed_word->str == NULL)
+		return (free(parsed_word), FAILURE_BIN_R);
+	if (avoid_parsed_word_from_token(current_tokens, dup_str,
 			i) == FAILURE_BIN_R)
-		return (free(parsed_text), FAILURE_BIN_R);
-	return (add_back_new_list((void *)parsed_text, parsed_texts,
-			free_parsed_text));
+		return (free(parsed_word), FAILURE_BIN_R);
+	return (add_back_new_list((void *)parsed_word, parsed_words,
+			free_parsed_word));
 }
 
-t_binary_result	append_chaintexts_to_file_name(t_list **current_tokens,
-		t_token *end_token, t_list **file_name)
+t_binary_result	append_chainwords_to_file_name_words(t_list **current_tokens,
+		t_token *end_token, t_list **file_name_words)
 {
 	t_binary_result	result;
 
@@ -113,20 +113,21 @@ t_binary_result	append_chaintexts_to_file_name(t_list **current_tokens,
 		&& result == SUCCESS_BIN_R)
 	{
 		if (is_in(QUOTE_DICT, get_token(*current_tokens)))
-			result = append_quoted_to_parsed_texts(current_tokens, file_name);
+			result = append_quoted_to_parsed_words(current_tokens,
+					file_name_words);
 		else if (is_ifs(get_token(*current_tokens)->value[0]))
 			break ;
 		else if (has_ifs(get_token(*current_tokens)->value))
 		{
-			result = append_only1st_text_to_parsed_texts(current_tokens,
-					file_name);
+			result = append_only1st_word_to_parsed_words(current_tokens,
+					file_name_words);
 			break ;
 		}
 		else
-			result = append_plain_text_to_parsed_texts(current_tokens,
-					file_name);
+			result = append_plain_word_to_parsed_words(current_tokens,
+					file_name_words);
 	}
 	if (result == FAILURE_BIN_R)
-		return (ft_lstclear(file_name, free_parsed_text), FAILURE_BIN_R);
+		return (ft_lstclear(file_name_words, free_parsed_word), FAILURE_BIN_R);
 	return (SUCCESS_BIN_R);
 }

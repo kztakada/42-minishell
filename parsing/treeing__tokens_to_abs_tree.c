@@ -6,18 +6,18 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 22:24:21 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/13 00:36:20 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:28:11 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 
 static void	init_parsing_state_only_1st_time(t_abs_node **abs_tree,
 		t_parsing_state *parsing_state)
 {
 	if (*abs_tree == NULL)
 	{
-		*abs_tree = init_abs_node(COMMAND);
+		*abs_tree = init_abs_node(ABS_COMMAND);
 		if (parsing_state != NULL)
 		{
 			parsing_state->tree_top_node = abs_tree;

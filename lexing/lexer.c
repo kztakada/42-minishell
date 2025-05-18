@@ -6,12 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:47:32 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/28 20:51:43 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:33:39 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
-#include "t_minishell.h"
 
 static int	lexicize_start_with_quote(char *input, t_list **token_list)
 {

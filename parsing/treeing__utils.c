@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:18:10 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/13 00:28:52 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:28:16 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 
 t_abs_node	*init_abs_node(t_abs_node_type abs_node_type)
 {
@@ -21,9 +21,9 @@ t_abs_node	*init_abs_node(t_abs_node_type abs_node_type)
 		return (NULL);
 	abs_node->is_subshell = FALSE;
 	abs_node->type = abs_node_type;
-	abs_node->command_args = NULL;
+	abs_node->cmd_words = NULL;
 	abs_node->expanded_args = NULL;
-	abs_node->redirection_list = NULL;
+	abs_node->redirections = NULL;
 	abs_node->left = NULL;
 	abs_node->right = NULL;
 	return (abs_node);
@@ -48,14 +48,14 @@ t_binary_result	add_back_new_list(void *content, t_list **existing_list,
 	return (SUCCESS_BIN_R);
 }
 
-void	free_parsed_text(void *content)
+void	free_parsed_word(void *content)
 {
-	t_parsed_text	*parsed_text;
+	t_parsed_word	*parsed_word;
 
-	parsed_text = (t_parsed_text *)content;
-	if (parsed_text->str != NULL)
-		free(parsed_text->str);
-	free(parsed_text);
+	parsed_word = (t_parsed_word *)content;
+	if (parsed_word->str != NULL)
+		free(parsed_word->str);
+	free(parsed_word);
 }
 
 void	free_redirection(void *content)
@@ -65,7 +65,7 @@ void	free_redirection(void *content)
 	redirection = (t_redirection *)content;
 	if (redirection->expanded_file_name != NULL)
 		free(redirection->expanded_file_name);
-	if (redirection->file_name != NULL)
-		ft_lstclear(&(redirection->file_name), free_parsed_text);
+	if (redirection->file_name_words != NULL)
+		ft_lstclear(&(redirection->file_name_words), free_parsed_word);
 	free(redirection);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   dictionary.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 01:10:10 by katakada          #+#    #+#             */
-/*   Updated: 2025/04/24 04:04:56 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/17 14:34:45 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/t_minishell.h"
+#include "minishell.h"
 
 static t_dict_out	init_dict_out(void)
 {

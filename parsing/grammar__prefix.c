@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:28:18 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 20:29:22 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:26:38 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 #define NG_USE_FIRST " && || |"
 
 static t_bool	can_use_as_first_token(t_token *test_token)

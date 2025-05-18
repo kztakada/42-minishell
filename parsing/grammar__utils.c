@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:05:51 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/05 18:20:34 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:26:43 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 
 t_list	**forward_token_list(t_list **current_token_list)
 {

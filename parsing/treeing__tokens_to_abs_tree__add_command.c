@@ -6,31 +6,31 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 22:28:30 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/12 19:41:08 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:27:57 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 
-static t_binary_result	set_file_name_to_redirection(t_list **current_tokens,
+static t_binary_result	set_file_name_words_to_redirection(t_list **current_tokens,
 		t_token *end_token, t_redirection *redirection)
 {
 	t_binary_result	result;
 
 	if (is_ifs(get_token(*current_tokens)->value[0]))
 	{
-		result = append_only1st_text_to_parsed_texts(current_tokens,
-				&redirection->file_name);
+		result = append_only1st_word_to_parsed_words(current_tokens,
+				&redirection->file_name_words);
 		if (result == FAILURE_BIN_R)
 			return (FAILURE_BIN_R);
 		if (get_token(*current_tokens)->id >= end_token->id
 			|| is_ifs(get_token(*current_tokens)->value[0]))
 			return (SUCCESS_BIN_R);
 	}
-	result = append_chaintexts_to_file_name(current_tokens, end_token,
-			&redirection->file_name);
+	result = append_chainwords_to_file_name_words(current_tokens, end_token,
+			&redirection->file_name_words);
 	if (result == FAILURE_BIN_R)
-		return (ft_lstclear(&(redirection->file_name), free_parsed_text),
+		return (ft_lstclear(&(redirection->file_name_words), free_parsed_word),
 			FAILURE_BIN_R);
 	return (SUCCESS_BIN_R);
 }
@@ -44,7 +44,7 @@ static t_redirection	*init_redirection(t_token_type token_type)
 		return (NULL);
 	redirection->fd = 0;
 	redirection->expanded_file_name = NULL;
-	redirection->file_name = NULL;
+	redirection->file_name_words = NULL;
 	if (token_type == OP_HEREDOC)
 		redirection->type = RE_OP_HEREDOC;
 	else if (token_type == OP_INPUT)
@@ -71,11 +71,11 @@ static t_binary_result	add_redirection_to_working_abs_node(t_list **current_toke
 	if (redirection == NULL)
 		return (FAILURE_BIN_R);
 	forward_token_list(current_tokens);
-	result = set_file_name_to_redirection(current_tokens, end_token,
+	result = set_file_name_words_to_redirection(current_tokens, end_token,
 			redirection);
 	if (result == SUCCESS_BIN_R)
 		result = add_back_new_list((void *)redirection,
-				&(get_working_node(parsing_state)->redirection_list),
+				&(get_working_node(parsing_state)->redirections),
 				free_redirection);
 	if (redirection->type == RE_OP_HEREDOC)
 		result = add_back_new_list((void *)redirection,
@@ -85,7 +85,7 @@ static t_binary_result	add_redirection_to_working_abs_node(t_list **current_toke
 	return (result);
 }
 
-static t_binary_result	add_command_args_to_working_abs_node(t_list **current_tokens,
+static t_binary_result	add_cmd_words_to_working_abs_node(t_list **current_tokens,
 		t_token *end_token, t_parsing_state *parsing_state)
 {
 	t_binary_result	result;
@@ -97,15 +97,15 @@ static t_binary_result	add_command_args_to_working_abs_node(t_list **current_tok
 		if (is_in(REDIRECT_OP, get_token(*current_tokens)))
 			break ;
 		else if (is_in(QUOTE_DICT, get_token(*current_tokens)))
-			result = append_quoted_to_parsed_texts(current_tokens,
-					&(get_working_node(parsing_state)->command_args));
+			result = append_quoted_to_parsed_words(current_tokens,
+					&(get_working_node(parsing_state)->cmd_words));
 		else
-			result = append_plain_text_to_parsed_texts(current_tokens,
-					&(get_working_node(parsing_state)->command_args));
+			result = append_plain_word_to_parsed_words(current_tokens,
+					&(get_working_node(parsing_state)->cmd_words));
 	}
 	if (result == FAILURE_BIN_R)
-		return (ft_lstclear(&(*(parsing_state->working_node))->command_args,
-				free_parsed_text), FAILURE_BIN_R);
+		return (ft_lstclear(&(*(parsing_state->working_node))->cmd_words,
+				free_parsed_word), FAILURE_BIN_R);
 	return (SUCCESS_BIN_R);
 }
 
@@ -117,7 +117,7 @@ t_binary_result	add_command_to_working_abs_node(t_list *tokens_begin,
 	t_binary_result	parse_result;
 
 	if (get_working_node(parsing_state) == NULL)
-		*(parsing_state->working_node) = init_abs_node(COMMAND);
+		*(parsing_state->working_node) = init_abs_node(ABS_COMMAND);
 	if (get_working_node(parsing_state) == NULL)
 		return (FAILURE_BIN_R);
 	current_tokens = tokens_begin;
@@ -130,7 +130,7 @@ t_binary_result	add_command_to_working_abs_node(t_list *tokens_begin,
 			parse_result = add_redirection_to_working_abs_node(&current_tokens,
 					end_token, parsing_state);
 		else
-			parse_result = add_command_args_to_working_abs_node(&current_tokens,
+			parse_result = add_cmd_words_to_working_abs_node(&current_tokens,
 					end_token, parsing_state);
 	}
 	return (parse_result);

@@ -6,21 +6,56 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/13 20:05:56 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:56:45 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef T_MINISHELL_H
 # define T_MINISHELL_H
 
-# include "../libraries/libft.h"
-# include "expanding.h"
 # include "minishell.h"
-# include "parsing.h"
 
 # define PROMPT "minishell$ "
 
 # define FAILURE -1
 # define SUCCESS 0
+
+// abs_node ****************************************************
+typedef struct s_abs_node	t_abs_node;
+typedef enum e_abs_node_type
+{
+	ABS_BIN_AND,
+	ABS_BIN_OR,
+	ABS_PIPE,
+	ABS_COMMAND
+}							t_abs_node_type;
+// cmd_words is list of t_parsed_word
+// redirections is list of t_redirection
+struct						s_abs_node
+{
+	t_bool					is_subshell;
+	t_abs_node_type			type;
+	t_list					*cmd_words;
+	char					**expanded_args;
+	t_list					*redirections;
+	t_abs_node				*left;
+	t_abs_node				*right;
+};
+//**************************************************************/
+// init_env__utils.c
+void						free_env_var(void *env_var);
+
+// init_env.c
+t_list						*init_envlst(char **env);
+
+// lexer.c
+t_exit_status				lexer(char *input, t_list **token_list);
+
+// parser.c
+t_exit_status				parser(t_list *input_tokens, t_abs_node **abs_tree,
+								t_env env);
+
+// parser_utils.c
+void						free_abs_tree(t_abs_node *abs_tree);
 
 #endif

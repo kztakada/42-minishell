@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:01:34 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/07 20:31:04 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:27:00 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "parsing.h"
 #define NG_NEXT_TO_HEREDOC " << >> && || | < > ( ) \n"
 #define NG_NEXT_TO_R_INPUT " << >> && || | < > ( ) \n"
 #define NG_NEXT_TO_R_OUTPUT " << >> && || | < > ( ) \n"

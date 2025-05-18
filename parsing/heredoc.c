@@ -6,26 +6,13 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:50:07 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/13 19:59:31 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:40:07 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
-
-// void	all_get_line(int fd) //テスト用
-// {
-// 	char *line;
-
-// 	printf("all_get_line fd:%d\n", fd);
-// 	while (TRUE)
-// 	{
-// 		line = get_next_line(fd);
-// 		if (line == NULL)
-// 			break ;
-// 		printf("%s", line);
-// 		free(line);
-// 	}
-// }
+#include "expanding.h"
+#include "for_test_parsing.h"
+#include "parsing.h"
 
 static char	*e_handle_expand_env(char **input, t_env env)
 {
@@ -137,7 +124,7 @@ static int	parse_heredoc(char *eof, t_bool is_quote, t_env env)
 t_binary_result	call_heredoc(t_parsing_state *parsing_state, t_env env)
 {
 	t_list			*current;
-	t_list			*file_name;
+	t_list			*file_name_words;
 	char			*delimiter;
 	t_redirection	*redirection;
 	t_binary_result	result;
@@ -149,11 +136,11 @@ t_binary_result	call_heredoc(t_parsing_state *parsing_state, t_env env)
 		if (current->content != NULL)
 		{
 			redirection = (t_redirection *)current->content;
-			file_name = redirection->file_name;
-			delimiter = get_heredoc_delimiter(file_name);
+			file_name_words = redirection->file_name_words;
+			delimiter = get_heredoc_delimiter(file_name_words);
 			redirection->expanded_file_name = delimiter;
 			redirection->fd = parse_heredoc(delimiter,
-					has_quoted_text(redirection->file_name), env);
+					has_quoted_text(redirection->file_name_words), env);
 			if (redirection->fd < 0)
 				result = FAILURE_BIN_R;
 			// all_get_line(redirection->fd); //テスト用
