@@ -6,17 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:05:51 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 14:26:43 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/19 21:46:35 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-t_list	**forward_token_list(t_list **current_token_list)
-{
-	*current_token_list = (*current_token_list)->next;
-	return (current_token_list);
-}
 
 t_token	*get_token(t_list *current_token)
 {

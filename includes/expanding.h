@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/18 20:53:08 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 03:34:48 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,19 @@
 // 	SUCCESS_EX = 1,
 
 // }						t_expanding;
+
 // t_expanded_word **********************************************
+// ET_DEATH_DOLLAR is when there is a dollar sign at the end of
+// the argument clause.  In this case, after the environment variable
+// is expanded, the ifs delimiter in the clause is completely ignored,
+// even though it is not quoted, a very very crazy case!
 typedef enum e_expanding_token_type
 {
 	ET_WILDCARD,
 	ET_SEPARATOR,
-	ET_EXPANDED_STR,
+	ET_UNQUOTED_STR,
+	ET_QUOTED_STR,
+	ET_DEATH_DOLLAR,
 }					t_e_token_type;
 typedef struct s_expanding_word
 {

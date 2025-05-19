@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   predicate_funcs.c                                  :+:      :+:    :+:   */
+/*   util_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 15:07:33 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 15:08:26 by katakada         ###   ########.fr       */
+/*   Created: 2025/05/19 21:47:55 by katakada          #+#    #+#             */
+/*   Updated: 2025/05/19 21:48:00 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,10 @@ int	is_ifs(char c)
 	if (lookup_dict(&c, IFS_DICT).in_d)
 		return (TRUE);
 	return (FALSE);
+}
+
+t_list	**forward_token_list(t_list **current_token_list)
+{
+	*current_token_list = (*current_token_list)->next;
+	return (current_token_list);
 }

@@ -67,7 +67,6 @@ int				grammar_next_token(t_token *test_token, t_list **next_tokens,
 int				grammar_prefix(t_token *test_token, int subshell_depth);
 
 // grammar__utils.c
-t_list			**forward_token_list(t_list **current_token_list);
 t_token			*get_token(t_list *current_token);
 t_bool			is_in(char *dict, t_token *test_token);
 t_bool			is_operand_text(t_token *test_token);
