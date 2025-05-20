@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 17:06:17 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:28:41 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ t_list				*expand_double_quoted_word(char *to_expand, t_env env);
 t_list				*init_expanding_token(t_e_token_type type);
 t_bool				is_valid_env_cahr(char env_char);
 t_bool				is_death_dollar(char *parsed_word_str);
+t_bool				is_delimiter_for_unquoted(char *word);
+t_bool				can_use_raw_cahr(char c);
 
 // expand__env_var.c
-char				*get_envlst_val(char *name, t_list *envlst);
 char				*expand_dollar(char **dollar_str, t_env env);
-char				*expand_normal_str(char **normal_str);
+char				*use_raw_str_when_double_quoted(char **raw_str);
 t_list				*expand_env_var_with_expanding_tokens(t_list *parsed_words,
 						t_env env);
 

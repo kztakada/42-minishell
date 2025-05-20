@@ -6,13 +6,13 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 20:06:51 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 17:25:00 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:28:04 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
 
-char	*get_envlst_val(char *name, t_list *envlst)
+static char	*get_envlst_val(char *name, t_list *envlst)
 {
 	t_env_var	*env_var;
 
@@ -53,26 +53,19 @@ char	*expand_dollar(char **dollar_str, t_env env)
 	return (free(env_name), ft_strdup(env_value));
 }
 
-static t_bool	is_normal_cahr(char c)
+char	*use_raw_str_when_double_quoted(char **raw_str)
 {
-	if (c == '\0' || c == '$' || c == '*' || is_ifs(c))
-		return (FALSE);
-	return (TRUE);
-}
-
-char	*expand_normal_str(char **normal_str)
-{
-	char	*normal_str_value;
+	char	*raw_str_value;
 	int		i;
 
 	i = 0;
-	while (is_normal_cahr((*normal_str)[i]))
+	while ((*raw_str)[i] != '\0' && (*raw_str)[i] != '$')
 		i++;
-	normal_str_value = ft_substr(*normal_str, 0, i);
-	if (normal_str_value == NULL)
+	raw_str_value = ft_substr(*raw_str, 0, i);
+	if (raw_str_value == NULL)
 		return (NULL);
-	*normal_str = *normal_str + i;
-	return (normal_str_value);
+	*raw_str = *raw_str + i;
+	return (raw_str_value);
 }
 
 t_list	*expand_env_var_with_expanding_tokens(t_list *parsed_words, t_env env)

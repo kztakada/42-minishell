@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 22:34:14 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 14:27:52 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:52:24 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_binary_result	append_quoted_to_parsed_words(t_list **current_tokens,
 	else
 		parsed_word->type = W_DOUBLE_QUOTED;
 	forward_token_list(current_tokens);
-	parsed_word->str = strdup(get_token(*current_tokens)->value);
+	parsed_word->str = ft_strdup(get_token(*current_tokens)->value);
 	if (parsed_word->str == NULL)
 	{
 		free(parsed_word);
@@ -46,7 +46,7 @@ t_binary_result	append_plain_word_to_parsed_words(t_list **current_tokens,
 	if (parsed_word == NULL)
 		return (FAILURE_BIN_R);
 	parsed_word->type = W_PLAIN;
-	parsed_word->str = strdup(get_token(*current_tokens)->value);
+	parsed_word->str = ft_strdup(get_token(*current_tokens)->value);
 	if (parsed_word->str == NULL)
 	{
 		free(parsed_word);

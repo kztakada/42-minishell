@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:50:46 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 17:37:23 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:08:18 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,19 @@ static t_list	*expand_death_dollar_word(char **parsed_word_str)
 	return (under_expanding_token);
 }
 
-static t_bool	is_delimiter_for_unquoted(char *word)
+static char	*use_raw_word(char **raw_str)
 {
-	if (word == NULL)
-		return (TRUE);
-	if (is_ifs(*word) || *word == '\0' || *word == '*' || is_death_dollar(word))
-		return (TRUE);
-	return (FALSE);
+	char	*raw_str_value;
+	int		i;
+
+	i = 0;
+	while (can_use_raw_cahr((*raw_str)[i]))
+		i++;
+	raw_str_value = ft_substr(*raw_str, 0, i);
+	if (raw_str_value == NULL)
+		return (NULL);
+	*raw_str = *raw_str + i;
+	return (raw_str_value);
 }
 
 static t_list	*expand_unquoted_word(char **to_expand, t_env env)
@@ -61,7 +67,7 @@ static t_list	*expand_unquoted_word(char **to_expand, t_env env)
 	t_list				*expanded_token;
 	t_expanding_token	*expanding_token;
 
-	unquoted_str = strdup("");
+	unquoted_str = ft_strdup("");
 	if (unquoted_str == NULL)
 		return (NULL);
 	while (!is_delimiter_for_unquoted(*to_expand))
@@ -70,8 +76,7 @@ static t_list	*expand_unquoted_word(char **to_expand, t_env env)
 			unquoted_str = strjoin_free(unquoted_str, expand_dollar(to_expand,
 						env));
 		else
-			unquoted_str = strjoin_free(unquoted_str,
-					expand_normal_str(to_expand));
+			unquoted_str = strjoin_free(unquoted_str, use_raw_word(to_expand));
 		if (unquoted_str == NULL)
 			return (ft_lstclear(&expanded_token, free_expanding_token), NULL);
 	}

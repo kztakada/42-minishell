@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:41:25 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/18 19:48:41 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:19:04 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "minishell.h"
 
 # define PROMPT "minishell$ "
+# define HEREDOC_PROMPT "> "
 
 # define FAILURE -1
 # define SUCCESS 0

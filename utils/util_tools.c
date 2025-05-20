@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:47:55 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 17:00:58 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:18:32 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,13 @@ char	*strjoin_free(char *s1, char *s2)
 
 	result = ft_strjoin(s1, s2);
 	if (result == NULL)
+	{
+		if (s1 != NULL)
+			free(s1);
+		if (s2 != NULL)
+			free(s2);
 		return (NULL);
+	}
 	free(s1);
 	free(s2);
 	return (result);

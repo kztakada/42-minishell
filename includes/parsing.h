@@ -110,9 +110,7 @@ int				grammar_operand_text(t_token *test_token, t_list **next_tokens,
 
 // heredoc__utils.c
 t_bool			has_quoted_text(t_list *parsed_words);
-char			*get_heredoc_delimiter(t_list *parsed_words);
-char			*e_handle_strjoin_free(char *s1, char *s2);
-char			*e_handle_substr(char *to_expand, int len);
+char			*get_heredoc_delimiter(t_list *file_name_words);
 
 // heredoc.c
 t_binary_result	call_heredoc(t_parsing_state *parsing_state, t_env env);

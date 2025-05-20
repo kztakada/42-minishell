@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:35:21 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 14:27:22 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:35:58 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,57 +38,26 @@ t_bool	has_quoted_text(t_list *parsed_words)
 	return (FALSE);
 }
 
-char	*get_heredoc_delimiter(t_list *parsed_words)
+char	*get_heredoc_delimiter(t_list *file_name_words)
 {
-	t_list			*current;
-	t_parsed_word	*parsed_word;
-	char			*expanded_str;
+	t_list			*current_word;
+	t_parsed_word	*file_name_word;
+	char			*eof_str;
+	char			*tmp;
 
-	current = parsed_words;
-	expanded_str = "";
-	while (current)
+	current_word = file_name_words;
+	eof_str = ft_strdup("");
+	if (eof_str == NULL)
+		return (perror(ERROR_MALLOC), NULL);
+	while (current_word)
 	{
-		parsed_word = (t_parsed_word *)current->content;
-		expanded_str = ft_strjoin(expanded_str, parsed_word->str);
-		current = current->next;
+		file_name_word = (t_parsed_word *)current_word->content;
+		tmp = eof_str;
+		eof_str = ft_strjoin(eof_str, file_name_word->str);
+		if (eof_str == NULL)
+			return (free(tmp), perror(ERROR_MALLOC), NULL);
+		free(tmp);
+		current_word = current_word->next;
 	}
-	return (expanded_str);
-}
-
-char	*e_handle_strjoin_free(char *s1, char *s2)
-{
-	char	*result;
-	t_bool	can_free_s1;
-	t_bool	can_free_s2;
-
-	can_free_s1 = TRUE;
-	can_free_s2 = TRUE;
-	if (s1 == NULL)
-	{
-		s1 = "";
-		can_free_s1 = FALSE;
-	}
-	if (s2 == NULL)
-	{
-		s2 = "";
-		can_free_s2 = FALSE;
-	}
-	result = ft_strjoin(s1, s2);
-	if (result == NULL)
-		return (exit(EXIT_FAILURE), NULL);
-	if (can_free_s1 == TRUE)
-		free(s1);
-	if (can_free_s2 == TRUE)
-		free(s2);
-	return (result);
-}
-
-char	*e_handle_substr(char *to_expand, int len)
-{
-	char	*tmp;
-
-	tmp = ft_substr(to_expand, 0, len);
-	if (tmp == NULL)
-		return (exit(EXIT_FAILURE), NULL);
-	return (tmp);
+	return (eof_str);
 }

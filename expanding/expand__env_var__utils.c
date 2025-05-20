@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:53:58 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 16:58:31 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:08:10 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,20 @@ t_bool	is_death_dollar(char *parsed_word_str)
 			return (TRUE);
 	}
 	return (FALSE);
+}
+
+t_bool	is_delimiter_for_unquoted(char *word)
+{
+	if (word == NULL)
+		return (TRUE);
+	if (is_ifs(*word) || *word == '\0' || *word == '*' || is_death_dollar(word))
+		return (TRUE);
+	return (FALSE);
+}
+
+t_bool	can_use_raw_cahr(char c)
+{
+	if (c == '\0' || c == '$' || c == '*' || is_ifs(c))
+		return (FALSE);
+	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:40:57 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 03:43:02 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:47:35 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,16 @@ char	**expand_cmd_words(t_list *cmd_words, t_env env)
 // 	return (SUCCESS_BIN_R);
 // }
 
-static t_bool	has_cmd_words(t_list *cmd_words)
+static t_bool	has_cmd_words(t_abs_node *abs_node)
 {
-	t_parsed_word	*cmd_word;
+	t_list	*cmd_words;
 
-	cmd_word = (t_parsed_word *)cmd_words->content;
-	if (cmd_word == NULL)
+	if (abs_node == NULL)
+		return (FALSE);
+	if (abs_node->cmd_words == NULL)
+		return (FALSE);
+	cmd_words = abs_node->cmd_words;
+	if (cmd_words->content == NULL)
 		return (FALSE);
 	else
 		return (TRUE);
@@ -127,7 +131,7 @@ t_binary_result	expand_abs_node(t_abs_node *abs_node, t_env env)
 		return (SUCCESS_BIN_R);
 	if (abs_node->type != ABS_COMMAND)
 		return (SUCCESS_BIN_R);
-	if (has_cmd_words(abs_node->cmd_words))
+	if (has_cmd_words(abs_node))
 	{
 		expanded_args = expand_cmd_words(abs_node->cmd_words, env);
 		if (expanded_args == NULL)

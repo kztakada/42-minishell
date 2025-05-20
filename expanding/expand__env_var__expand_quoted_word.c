@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:56:19 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 17:00:12 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:36:21 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,15 @@ t_list	*expand_single_quoted_word(char *str)
 	return (expanded_token);
 }
 
-static char	*expand_double_quoted_str(char **normal_str)
-{
-	char	*normal_str_value;
-	int		i;
-
-	i = 0;
-	while ((*normal_str)[i] != '\0' && (*normal_str)[i] != '$')
-		i++;
-	normal_str_value = ft_substr(*normal_str, 0, i);
-	if (normal_str_value == NULL)
-		return (NULL);
-	*normal_str = *normal_str + i;
-	return (normal_str_value);
-}
-
 t_list	*expand_double_quoted_word(char *to_expand, t_env env)
 {
 	char				*d_quoted_str;
 	t_list				*expanded_token;
 	t_expanding_token	*expanding_token;
 
-	d_quoted_str = strdup("");
+	d_quoted_str = ft_strdup("");
 	if (d_quoted_str == NULL)
-		return (NULL);
+		return (perror(ERROR_MALLOC), NULL);
 	while (*to_expand != '\0')
 	{
 		if (*to_expand == '$')
@@ -60,7 +45,7 @@ t_list	*expand_double_quoted_word(char *to_expand, t_env env)
 						env));
 		else
 			d_quoted_str = strjoin_free(d_quoted_str,
-					expand_double_quoted_str(&to_expand));
+					use_raw_str_when_double_quoted(&to_expand));
 		if (d_quoted_str == NULL)
 			return (ft_lstclear(&expanded_token, free_expanding_token), NULL);
 	}
