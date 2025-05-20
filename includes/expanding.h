@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 03:34:48 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:06:17 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,22 @@ typedef struct s_expanding_word
 t_bool				is_ambiguous_redirection(t_list *expanding_tokens);
 void				put_ambiguous_redirection_err(t_list *file_name_words);
 
+// expand__env_var__expand_plain_word.c
+t_list				*expand_plain_word(t_list *current_words, t_env env);
+
+// expand__env_var__expand_quoted_word.c
+t_list				*expand_single_quoted_word(char *str);
+t_list				*expand_double_quoted_word(char *to_expand, t_env env);
+
+// expand__env_var__utils.c
+t_list				*init_expanding_token(t_e_token_type type);
+t_bool				is_valid_env_cahr(char env_char);
+t_bool				is_death_dollar(char *parsed_word_str);
+
 // expand__env_var.c
 char				*get_envlst_val(char *name, t_list *envlst);
+char				*expand_dollar(char **dollar_str, t_env env);
+char				*expand_normal_str(char **normal_str);
 t_list				*expand_env_var_with_expanding_tokens(t_list *parsed_words,
 						t_env env);
 
