@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:40:57 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/21 22:41:21 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 03:20:50 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,16 @@ char	**expand_cmd_words(t_list *cmd_words, t_env env)
 	t_list	*expanding_tokens;
 	char	**expanded_str_list;
 
-	expanded_str_list = NULL;
 	expanding_tokens = expand_env_var_with_expanding_tokens(cmd_words, env);
 	if (expanding_tokens == NULL)
 		return (NULL);
-	print_expanding_token_list(expanding_tokens);
+	// print_expanding_token_list(expanding_tokens);
 	// if (expand_wildcard(&expanding_tokens) == FAILURE_BIN_R)
 	// 	return (NULL);
-	// expanded_str_list = expanding_tokens_to_str_list(expanding_tokens);
-	// ft_lstclear(&expanding_tokens, free_expanding_token);
-	// if (expanded_str_list == NULL)
-	// 	return (NULL);
+	expanded_str_list = expanding_tokens_to_arg_list(expanding_tokens);
+	ft_lstclear(&expanding_tokens, free_expanding_token);
+	if (expanded_str_list == NULL)
+		return (NULL);
 	return (expanded_str_list);
 }
 
@@ -122,6 +121,18 @@ static t_bool	has_cmd_words(t_abs_node *abs_node)
 		return (TRUE);
 }
 
+void	print_str_list(char **str_list)
+{
+	int	i;
+
+	i = 0;
+	while (str_list[i] != NULL)
+	{
+		printf("%s\n", str_list[i]);
+		i++;
+	}
+}
+
 t_binary_result	expand_abs_node(t_abs_node *abs_node, t_env env)
 {
 	char	**expanded_args;
@@ -137,6 +148,7 @@ t_binary_result	expand_abs_node(t_abs_node *abs_node, t_env env)
 		if (expanded_args == NULL)
 			return (FAILURE_BIN_R);
 		abs_node->expanded_args = expanded_args;
+		print_str_list(abs_node->expanded_args);
 	}
 	// e_r_result = expand_redirections(abs_node->redirections, env);
 	// if (e_r_result == FAILURE_BIN_R)

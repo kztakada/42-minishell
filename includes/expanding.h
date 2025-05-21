@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 01:15:58 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 03:20:32 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ t_binary_result		expand_abs_node(t_abs_node *abs_node, t_env env);
 // expander__utils.c
 t_expanding_token	*get_ex_token(t_list **expanding_tokens);
 void				free_expanding_token(void *content);
-char				**expanding_tokens_to_str_list(t_list *expanding_tokens);
+char				**expanding_tokens_to_arg_list(t_list *expanding_tokens);
 
 #endif
