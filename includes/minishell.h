@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 17:01:22 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 03:53:28 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ void						no_del(void *target);
 int							is_ifs(char c);
 t_list						**forward_token_list(t_list **current_token_list);
 char						*strjoin_free(char *s1, char *s2);
+void						free_str_list_by_size(char **str_list,
+								int str_list_size);
 
 // lexing_utils.c
 void						free_token(void *target);

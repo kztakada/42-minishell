@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:47:55 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 19:18:32 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 03:53:10 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,20 @@ char	*strjoin_free(char *s1, char *s2)
 	free(s1);
 	free(s2);
 	return (result);
+}
+
+void	free_str_list_by_size(char **str_list, int str_list_size)
+{
+	int	i;
+
+	if (str_list == NULL)
+		return ;
+	i = 0;
+	while (i < str_list_size)
+	{
+		if (str_list[i] != NULL)
+			free(str_list[i]);
+		i++;
+	}
+	free(str_list);
 }

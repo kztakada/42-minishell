@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 03:20:32 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 04:10:11 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ t_list				*expand_env_var_with_expanding_tokens(t_list *parsed_words,
 
 // expand__wildcard.c
 t_binary_result		expand_wildcard(t_list **expanding_tokens);
+
+// expand_abs_node__expanding_tokens_to_arg_list.c
+char				**expanding_tokens_to_arg_list(t_list *expanding_tokens);
 
 // expand_abs_node.c
 t_binary_result		expand_abs_node(t_abs_node *abs_node, t_env env);
