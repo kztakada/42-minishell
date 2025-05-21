@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 14:25:45 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 04:42:40 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ static t_loop_status	can_keep_phrasing_tokens(t_token *phrase_top_token,
 	if (is_in(CMD_MEMBER_OP, phrase_top_token)
 		|| phrase_top_token->type == OPERAND_TEXT)
 	{
-		if (is_in(NOT_CMD_MEMBER_OP, next_token))
+		if (is_in(NOT_CMD_MEMBER_OP, next_token) || is_in(CMD_MEMBER_OP,
+				next_token))
 			return (STOP);
 	}
 	else
