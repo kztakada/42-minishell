@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 00:37:00 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 01:15:58 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ t_list				*expand_plain_word(t_list *current_words, t_env env);
 // expand__env_var__expand_quoted_word.c
 t_list				*expand_single_quoted_word(char *str);
 t_list				*expand_double_quoted_word(char *to_expand, t_env env);
+
+// expand__env_var__split__utils.c
+void				delete_prefix_separator(t_list **ex_tokens);
+void				to_next_separate_top(t_list **current_token);
+t_list				*split_unquoted_word(char **to_expand);
+
+// expand__env_var__split_post_expanded__utils.c
+t_binary_result		split_unquoted_str_before_1st_separator(t_list *current_token);
 
 // expand__env_var__split_post_expanded.c
 void				delete_prefix_separator(t_list **ex_tokens);
