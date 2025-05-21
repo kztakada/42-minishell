@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:43:16 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 03:20:25 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/21 03:50:21 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ void	free_expanding_token(void *content)
 	if (expanding_token->str != NULL)
 		free(expanding_token->str);
 	free(expanding_token);
+}
+
+t_expanding_token	*get_ex_token(t_list **expanding_tokens)
+{
+	t_expanding_token	*expanding_token;
+
+	if (*expanding_tokens == NULL)
+		return (NULL);
+	expanding_token = (t_expanding_token *)(*expanding_tokens)->content;
+	return (expanding_token);
 }
 
 // 未実装

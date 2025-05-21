@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 19:28:41 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 00:37:00 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,16 @@ t_bool				is_ambiguous_redirection(t_list *expanding_tokens);
 void				put_ambiguous_redirection_err(t_list *file_name_words);
 
 // expand__env_var__expand_plain_word.c
+t_list				*split_operator_word(char **parsed_word_str);
 t_list				*expand_plain_word(t_list *current_words, t_env env);
 
 // expand__env_var__expand_quoted_word.c
 t_list				*expand_single_quoted_word(char *str);
 t_list				*expand_double_quoted_word(char *to_expand, t_env env);
+
+// expand__env_var__split_post_expanded.c
+void				delete_prefix_separator(t_list **ex_tokens);
+t_binary_result		split_post_expanded_unquoted_str(t_list **ex_tokens);
 
 // expand__env_var__utils.c
 t_list				*init_expanding_token(t_e_token_type type);
@@ -73,6 +78,7 @@ t_binary_result		expand_wildcard(t_list **expanding_tokens);
 t_binary_result		expand_abs_node(t_abs_node *abs_node, t_env env);
 
 // expander__utils.c
+t_expanding_token	*get_ex_token(t_list **expanding_tokens);
 void				free_expanding_token(void *content);
 char				**expanding_tokens_to_str_list(t_list *expanding_tokens);
 

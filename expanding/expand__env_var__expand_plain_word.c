@@ -6,13 +6,13 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:50:46 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 19:08:18 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 00:36:30 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
 
-static t_list	*expand_operator_word(char **parsed_word_str)
+t_list	*split_operator_word(char **parsed_word_str)
 {
 	t_list	*under_expanding_token;
 
@@ -102,7 +102,7 @@ t_list	*expand_plain_word(t_list *current_words, t_env env)
 	while (*parsed_word_str != '\0')
 	{
 		if (*parsed_word_str == '*' || is_ifs(*parsed_word_str))
-			under_expanding_token = expand_operator_word(&parsed_word_str);
+			under_expanding_token = split_operator_word(&parsed_word_str);
 		else if (is_death_dollar(parsed_word_str))
 			under_expanding_token = expand_death_dollar_word(&parsed_word_str);
 		else

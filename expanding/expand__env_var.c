@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 20:06:51 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 19:28:04 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:03:00 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,7 @@ t_list	*expand_env_var_with_expanding_tokens(t_list *parsed_words, t_env env)
 		ft_lstadd_back(&expanded_tokens, under_expanding_token);
 		forward_token_list(&current_words);
 	}
+	if (split_post_expanded_unquoted_str(&expanded_tokens) == FAILURE_BIN_R)
+		return (ft_lstclear(&expanded_tokens, free_expanding_token), NULL);
 	return (expanded_tokens);
 }
