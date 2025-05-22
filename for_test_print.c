@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   for_test.c                                         :+:      :+:    :+:   */
+/*   for_test_print.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:18:59 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/18 18:06:18 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:28:03 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "expanding.h"
 #include "parsing.h"
 
 #ifdef __GNUC__
@@ -17,6 +18,56 @@
 #else
 # define UNUSED
 #endif
+
+// for expander test		**************************************************//
+void UNUSED	print_expanding_token_list(t_list *expanding_tokens)
+{
+	t_expanding_token	*expanding_token;
+
+	while (expanding_tokens != NULL)
+	{
+		expanding_token = (t_expanding_token *)expanding_tokens->content;
+		if (expanding_token->type == ET_UNQUOTED_STR)
+			printf("ET_UNQUOTED_STR: %s\n", expanding_token->str);
+		else if (expanding_token->type == ET_QUOTED_STR)
+			printf("ET_QUOTED_STR: %s\n", expanding_token->str);
+		else if (expanding_token->type == ET_DEATH_DOLLAR)
+			printf("ET_DEATH_DOLLAR: %s\n", "$");
+		else if (expanding_token->type == ET_WILDCARD)
+			printf("ET_WILDCARD: %s\n", "*");
+		else if (expanding_token->type == ET_SEPARATOR)
+			printf("ET_SEPARATOR: %s\n", "/");
+		else
+			printf("Unknown type\n");
+		expanding_tokens = expanding_tokens->next;
+	}
+}
+
+void UNUSED	print_str_list(char **str_list)
+{
+	int	i;
+
+	i = 0;
+	while (str_list[i] != NULL)
+	{
+		printf("%s\n", str_list[i]);
+		i++;
+	}
+}
+
+void UNUSED	print_expanded_file_names(t_list *redirections)
+{
+	t_list			*current_redirection;
+	t_redirection	*redirection;
+
+	current_redirection = redirections;
+	while (current_redirection != NULL)
+	{
+		redirection = (t_redirection *)current_redirection->content;
+		printf("Expanded file name: %s\n", redirection->expanded_file_name);
+		current_redirection = current_redirection->next;
+	}
+}
 
 // for call_heredoc test **************************************************//
 void UNUSED	all_get_line(int fd) //テスト用
