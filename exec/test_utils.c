@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:14:40 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/16 11:53:34 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/20 04:22:44 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,76 @@
 // 	return (node);
 // }
 
-// redirection (builtins)
+// // redirection (redirect_output_to_file)
+// t_abs_node	*abs_init(void)
+// {
+//     t_abs_node	*node = (t_abs_node *)malloc(sizeof(t_abs_node));
+//     t_redirection	*redirection;
+
+//     if (!node)
+//         return (NULL); // メモリ確保失敗時のエラーハンドリング
+
+//     // ノードの初期化
+//     node->expanded_args = (char **)malloc(sizeof(char *) * (2 + 1));
+//     if (!node->expanded_args)
+//     {
+//         free(node);
+//         return (NULL);
+//     }
+//     node->expanded_args[0] = strdup("echo");
+//     node->expanded_args[1] = strdup("AAA");
+//     node->expanded_args[2] = NULL;
+
+//     // リダイレクトリストの初期化
+//     node->redirection_list = (t_list *)malloc(sizeof(t_list));
+//     if (!node->redirection_list)
+//     {
+//         free(node->expanded_args[0]);
+//         free(node->expanded_args[1]);
+//         free(node->expanded_args);
+//         free(node);
+//         return (NULL);
+//     }
+
+//     redirection = (t_redirection *)malloc(sizeof(t_redirection));
+//     if (!redirection)
+//     {
+//         free(node->redirection_list);
+//         free(node->expanded_args[0]);
+//         free(node->expanded_args[1]);
+//         free(node->expanded_args);
+//         free(node);
+//         return (NULL);
+//     }
+
+//     redirection->type = RE_OP_OUTPUT;
+//     redirection->fd = 0;
+//     redirection->file_name = NULL;
+//     redirection->expanded_file_name = strdup("test.txt"); // strdupでコピー
+//     if (!redirection->expanded_file_name)
+//     {
+//         free(redirection);
+//         free(node->redirection_list);
+//         free(node->expanded_args[0]);
+//         free(node->expanded_args[1]);
+//         free(node->expanded_args);
+//         free(node);
+//         return (NULL);
+//     }
+
+//     node->redirection_list->content = redirection;
+//     node->redirection_list->next = NULL; // nextをNULLで初期化
+
+//     // その他のフィールドの初期化
+//     node->type = COMMAND;
+//     node->command_args = NULL;
+//     node->left = NULL;
+//     node->right = NULL;
+
+//     return (node);
+// }
+
+// redirection (redirect_input_from_file)
 t_abs_node	*abs_init(void)
 {
     t_abs_node	*node = (t_abs_node *)malloc(sizeof(t_abs_node));
@@ -152,10 +221,10 @@ t_abs_node	*abs_init(void)
         return (NULL);
     }
 
-    redirection->type = RE_OP_OUTPUT;
+    redirection->type = RE_OP_APPEND;
     redirection->fd = 0;
     redirection->file_name = NULL;
-    redirection->expanded_file_name = strdup(""); // strdupでコピー
+    redirection->expanded_file_name = strdup("test.txt"); // strdupでコピー
     if (!redirection->expanded_file_name)
     {
         free(redirection);
