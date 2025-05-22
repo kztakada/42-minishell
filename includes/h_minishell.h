@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:56:46 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/16 11:53:34 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/22 02:59:53 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@
 
 // test includes
 #include <stdbool.h>
+
+// This is saved stdout and stdin
+typedef struct s_std
+{
+	int		saved_stdin;
+	int		saved_stdout;
+}	t_std;
 
 typedef enum e_err_msg
 {
@@ -50,13 +57,6 @@ typedef struct s_path
 	char	*path;
 }	t_path;
 
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
 // abs node
 typedef enum e_redirection_op_type
 {
@@ -65,6 +65,7 @@ typedef enum e_redirection_op_type
 	RE_OP_INPUT,  // <
 	RE_OP_OUTPUT, // >
 }							t_redirection_op_type;
+
 // filename is t_parsed_text list
 typedef struct s_redirection
 {
@@ -82,6 +83,7 @@ typedef enum e_abs_node_type
 	PIPE,
 	COMMAND
 }							t_abs_node_type;
+
 // command_args is list of t_parsed_text
 // redirection_list is list of t_redirection
 struct						s_abs_node
@@ -94,30 +96,23 @@ struct						s_abs_node
 	t_abs_node				*right;
 };
 
-typedef struct s_minishell
-{
-	t_env	*env_lst;
-	char	**envp;
-	int		exit_s;
-	int		sig_child;
-}	t_minishell;
-
 // prototypes builtins
-int		ft_cd(char *path, t_minishell *minishell);
+int		ft_cd(char *path, t_list *env_list);
 int		ft_echo(char **args);
-int		ft_env(t_minishell *minishell);
-int		ft_exit(char **args, t_minishell *minishell);
-int		ft_export(char **argv, t_minishell *minishell);
+int		ft_env(t_list *env_list);
+int		ft_exit(char **args, t_exit_status exit_s);
+int		ft_export(char **argv, t_list *env_list);
 int		ft_pwd(void);
-int		ft_unset(char **args, t_minishell *minishell);
-t_bool	create_add_new_env(t_env **env_lst, char *key, char *value);
-t_bool	update_env_value(t_env **env_lst, char *key, char *value);
-int		is_alredy_exist(t_env *env_lst, char *key);
-int		check_key_error(char *arg);
+int		ft_unset(char **args, t_list *env_list);
+t_bool	create_add_new_env(t_list **env_lst, char *name, char *value);
+t_bool	update_env_value(t_list **env_lst, char *name, char *value);
+int		is_alredy_exist(t_list *env_lst, char *name);
+int		check_name_error(char *arg);
 
 //prototypes exec
-int			exec_cmd_external(t_abs_node *node, t_minishell *minishell);
-int			exec_cmd_builtin(char **args, t_minishell *minishell);
+int			exec_cmd(t_abs_node *abs, t_env *env, t_std std);
+int			exec_cmd_external(t_abs_node *node, char *envp[]);
+int			exec_cmd_builtin(char **args, t_env *env);
 int			exec_redirection(t_abs_node *node);
 t_path		get_path(char *cmd);
 t_path		create_t_path(char *cmd, int err_exit_s,
@@ -150,13 +145,6 @@ int 	err_msg_redirection(char *filename);
 t_abs_node		*abs_init(void);
 
 //test_utils (builtins)
-t_minishell	minishell_init(char **envp);
-t_env 		*make_env_list(char **envp);
-char		*ft_extract_key(char *str);
-void		*ft_garbage_collector(void *ptr, bool clean);
-char		*ft_extract_value(char *str);
-void		ft_update_env_lst(char *key, char *value, bool create, t_env **env_lst);
-void		ft_env_lst_back(t_env *new, t_env *env_lst);
-t_env		*ft_env_lst_new(char *key, char *value);
+t_list	*init_envlst(char **env);
 
 #endif

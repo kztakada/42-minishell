@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:44:45 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/16 11:44:53 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/20 02:54:44 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_env_var
 typedef struct s_env
 {
 	t_list			*env_lists;
+	char 			**envp;
 	t_exit_status	*exit_status;
 }					t_env;
 
