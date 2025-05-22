@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   grammar_redirect.c                                 :+:      :+:    :+:   */
+/*   grammar_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -28,7 +28,7 @@ int	grammar_heredoc(t_list **next_tokens, int subshell_depth,
 		&& get_token((*next_tokens)->next)->type == TERMINATOR)
 		return (NG_G);
 	if (*strict_mode == TRUE)
-		return (grammar_subshell_to_redirect(next_tokens, strict_mode));
+		return (grammar_subshell_to_redirection(next_tokens, strict_mode));
 	return (OK_G);
 }
 
@@ -42,7 +42,7 @@ int	grammar_re_append(t_list **next_tokens, int subshell_depth,
 		&& get_token((*next_tokens)->next)->type == TERMINATOR)
 		return (NG_G);
 	if (*strict_mode == TRUE)
-		return (grammar_subshell_to_redirect(next_tokens, strict_mode));
+		return (grammar_subshell_to_redirection(next_tokens, strict_mode));
 	return (OK_G);
 }
 
@@ -56,7 +56,7 @@ int	grammar_re_input(t_list **next_tokens, int subshell_depth,
 		&& get_token((*next_tokens)->next)->type == TERMINATOR)
 		return (NG_G);
 	if (*strict_mode == TRUE)
-		return (grammar_subshell_to_redirect(next_tokens, strict_mode));
+		return (grammar_subshell_to_redirection(next_tokens, strict_mode));
 	return (OK_G);
 }
 
@@ -70,6 +70,6 @@ int	grammar_re_output(t_list **next_tokens, int subshell_depth,
 		&& get_token((*next_tokens)->next)->type == TERMINATOR)
 		return (NG_G);
 	if (*strict_mode == TRUE)
-		return (grammar_subshell_to_redirect(next_tokens, strict_mode));
+		return (grammar_subshell_to_redirection(next_tokens, strict_mode));
 	return (OK_G);
 }

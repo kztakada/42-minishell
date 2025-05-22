@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 23:25:10 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:47:42 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static t_list	**setup_check_config(t_token *test_token,
 
 // strict_mode:
 // bash only strictly checks the second argument
-// if the subshell is followed by a redirect.
+// if the subshell is followed by a redirection.
 static int	check_atomic_token_grammar(t_list **current_tokens,
 		int *subshell_depth)
 {

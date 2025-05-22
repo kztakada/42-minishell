@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_main.c                                        :+:      :+:    :+:   */
+/*   err_msg_lib_func.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 14:55:16 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/20 04:16:34 by kharuya          ###   ########.fr       */
+/*   Created: 2025/05/09 13:39:34 by kharuya           #+#    #+#             */
+/*   Updated: 2025/05/22 03:57:12 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-// check_redirection input (external)
-int main(int ac, char *av[], char *envp[])
+int	err_msg_malloc(void)
 {
-	(void)ac;
-	(void)av;
-	t_abs_node		*abs = abs_init();
-	t_env	*env = (t_env *)malloc(sizeof(t_env) * 1);
-	env->env_lists = init_envlst(envp);
-	env->envp = envp;
-	env->exit_status = 0;
-	exec_redirection(abs);
-	exec_cmd_builtin(abs->expanded_args, env);
-	return (0);
+	perror(ERROR_MALLOC);
+	return (EXIT_S_FAILURE);
 }
+
+// ここではエラーメッセージと共にfreeが必要なものをfreeするが、
+//まだ構造体の構成がはっきりしていないので、後から処理を追加する。

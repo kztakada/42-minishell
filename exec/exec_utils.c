@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_redirection.c                                 :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 19:00:58 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/06 14:32:04 by kharuya          ###   ########.fr       */
+/*   Created: 2025/05/15 16:22:32 by kharuya           #+#    #+#             */
+/*   Updated: 2025/05/15 17:48:50 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-int	exec_redirection(t_abs_node node)
+t_err	create_t_err(int err_exit_s, int err_msg, char *err_cause)
 {
-	(void)node;
-	return (0);
+	t_err err;
+
+	err.exit_s = err_exit_s;
+	err.msg = err_msg;
+	err.cause = err_cause;
+	return (err);
+}
+
+t_path	create_t_path(char *cmd, int err_exit_s,
+	int err_msg, char *err_cause)
+{
+	t_path	path;
+
+	path.path = cmd;
+	path.err = create_t_err(err_exit_s, err_msg, err_cause);
+	return (path);
 }

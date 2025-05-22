@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 03:53:28 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:44:45 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ enum						e_exit_status
 	EXIT_S_CMD_FAILURE = 126,
 	EXIT_S_CMD_NOT_FOUND = 127,
 	EXIT_S_INVALID_ARG = 128,
+	EXIT_S_OUT_OF_RANGE = 255,
 };
 // error messages *************************************************/
 # define ERROR_MALLOC "Error: Memory allocation failed\n"

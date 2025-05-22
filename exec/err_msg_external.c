@@ -1,50 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_msg.c                                          :+:      :+:    :+:   */
+/*   err_msg_external.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 15:56:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/25 07:05:35 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/22 03:53:44 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-static int	msg_cmd_not_found(t_err err)
+int	msg_cmd_not_found(t_err err)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(err.cause, 2);
 	ft_putstr_fd(": command not found\n", 2);
-	return (err.no);
+	return (err.exit_s);
 }
 
-static int	msg_no_such_file(t_err err)
+int	msg_no_such_file(t_err err)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(err.cause, 2);
 	ft_putstr_fd(": No such file or directory\n", 2);
-	return (err.no);
+	return (err.exit_s);
 }
 
-static int	msg_perm_denied(t_err err)
+int	msg_perm_denied(t_err err)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(err.cause, 2);
 	ft_putstr_fd(": Permission denied\n", 2);
-	return (err.no);
+	return (err.exit_s);
 }
 
-static int msg_ambiguous(t_err err)
+int	msg_ambiguous(t_err err)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(err.cause, 2);
-	ft_putstr_fd(": ambiguous redirect\n", 2);
-	return (err.no);
+	ft_putstr_fd(": ambiguous redirection\n", 2);
+	return (err.exit_s);
 }
 
-int	err_msg(t_err err)
+int	msg_is_directory(t_err err)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(err.cause, 2);
+	ft_putstr_fd(": Is a directory\n", 2);
+	return (err.exit_s);
+}
+
+int	err_msg_external(t_err err)
 {
 	if (err.msg == ERRMSG_CMD_NOT_FOUND)
 		return (msg_cmd_not_found(err));
@@ -52,7 +60,5 @@ int	err_msg(t_err err)
 		return (msg_no_such_file(err));
 	else if (err.msg == ERRMSG_PERM_DENIED)
 		return (msg_perm_denied(err));
-	else if (err.msg == ERRMSG_AMBIGUOUS)
-		return (msg_ambiguous(err));
-	return (0);
+	return (EXIT_S_SUCCESS);
 }

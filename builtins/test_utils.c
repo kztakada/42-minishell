@@ -6,151 +6,124 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:43:00 by kharuya           #+#    #+#             */
-/*   Updated: 2025/04/22 21:46:49 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/20 02:15:14 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-char	*ft_extract_key(char *str)
+static char	*extract_env_var_value(char *env_var_source, int *is_error)
 {
-	size_t	i;
+	char	*var_value;
+	int		var_value_len;
+	int		i;
 
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (ft_garbage_collector(ft_substr(str, 0, i), false));
+	var_value = NULL;
+	while (env_var_source[i] && env_var_source[i] != '=')
 		i++;
-	}
-	return (ft_strdup(str));
-}
-
-static void	ft_del(void *ptr)
-{
-	free(ptr);
-	ptr = NULL;
-}
-
-void	*ft_garbage_collector(void *ptr, bool clean)
-{
-	static t_list	*garbage_list;
-
-	if (clean)
+	if (env_var_source[i] == '=')
 	{
-		ft_lstclear(&garbage_list, ft_del);
+		i++;
+		var_value_len = ft_strlen(env_var_source) - i;
+		var_value = ft_substr(env_var_source, i, var_value_len);
+		if (var_value == NULL)
+			*is_error = TRUE;
+	}
+	return (var_value);
+}
+
+
+static char	*extract_env_var_name(char *env_var_source, int *is_error)
+{
+	char	*var_name;
+	int		i;
+
+	i = 0;
+	var_name = NULL;
+	while (env_var_source[i] && env_var_source[i] != '=')
+		i++;
+	var_name = ft_substr(env_var_source, 0, i);
+	if (var_name == NULL)
+		*is_error = TRUE;
+	return (var_name);
+}
+
+static void	free_env_var(void *env_var)
+{
+	t_env_var	*to_free_object;
+
+	to_free_object = (t_env_var *)env_var;
+	if (to_free_object)
+	{
+		free(to_free_object->name);
+		free(to_free_object->value);
+		free(to_free_object);
+	}
+}
+
+static t_list	**set_env_ver_to_list(t_list **env_lists, t_env_var *env_var)
+{
+	t_list	*new_env_list;
+
+	new_env_list = ft_lstnew(env_var);
+	if (!new_env_list)
+	{
+		free_env_var((void *)env_var);
 		return (NULL);
 	}
-	else
-	{
-		ft_lstadd_back(&garbage_list, ft_lstnew(ptr));
-		return (ptr);
-	}
+	ft_lstadd_back(env_lists, new_env_list);
+	return (env_lists);
 }
 
-char	*ft_extract_value(char *str)
+static t_env_var	*get_env_var(char *env_var_source)
 {
-	size_t	i;
+	char		*env_var_name;
+	char		*env_var_value;
+	t_env_var	*env_var;
+	int			is_error;
 
-	i = 0;
-	while (str[i])
+	is_error = FALSE;
+	env_var_name = extract_env_var_name(env_var_source, &is_error);
+	env_var_value = extract_env_var_value(env_var_source, &is_error);
+	if (!env_var_name || is_error)
+		return (NULL);
+	env_var = malloc(sizeof(t_env_var));
+	if (!env_var)
 	{
-		if (str[i] == '=')
+		free(env_var_name);
+		free(env_var_value);
+		return (NULL);
+	}
+	env_var->name = env_var_name;
+	env_var->value = env_var_value;
+	return (env_var);
+}
+
+t_list	*init_envlst(char **env)
+{
+	int			i;
+	t_list		*env_lists;
+	t_env_var	*env_var;
+
+	if (!env)
+		return (NULL);
+	i = 0;
+	env_lists = NULL;
+	while (env[i])
+	{
+		env_var = get_env_var(env[i]);
+		if (!env_var)
 		{
-			i++;
-			return (ft_garbage_collector(
-					ft_substr(str, i, ft_strlen(str) - i), false));
+			ft_lstclear(&env_lists, free_env_var);
+			return (NULL);
+		}
+		if (!set_env_ver_to_list(&env_lists, env_var))
+		{
+			ft_lstclear(&env_lists, free_env_var);
+			return (NULL);
 		}
 		i++;
 	}
-	return (NULL);
-}
-
-void	ft_env_lst_back(t_env *new, t_env *env_lst)
-{
-	t_env	*curr;
-
-	if (!env_lst)
-	{
-		env_lst = new;
-		return ;
-	}
-	curr = env_lst;
-	while (curr && curr->next)
-		curr = curr->next;
-	curr->next = new;
-}
-
-t_env	*ft_env_lst_new(char *key, char *value)
-{
-	t_env	*new;
-
-	new = (t_env *)ft_calloc(1, sizeof(t_env));
-	if (!new)
-		return (NULL);
-	new->key = ft_garbage_collector(ft_strdup(key), false);
-	if (value)
-		new->value = ft_garbage_collector(ft_strdup(value), false);
-	new->next = NULL;
-	return (new);
-}
-
-void	ft_update_env_lst(char *key, char *value, bool create, t_env **env_lst)
-{
-    t_env	*new_node;
-    t_env	*current;
-
-    if (!key || !value || !env_lst)
-        return;
-
-    current = *env_lst;
-    while (current)
-    {
-        if (ft_strcmp(current->key, key) == 0)
-        {
-            free(current->value);
-            current->value = ft_strdup(value);
-            return;
-        }
-        current = current->next;
-    }
-
-    if (create)
-    {
-        new_node = ft_env_lst_new(key, value);
-        if (!new_node)
-            return;
-        new_node->next = *env_lst;
-        *env_lst = new_node;
-    }
-}
-
-t_env *make_env_list(char **envp)
-{
-	int	i;
-	char	*key;
-	char	*value;
-	t_env	*env_lst;
-
-	env_lst = NULL;
-	i = 0;
-	while (envp[i])
-	{
-		key = ft_extract_key(envp[i]);
-		value = ft_extract_value(envp[i]);
-		ft_update_env_lst(key, value, true, &env_lst);
-		i++;
-	}
-	return (env_lst);
-}
-
-t_minishell minishell_init(char **envp)
-{
-	t_minishell minishell;
-
-	ft_memset(&minishell, 0, sizeof(t_minishell));
-	minishell.envp = envp;
-	minishell.env_lst = make_env_list(envp);
-	minishell.exit_s = EXIT_SUCCESS;
-	return (minishell);
+	return (env_lists);
 }
