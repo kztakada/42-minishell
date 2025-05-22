@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   err_msg_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:58:06 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/22 03:58:49 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/23 01:31:44 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "exec.h"
 
 static t_err	identify_redirection_error(char *file_name)
 {

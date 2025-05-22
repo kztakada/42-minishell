@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 02:14:28 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/22 03:50:47 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/23 01:39:29 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "../includes/builtins.h"
 
 t_bool	update_env_value(t_list **env_list, char *name, char *value)
 {

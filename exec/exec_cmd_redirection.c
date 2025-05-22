@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "exec.h"
 
 static int	redirect_output_to_file(char *file_name, int *status)
 {

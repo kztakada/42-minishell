@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/23 01:15:29 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/23 02:34:01 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	execute_command(char *input, t_list *env_vars)
 	}
 	// 空文字入力など、exec_が実行されない場合は、exit_statusを更新しないこと
 	exec(abs_tree, &env);
-	printf("exit status: %d\n", exit_status);
+	// printf("exit status: %d\n", exit_status); // テスト用
 	free_abs_tree(abs_tree);
 }
 

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "exec.h"
 
 int	msg_cmd_not_found(t_err err)
 {

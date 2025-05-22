@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:51:35 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/15 16:22:59 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/23 01:30:23 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "exec.h"
 
 static t_path	check_exec(char *path, char *cmd)
 {

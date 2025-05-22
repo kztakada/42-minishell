@@ -6,11 +6,12 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:58:56 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/23 00:52:42 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/23 01:31:28 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "../includes/builtins.h"
+#include "exec.h"
 
 int	exec_cmd_builtin(char **args, t_env *env)
 {

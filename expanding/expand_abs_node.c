@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:40:57 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 23:23:12 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/23 02:37:32 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,11 @@ t_binary_result	expand_abs_node(t_abs_node *abs_node, t_env env)
 		if (expanded_args == NULL)
 			return (FAILURE_BIN_R);
 		abs_node->expanded_args = expanded_args;
-		print_str_list(abs_node->expanded_args);
+		// print_str_list(abs_node->expanded_args); // テスト用
 	}
 	e_r_result = expand_redirections(abs_node->redirections, env);
 	if (e_r_result == FAILURE_BIN_R)
 		return (FAILURE_BIN_R);
-	print_expanded_file_names(abs_node->redirections);
+	// print_expanded_file_names(abs_node->redirections); // テスト用
 	return (SUCCESS_BIN_R);
 }

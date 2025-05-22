@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:14:40 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/23 00:57:52 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/23 01:49:41 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "exec.h"
 
 // // exec_cmd_external(absolute path success)
 // t_abs_node	*abs_init(void)

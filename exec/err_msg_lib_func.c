@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   err_msg_lib_func.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:39:34 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/22 03:57:12 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/23 01:32:04 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "exec.h"
 
 int	err_msg_malloc(void)
 {

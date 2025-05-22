@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   err_msg_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:10:44 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/11 16:55:49 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/23 01:40:24 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "../includes/builtins.h"
+#include "exec.h"
 
 // cd
 int	cd_err_msg_file(char *path)

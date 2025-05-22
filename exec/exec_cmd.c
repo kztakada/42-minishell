@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:17:57 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/22 03:57:33 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/23 02:22:51 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "exec.h"
 
 static void	reset_stds(t_std std)
 {
@@ -48,7 +48,7 @@ int	exec_cmd(t_abs_node *abs, t_env *env, t_std std)
 		status = exec_redirection(abs);
 		if (status != EXIT_S_SUCCESS)
 			return (status);
-		status = exec_cmd_external(abs, env->envp);
+		status = exec_cmd_builtin(abs->expanded_args, env);
 		return (reset_stds(std), status);
 	}
 	else

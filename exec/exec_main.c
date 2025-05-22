@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 14:55:16 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/23 01:02:06 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/23 01:57:37 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "exec.h"
 
 // check_redirection input (external)
 // int	main(int ac, char *av[], char *envp[])

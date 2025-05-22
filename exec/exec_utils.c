@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:22:32 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/15 17:48:50 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/23 01:30:40 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/h_minishell.h"
+#include "exec.h"
 
 t_err	create_t_err(int err_exit_s, int err_msg, char *err_cause)
 {
