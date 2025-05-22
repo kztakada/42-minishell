@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_msg_redirection.c                                 :+:      :+:    :+:   */
+/*   err_msg_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 17:31:48 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/15 19:30:05 by kharuya          ###   ########.fr       */
+/*   Created: 2025/05/22 03:58:06 by kharuya           #+#    #+#             */
+/*   Updated: 2025/05/22 03:58:49 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_err	identify_redirection_error(char *file_name)
 {
-	struct stat buf;
+	struct stat	buf;
 
 	stat(file_name, &buf);
 	if (S_ISDIR(buf.st_mode))

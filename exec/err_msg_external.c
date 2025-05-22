@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 15:56:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/16 11:53:34 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/22 03:53:44 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	msg_perm_denied(t_err err)
 	return (err.exit_s);
 }
 
-int msg_ambiguous(t_err err)
+int	msg_ambiguous(t_err err)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(err.cause, 2);
@@ -44,7 +44,7 @@ int msg_ambiguous(t_err err)
 	return (err.exit_s);
 }
 
-int msg_is_directory(t_err err)
+int	msg_is_directory(t_err err)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(err.cause, 2);
