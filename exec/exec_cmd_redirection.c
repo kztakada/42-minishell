@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_redirection.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:00:58 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/22 04:01:50 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/23 00:48:55 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	redirect_output_to_file(char *file_name, int *status)
 {
-	int		fd;
+	int	fd;
 
 	fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
@@ -75,7 +75,7 @@ int	exec_redirection(t_abs_node *node)
 	char			*file_name;
 	int				status;
 
-	list = node->redirection_list;
+	list = node->redirections;
 	while (list)
 	{
 		redirection = list->content;
@@ -90,7 +90,8 @@ int	exec_redirection(t_abs_node *node)
 			&& redirect_append_to_file(file_name, &status) != EXIT_S_SUCCESS)
 			return (status);
 		else if (redirection->type == RE_OP_HEREDOC
-			&& redirect_input_from_fd(redirection->fd, &status) != EXIT_S_SUCCESS)
+			&& redirect_input_from_fd(redirection->fd,
+				&status) != EXIT_S_SUCCESS)
 			return (status);
 		list = list->next;
 	}

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env__utils.c                                  :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 20:20:37 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/23 00:26:35 by katakada         ###   ########.fr       */
+/*   Created: 2025/05/23 00:13:08 by katakada          #+#    #+#             */
+/*   Updated: 2025/05/23 01:10:01 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "exec.h"
 
-void	free_env_var(void *env_var)
+void	exec(t_abs_node *abs_tree, t_env *env)
 {
-	t_env_var	*to_free_object;
+	t_exit_status	result;
 
-	to_free_object = (t_env_var *)env_var;
-	if (to_free_object)
+	result = expander(abs_tree, *env);
+	if (result != 0)
 	{
-		free(to_free_object->name);
-		free(to_free_object->value);
-		free(to_free_object);
+		*(env->exit_status) = result;
+		return ;
 	}
 }

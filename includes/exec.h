@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env__utils.c                                  :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 20:20:37 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/23 00:26:35 by katakada         ###   ########.fr       */
+/*   Created: 2025/05/23 00:13:37 by katakada          #+#    #+#             */
+/*   Updated: 2025/05/23 00:14:30 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-void	free_env_var(void *env_var)
-{
-	t_env_var	*to_free_object;
+# include "minishell.h"
 
-	to_free_object = (t_env_var *)env_var;
-	if (to_free_object)
-	{
-		free(to_free_object->name);
-		free(to_free_object->value);
-		free(to_free_object);
-	}
-}
+#endif

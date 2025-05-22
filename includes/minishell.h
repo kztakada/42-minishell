@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 23:44:45 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/23 00:55:24 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ typedef enum e_binary_result
 	FAILURE_BIN_R = -1,
 	SUCCESS_BIN_R = 0,
 }							t_binary_result;
+
+# define FAILURE -1
+# define SUCCESS 0
+// prompt
+# define PROMPT "minishell$ "
+# define HEREDOC_PROMPT "> "
 // for env    ***************************************************/
 typedef struct s_env_var
 {
@@ -51,6 +57,7 @@ typedef struct s_env_var
 typedef struct s_env
 {
 	t_list					*env_vars;
+	char					**envp;
 	t_exit_status			*exit_status;
 }							t_env;
 // exit status ***************************************************/
@@ -113,7 +120,72 @@ struct						s_token
 	t_token_type			type;
 	char					*value;
 };
+// t_parsed_word **********************************************
+typedef enum e_parsed_word_type
+{
+	W_PLAIN,
+	W_DOUBLE_QUOTED,
+	W_SINGLE_QUOTED,
+}							t_parsed_word_type;
+typedef struct s_parsed_word
+{
+	t_parsed_word_type		type;
+	char					*str;
+}							t_parsed_word;
+// t_redirection ***********************************************
+typedef enum e_redirect_op_type
+{
+	RE_OP_HEREDOC,
+	RE_OP_APPEND,
+	RE_OP_INPUT,
+	RE_OP_OUTPUT,
+}							t_redirect_op_type;
+// filename is t_parsed_word list
+// if heredoc, filename is EOF
+typedef struct s_redirection
+{
+	t_redirect_op_type		type;
+	int						fd;
+	t_list					*file_name_words;
+	char					*expanded_file_name;
+}							t_redirection;
+// abs_node ****************************************************
+typedef struct s_abs_node	t_abs_node;
+typedef enum e_abs_node_type
+{
+	ABS_BIN_AND,
+	ABS_BIN_OR,
+	ABS_PIPE,
+	ABS_COMMAND
+}							t_abs_node_type;
+// cmd_words is list of t_parsed_word
+// redirections is list of t_redirection
+struct						s_abs_node
+{
+	t_bool					is_subshell;
+	t_abs_node_type			type;
+	t_list					*cmd_words;
+	char					**expanded_args;
+	t_list					*redirections;
+	t_abs_node				*left;
+	t_abs_node				*right;
+};
 //*****************************************************************/
+
+// lexer.c
+t_exit_status				lexer(char *input, t_list **token_list);
+
+// parser.c
+t_exit_status				parser(t_list *input_tokens, t_abs_node **abs_tree,
+								t_env env);
+
+// expander.c
+t_exit_status				expander(t_abs_node *abs_tree, t_env env);
+
+// exec.c
+void						exec(t_abs_node *abs_tree, t_env *env);
+
+// utils **********************************************************/
 
 // dictionary.c
 t_dict_out					lookup_dict(char *subject, char *dict);
@@ -133,4 +205,13 @@ void						free_str_list_by_size(char **str_list,
 
 // lexing_utils.c
 void						free_token(void *target);
+
+// init_env__utils.c
+void						free_env_var(void *env_var);
+
+// init_env.c
+t_list						*init_envlst(char **env);
+
+// parser_utils.c
+void						free_abs_tree(t_abs_node *abs_tree);
 #endif

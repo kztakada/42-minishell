@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:51:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 23:48:07 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:56:48 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static int	grammar_operator(t_token *test_token, t_list **next_tokens,
 			subshell_depth));
 }
 
-static int	grammar_redirection(t_token *test_token, t_list **next_tokens,
+static int	grammar_redirect(t_token *test_token, t_list **next_tokens,
 		int subshell_depth, t_bool *strict_mode)
 {
-	t_gram_redirection	*g_redirection;
+	t_gram_redirect	*g_redirect;
 
-	g_redirection = (t_gram_redirection[]){
+	g_redirect = (t_gram_redirect[]){
 		grammar_heredoc,
 		grammar_re_append,
 		grammar_re_input,
@@ -61,7 +61,7 @@ int	grammar_next_token(t_token *test_token, t_list **next_tokens,
 	else if (is_in(G_OPERATORS, test_token))
 		return (grammar_operator(test_token, next_tokens, *subshell_depth));
 	else if (is_in(REDIRECT_OP, test_token))
-		return (grammar_redirection(test_token, next_tokens, *subshell_depth,
+		return (grammar_redirect(test_token, next_tokens, *subshell_depth,
 				strict_mode));
 	else
 		return (grammar_operand_text(test_token, next_tokens, *subshell_depth,

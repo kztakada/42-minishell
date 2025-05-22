@@ -1,7 +1,7 @@
 #ifndef FOR_TEST_PRINT_H
 # define FOR_TEST_PRINT_H
 
-# include "t_minishell.h"
+# include "minishell.h"
 void	print_expanding_token_list(t_list *expanding_tokens);
 void	print_str_list(char **str_list);
 void	print_expanded_file_names(t_list *redirections);

@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:47:55 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 03:53:10 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/23 00:27:32 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "minishell.h"
 
 int	is_ifs(char c)
 {

@@ -1,7 +1,7 @@
 #ifndef LEXING_H
 # define LEXING_H
 
-# include "t_minishell.h"
+# include "minishell.h"
 
 // lexicize_func_sign.c
 int	add_token_to_list(t_token *token, t_list **token_list);

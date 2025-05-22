@@ -1,7 +1,7 @@
 #ifndef PARSING_H
 # define PARSING_H
 
-# include "t_minishell.h"
+# include "minishell.h"
 
 // grammar dictionary
 # define REDIRECT_OP " << >> < >"

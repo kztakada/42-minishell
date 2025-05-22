@@ -6,22 +6,14 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 13:33:01 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/23 00:26:47 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANDING_H
 # define EXPANDING_H
 
-# include "t_minishell.h"
-
-// typedef enum e_expanding
-// {
-// 	FAILURE_EX = -1,
-// 	AMBIGUOUS_R_ERROR_EX = 0,
-// 	SUCCESS_EX = 1,
-
-// }						t_expanding;
+# include "minishell.h"
 
 // t_expanded_word **********************************************
 // ET_DEATH_DOLLAR is when there is a dollar sign at the end of

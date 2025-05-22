@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:19:22 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/18 18:06:18 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/23 00:26:37 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_minishell.h"
+#include "minishell.h"
 
 static char	*extract_env_var_name(char *env_var_source, int *is_error)
 {
@@ -71,8 +71,6 @@ static t_env_var	*get_env_var(char *env_var_source)
 	env_var->value = env_var_value;
 	return (env_var);
 }
-
-
 
 static t_list	**set_env_ver_to_list(t_list **env_vars, t_env_var *env_var)
 {

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   grammar_subshell_to_redirection.c                     :+:      :+:    :+:   */
+/*   grammar_subshell_to_redirect.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 20:06:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 14:27:05 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:59:48 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_loop_status	check_strict_text(t_list **next_tokens)
 	return (CONTINUE);
 }
 
-int	grammar_subshell_to_redirection(t_list **next_tokens, t_bool *strict_mode)
+int	grammar_subshell_to_redirect(t_list **next_tokens, t_bool *strict_mode)
 {
 	while (get_token(*next_tokens)->type == OPERAND_TEXT
 		|| get_token(*next_tokens)->type == QUOTE_SINGLE
