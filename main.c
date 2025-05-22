@@ -6,11 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/18 18:11:27 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:20:38 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "for_test_parsing.h"
+#include "for_test_print.h"
 #include "t_minishell.h"
 
 static t_bool	safe_add_history(char *input)

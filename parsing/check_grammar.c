@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 04:42:40 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:25:10 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ static t_loop_status	can_keep_phrasing_tokens(t_token *phrase_top_token,
 	if (is_in(CMD_MEMBER_OP, phrase_top_token)
 		|| phrase_top_token->type == OPERAND_TEXT)
 	{
-		if (is_in(NOT_CMD_MEMBER_OP, next_token) || is_in(CMD_MEMBER_OP,
-				next_token))
+		if (is_in(OPERATORS_DICT, next_token))
 			return (STOP);
+		else
+			return (CONTINUE);
 	}
 	else
 		return (STOP);
-	return (CONTINUE);
 }
 
 // "phrase" is the smallest unit of an abstract syntax tree
@@ -91,6 +91,13 @@ int	check_one_phrase_grammar(t_list **current_tokens, int *subshell_depth)
 	while (can_keep_phrasing_tokens(phrase_top_token,
 			get_token(*current_tokens)) == CONTINUE)
 	{
+		if (get_token(*current_tokens)->type == OPERAND_TEXT
+			&& has_ifs(get_token(*current_tokens)->value))
+		{
+			if (!is_ifs(get_token(*current_tokens)->value[0]))
+				*current_tokens = (*current_tokens)->next;
+			break ;
+		}
 		g_result = check_atomic_token_grammar(current_tokens, subshell_depth);
 		if (g_result == NG_G)
 			return (NG_G);

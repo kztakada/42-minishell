@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:13:23 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 01:15:17 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 22:09:43 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ static t_binary_result	split_to_expanding_tokens(char *to_split,
 {
 	t_list	*under_expanding_token;
 
+	if (*to_split == '\0')
+	{
+		under_expanding_token = split_unquoted_word(&to_split);
+		if (under_expanding_token == NULL)
+			return (ft_lstclear(split_list, free_expanding_token),
+				FAILURE_BIN_R);
+		ft_lstadd_back(split_list, under_expanding_token);
+		return (SUCCESS_BIN_R);
+	}
 	while (*to_split != '\0')
 	{
 		if (*to_split == '*' || is_ifs(*to_split))

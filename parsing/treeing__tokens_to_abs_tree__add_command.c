@@ -6,14 +6,14 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 22:28:30 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 14:27:57 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:18:38 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static t_binary_result	set_file_name_words_to_redirection(t_list **current_tokens,
-		t_token *end_token, t_redirection *redirection)
+static t_binary_result	set_file_name_words_to_redirection(
+	t_list **current_tokens, t_token *end_token, t_redirection *redirection)
 {
 	t_binary_result	result;
 
@@ -61,8 +61,8 @@ static t_redirection	*init_redirection(t_token_type token_type)
 	return (redirection);
 }
 
-static t_binary_result	add_redirection_to_working_abs_node(t_list **current_tokens,
-		t_token *end_token, t_parsing_state *parsing_state)
+static t_binary_result	add_redirection_to_working_abs_node(
+	t_list **current_tokens, t_token *end_token, t_parsing_state *parsing_state)
 {
 	t_redirection	*redirection;
 	t_binary_result	result;
@@ -85,8 +85,8 @@ static t_binary_result	add_redirection_to_working_abs_node(t_list **current_toke
 	return (result);
 }
 
-static t_binary_result	add_cmd_words_to_working_abs_node(t_list **current_tokens,
-		t_token *end_token, t_parsing_state *parsing_state)
+static t_binary_result	add_cmd_words_to_working_abs_node(
+	t_list **current_tokens, t_token *end_token, t_parsing_state *parsing_state)
 {
 	t_binary_result	result;
 

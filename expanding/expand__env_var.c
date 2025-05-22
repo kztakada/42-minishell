@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 20:06:51 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/21 16:03:00 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 20:49:13 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,31 @@ char	*use_raw_str_when_double_quoted(char **raw_str)
 	return (raw_str_value);
 }
 
+void	remove_separator_when_duplicate(t_list **ex_tokens)
+{
+	t_list	*current_token;
+	t_list	*to_delete_token;
+
+	if (ex_tokens == NULL || *ex_tokens == NULL)
+		return ;
+	current_token = *ex_tokens;
+	while (current_token != NULL && current_token->next != NULL)
+	{
+		if (get_ex_token(&current_token)->type == ET_SEPARATOR
+			&& get_ex_token(&current_token->next)->type == ET_SEPARATOR)
+		{
+			to_delete_token = current_token->next;
+			current_token->next = current_token->next->next;
+			ft_lstdelone(to_delete_token, free_expanding_token);
+		}
+		else
+			current_token = current_token->next;
+	}
+}
+
 t_list	*expand_env_var_with_expanding_tokens(t_list *parsed_words, t_env env)
 {
-	t_list			*under_expanding_token;
+	t_list			*under_expanding;
 	t_list			*expanded_tokens;
 	t_list			*current_words;
 	t_parsed_word	*parsed_word;
@@ -81,18 +103,18 @@ t_list	*expand_env_var_with_expanding_tokens(t_list *parsed_words, t_env env)
 	{
 		parsed_word = (t_parsed_word *)current_words->content;
 		if (parsed_word->type == W_SINGLE_QUOTED)
-			under_expanding_token = expand_single_quoted_word(parsed_word->str);
+			under_expanding = expand_single_quoted_word(parsed_word->str);
 		else if (parsed_word->type == W_DOUBLE_QUOTED)
-			under_expanding_token = expand_double_quoted_word(parsed_word->str,
-					env);
+			under_expanding = expand_double_quoted_word(parsed_word->str, env);
 		else
-			under_expanding_token = expand_plain_word(current_words, env);
-		if (under_expanding_token == NULL)
+			under_expanding = expand_plain_word(current_words, env);
+		if (under_expanding == NULL)
 			return (ft_lstclear(&expanded_tokens, free_expanding_token), NULL);
-		ft_lstadd_back(&expanded_tokens, under_expanding_token);
+		ft_lstadd_back(&expanded_tokens, under_expanding);
 		forward_token_list(&current_words);
 	}
 	if (split_post_expanded_unquoted_str(&expanded_tokens) == FAILURE_BIN_R)
 		return (ft_lstclear(&expanded_tokens, free_expanding_token), NULL);
+	remove_separator_when_duplicate(&expanded_tokens);
 	return (expanded_tokens);
 }

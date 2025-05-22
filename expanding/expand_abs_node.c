@@ -6,34 +6,12 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:40:57 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 04:24:40 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:23:12 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
-
-void	print_expanding_token_list(t_list *expanding_tokens)
-{
-	t_expanding_token	*expanding_token;
-
-	while (expanding_tokens != NULL)
-	{
-		expanding_token = (t_expanding_token *)expanding_tokens->content;
-		if (expanding_token->type == ET_UNQUOTED_STR)
-			printf("ET_UNQUOTED_STR: %s\n", expanding_token->str);
-		else if (expanding_token->type == ET_QUOTED_STR)
-			printf("ET_QUOTED_STR: %s\n", expanding_token->str);
-		else if (expanding_token->type == ET_DEATH_DOLLAR)
-			printf("ET_DEATH_DOLLAR: %s\n", "$");
-		else if (expanding_token->type == ET_WILDCARD)
-			printf("ET_WILDCARD: %s\n", "*");
-		else if (expanding_token->type == ET_SEPARATOR)
-			printf("ET_SEPARATOR: %s\n", "/");
-		else
-			printf("Unknown type\n");
-		expanding_tokens = expanding_tokens->next;
-	}
-}
+#include "for_test_print.h"
 
 char	**expand_cmd_words(t_list *cmd_words, t_env env)
 {
@@ -65,11 +43,11 @@ static char	*expand_file_name(t_list *file_name_words, t_env env)
 		return (NULL);
 	// if (expand_wildcard(&expanding_tokens) == FAILURE_BIN_R)
 	// 	return (NULL);
-	// if (is_ambiguous_redirection(expanding_tokens))
-	// {
-	// 	put_ambiguous_redirection_err(file_name_words);
-	// 	return (ft_lstclear(&expanding_tokens, free_expanding_token), NULL);
-	// }
+	if (is_ambiguous_redirection(expanding_tokens))
+	{
+		put_ambiguous_redirection_err(file_name_words);
+		return (ft_lstclear(&expanding_tokens, free_expanding_token), NULL);
+	}
 	expanded_str_list = expanding_tokens_to_arg_list(expanding_tokens);
 	ft_lstclear(&expanding_tokens, free_expanding_token);
 	if (expanded_str_list == NULL)
@@ -121,32 +99,6 @@ static t_bool	has_cmd_words(t_abs_node *abs_node)
 		return (TRUE);
 }
 
-void	print_str_list(char **str_list)
-{
-	int	i;
-
-	i = 0;
-	while (str_list[i] != NULL)
-	{
-		printf("%s\n", str_list[i]);
-		i++;
-	}
-}
-
-void	print_expanded_file_names(t_list *redirections)
-{
-	t_list			*current_redirection;
-	t_redirection	*redirection;
-
-	current_redirection = redirections;
-	while (current_redirection != NULL)
-	{
-		redirection = (t_redirection *)current_redirection->content;
-		printf("Expanded file name: %s\n", redirection->expanded_file_name);
-		current_redirection = current_redirection->next;
-	}
-}
-
 t_binary_result	expand_abs_node(t_abs_node *abs_node, t_env env)
 {
 	char			**expanded_args;
@@ -166,10 +118,7 @@ t_binary_result	expand_abs_node(t_abs_node *abs_node, t_env env)
 	}
 	e_r_result = expand_redirections(abs_node->redirections, env);
 	if (e_r_result == FAILURE_BIN_R)
-	{
-		free_str_list(abs_node->expanded_args);
 		return (FAILURE_BIN_R);
-	}
 	print_expanded_file_names(abs_node->redirections);
 	return (SUCCESS_BIN_R);
 }

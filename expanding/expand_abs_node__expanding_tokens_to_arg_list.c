@@ -6,14 +6,14 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 04:08:51 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 04:10:21 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:36:48 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
 #define NULL_COUNT 1
 
-static int	get_arg_size(t_list *expanding_tokens)
+int	get_arg_size(t_list *expanding_tokens)
 {
 	t_list	*current_token;
 	int		arg_count;

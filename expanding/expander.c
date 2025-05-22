@@ -6,12 +6,12 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 19:57:12 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/21 16:00:06 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:20:38 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
-#include "for_test_parsing.h"
+#include "for_test_print.h"
 
 static t_binary_result	expand_abs_tree(t_abs_node *abs_tree, t_env env)
 {

@@ -6,12 +6,12 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:50:07 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 19:53:14 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/22 23:20:38 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
-#include "for_test_parsing.h"
+#include "for_test_print.h"
 #include "parsing.h"
 
 static char	*expand_heredoc_input(char *to_expand, t_env env)
