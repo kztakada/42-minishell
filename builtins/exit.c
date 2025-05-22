@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:27 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/11 17:01:07 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/20 02:36:56 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,8 @@ static int	get_exit_s(char *arg)
 	}
 }
 
-int	ft_exit(char **args, t_minishell *minishell)
+int	ft_exit(char **args, t_exit_status exit_s)
 {
-	int	exit_s;
-
-	exit_s = minishell->exit_s;
 	if (args[1])
 	{
 		if (!is_digit(args[1]))

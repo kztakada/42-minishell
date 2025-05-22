@@ -6,27 +6,30 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:45 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/08 16:14:41 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/20 02:29:53 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-static void	unset_env(char *key, t_minishell **minishell)
+static void	unset_env(char *name, t_list **env_list)
 {
-	t_env	*pre;
-	t_env	*curr;
+	t_list		*pre;
+	t_list		*curr;
+	t_env_var	*env_curr;
 
 	pre = NULL;
-	curr = (*minishell)->env_lst;
+	curr = *env_list;
 	while (curr)
 	{
-		if (!ft_strcmp(curr->key, key))
+		env_curr = curr->content;
+		if (!ft_strcmp(env_curr->name, name))
 		{
 			if (pre)
 				pre->next = curr->next;
 			else
-				(*minishell)->env_lst = curr->next;
+				*env_list = curr->next;
+			free(env_curr);
 			free(curr);
 			return ;
 		}
@@ -36,7 +39,7 @@ static void	unset_env(char *key, t_minishell **minishell)
 	return ;
 }
 
-int	ft_unset(char **args, t_minishell *minishell)
+int	ft_unset(char **args, t_list *env_list)
 {
 	int	i;
 	int	tmp_status;
@@ -47,10 +50,10 @@ int	ft_unset(char **args, t_minishell *minishell)
 	tmp_status = EXIT_SUCCESS;
 	while (args[i])
 	{
-		if (check_key_error(args[i]))
+		if (check_name_error(args[i]))
 			tmp_status = unset_err_msg(args[i]);
 		else
-			unset_env(args[i], &minishell);
+			unset_env(args[i], &env_list);
 		i++;
 	}
 	return (tmp_status);

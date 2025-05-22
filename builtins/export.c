@@ -6,78 +6,78 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/08 16:13:48 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/20 02:08:12 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/h_minishell.h"
 
-static int	print_env_list(t_minishell *minishell)
+static int	print_env_list(t_list *env_list)
 {
-	t_env	*env_lst;
-	size_t	i;
+	t_env_var	*env;
+	size_t		i;
 
-	env_lst = minishell->env_lst;
-	while (env_lst)
+	while (env_list)
 	{
-		if (env_lst->value != NULL && (ft_strcmp(env_lst->key, "_") != 0))
+		env = (t_env_var *)env_list->content;
+		if (env->value != NULL && (ft_strcmp(env->name, "_") != 0))
 		{
-			printf("declare -x %s=\"", env_lst->key);
+			printf("declare -x %s=\"", env->name);
 			i = 0;
-			while ((env_lst->value)[i])
+			while ((env->value)[i])
 			{
-				if ((env_lst->value)[i] == '$' || (env_lst->value)[i] == '"')
-					printf("\\%c", (env_lst->value)[i++]);
+				if ((env->value)[i] == '$' || (env->value)[i] == '"')
+					printf("\\%c", (env->value)[i++]);
 				else
-					printf("%c", (env_lst->value)[i++]);
+					printf("%c", (env->value)[i++]);
 			}
 			printf("\"\n");
 		}
-		else if (env_lst->value == NULL && (ft_strcmp(env_lst->key, "_") != 0))
-			printf("declare -x %s\n", env_lst->key);
-		env_lst = env_lst->next;
+		else if (env->value == NULL && (ft_strcmp(env->name, "_") != 0))
+			printf("declare -x %s\n", env->name);
+		env_list = env_list->next;
 	}
 	return (EXIT_SUCCESS);
 }
 
-static void	update_env_lst(char *arg, t_env *env_lst)
+static void	update_env_list(char *arg, t_list *env_list)
 {
-	char	*key;
+	char	*name;
 	char	*value;
 
 	if (!ft_strchr(arg, '='))
 	{
-		key = ft_strdup(arg);
+		name = ft_strdup(arg);
 		value = NULL;
 	}
 	else
 	{
-		key = ft_substr(arg, 0, ft_strchr(arg, '=') - arg);
+		name = ft_substr(arg, 0, ft_strchr(arg, '=') - arg);
 		value = ft_strchr(arg, '=') + 1;
 	}
-	if (is_alredy_exist(env_lst, key))
-		update_env_value(&env_lst, key, value);
+	if (is_alredy_exist(env_list, name))
+		update_env_value(&env_list, name, value);
 	else
-		create_add_new_env(&env_lst, key, value);
-	free(key);
+		create_add_new_env(&env_list, name, value);
+	free(name);
 	return ;
 }
 
-int	ft_export(char **argv, t_minishell *minishell)
+int	ft_export(char **argv, t_list *env_list)
 {
 	int	i;
 	int	tmp_status;
 
 	if (!argv[1])
-		return (print_env_list(minishell));
+		return (print_env_list(env_list));
 	i = 1;
 	tmp_status = EXIT_SUCCESS;
 	while (argv[i])
 	{
-		if (check_key_error(argv[i]))
+		if (check_name_error(argv[i]))
 			tmp_status = export_err_msg(argv[i]);
 		else
-			update_env_lst(argv[i], minishell->env_lst);
+			update_env_list(argv[i], env_list);
 		i++;
 	}
 	return (tmp_status);
