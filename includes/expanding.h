@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/23 00:26:47 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/25 02:31:38 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ char				*expand_dollar(char **dollar_str, t_env env);
 char				*use_raw_str_when_double_quoted(char **raw_str);
 t_list				*expand_env_var_with_expanding_tokens(t_list *parsed_words,
 						t_env env);
+
+// expand__wildcard__utils.c
+void				reconect_wild_expanded_list(t_list *wildcard_in_tokens,
+						t_list *wild_expanded_tokens);
+t_bool				has_wildcard_before_1st_separator(t_list *current_token);
+t_binary_result		insert_separator_to_quoted_ex_tokens(t_list *ex_tokens);
 
 // expand__wildcard.c
 t_binary_result		expand_wildcard(t_list **expanding_tokens);

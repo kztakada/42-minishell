@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:53:58 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 19:08:10 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/25 00:18:07 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,15 @@ t_list	*init_expanding_token(t_e_token_type type)
 	if (expanding_token == NULL)
 		return (NULL);
 	expanding_token->type = type;
-	expanding_token->str = NULL;
+	if (type == ET_DEATH_DOLLAR)
+		expanding_token->str = ft_strdup("$");
+	else if (type == ET_WILDCARD)
+		expanding_token->str = ft_strdup("*");
+	else
+		expanding_token->str = NULL;
+	if ((type == ET_DEATH_DOLLAR || type == ET_WILDCARD)
+		&& expanding_token->str == NULL)
+		return (free(expanding_token), NULL);
 	expanded_token = ft_lstnew(expanding_token);
 	if (expanded_token == NULL)
 	{
