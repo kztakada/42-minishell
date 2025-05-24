@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:15 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/23 01:39:37 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/24 20:43:23 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_echo(char **args)
 
 	i = 1;
 	n_flag = FALSE;
-	while (ft_strcmp(args[i], "-n") == 0)
+	while (args[i] != NULL && ft_strcmp(args[i], "-n") == 0)
 	{
 		n_flag = TRUE;
 		i++;
