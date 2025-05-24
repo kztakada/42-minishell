@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/23 02:34:01 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/24 20:14:52 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_bool	safe_add_history(char *input)
 	return (TRUE);
 }
 
-static void	execute_command(char *input, t_list *env_vars)
+static void	execute_command(char *input, t_list *env_vars, char **env_origin)
 {
 	t_list					*token_list;
 	t_abs_node				*abs_tree;
@@ -38,6 +38,7 @@ static void	execute_command(char *input, t_list *env_vars)
 	// TODO: lexerでエラーした時にexit_statusは何番を返せば良いか？
 	env.env_vars = env_vars;
 	env.exit_status = &exit_status;
+	env.envp = env_origin;
 	token_list = NULL;
 	result = lexer(input, &token_list);
 	free(input);
@@ -79,7 +80,7 @@ int	app_main(int argc, char **argv, char **env)
 			input = readline(PROMPT);
 			if (safe_add_history(input) == FALSE)
 				continue ;
-			execute_command(input, env_vars);
+			execute_command(input, env_vars, env);
 		}
 	}
 	else
@@ -94,7 +95,7 @@ int	app_main(int argc, char **argv, char **env)
 			if (newline)
 				*newline = '\0';
 			// printf("%s\n", input); // テスト用
-			execute_command(input, env_vars);
+			execute_command(input, env_vars, env);
 			input = get_next_line(STDIN_FILENO);
 		}
 		free(input);
