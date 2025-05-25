@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:47:55 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/23 00:27:32 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:11:44 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,15 @@ void	free_str_list_by_size(char **str_list, int str_list_size)
 		i++;
 	}
 	free(str_list);
+}
+
+void	ft_swap(void **a, void **b)
+{
+	void	*temp;
+
+	if (a == NULL || b == NULL || *a == NULL || *b == NULL)
+		return ;
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }
