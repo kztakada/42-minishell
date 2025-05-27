@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/25 02:31:38 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/27 01:10:40 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ t_list				*expand_env_var_with_expanding_tokens(t_list *parsed_words,
 						t_env env);
 
 // expand__wildcard__utils.c
-void				reconect_wild_expanded_list(t_list *wildcard_in_tokens,
-						t_list *wild_expanded_tokens);
+void				replace_wildcard_with_d_names(t_list *with_wildcd,
+						t_list *replaced_d_names);
 t_bool				has_wildcard_before_1st_separator(t_list *current_token);
 t_binary_result		insert_separator_to_quoted_ex_tokens(t_list *ex_tokens);
 
@@ -91,5 +91,6 @@ t_binary_result		expand_abs_node(t_abs_node *abs_node, t_env env);
 t_expanding_token	*get_ex_token(t_list **expanding_tokens);
 void				free_expanding_token(void *content);
 char				**expanding_tokens_to_arg_list(t_list *expanding_tokens);
+void				sort_ex_list_by_ascending(t_list **expanded_tokens);
 
 #endif

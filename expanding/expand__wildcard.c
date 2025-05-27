@@ -6,318 +6,335 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 20:07:15 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/25 23:38:12 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:56:31 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
 #include "for_test_print.h"
+#define ENDS_IN_WILDCARD -1
 
-char	get_next_char(t_list **w_tokens, int *current_index)
+t_bool	is_hidden_file(t_list *for_wildcd_check)
 {
-	char	next_char;
-
-	if (w_tokens == NULL || *w_tokens == NULL || current_index == NULL)
-		return ('\0');
-	if (get_ex_token(w_tokens)->type == ET_SEPARATOR)
-		return ('\0');
-	if (get_ex_token(w_tokens)->type == ET_WILDCARD)
-	{
-		while (*w_tokens != NULL && get_ex_token(w_tokens)->type == ET_WILDCARD)
-			*w_tokens = (*w_tokens)->next;
-		*current_index = 0;
-		return ('*');
-	}
-	if (get_ex_token(w_tokens)->str[*current_index] == '\0')
-	{
-		*w_tokens = (*w_tokens)->next;
-		*current_index = 0;
-		return (get_next_char(w_tokens, current_index));
-	}
-	next_char = get_ex_token(w_tokens)->str[*current_index];
-	(*current_index)++;
-	return (next_char);
-}
-
-char	wrap_get_next_char(t_list *wildcard_in_tokens, t_bool is_first_call)
-{
-	static t_list	*current_token;
-	static int		current_index;
-
-	if (is_first_call)
-	{
-		if (wildcard_in_tokens == NULL)
-			return ('\0');
-		current_token = wildcard_in_tokens;
-		current_index = 0;
-	}
-	return (get_next_char(&current_token, &current_index));
-}
-
-int	count_wildcard_in_tokens(t_list *wildcard_in_tokens)
-{
-	int	count;
-
-	count = 0;
-	if (wildcard_in_tokens == NULL)
-		return (0);
-	while (wildcard_in_tokens != NULL
-		&& get_ex_token(&wildcard_in_tokens)->type != ET_SEPARATOR)
-	{
-		if (get_ex_token(&wildcard_in_tokens)->type == ET_WILDCARD)
-			count++;
-		wildcard_in_tokens = wildcard_in_tokens->next;
-	}
-	return (count);
-}
-
-int	get_last_ward_length(t_list *wildcard_in_tokens)
-{
-	int		last_ward_length;
-	char	char_in_wildcard;
-
-	if (wildcard_in_tokens == NULL)
-		return (0);
-	last_ward_length = 0;
-	char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, TRUE);
-	while (char_in_wildcard != '\0')
-	{
-		if (char_in_wildcard == '*')
-		{
-			last_ward_length = 0;
-			char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, FALSE);
-			if (char_in_wildcard == '\0')
-				return (last_ward_length);
-			while (char_in_wildcard != '\0' && char_in_wildcard != '*')
-			{
-				last_ward_length++;
-				char_in_wildcard = wrap_get_next_char(wildcard_in_tokens,
-						FALSE);
-			}
-		}
-		else
-		{
-			last_ward_length++;
-			char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, FALSE);
-		}
-	}
-	return (last_ward_length);
-}
-
-t_bool	is_same_last_ward(char *d_name, t_list *wildcard_in_tokens)
-{
-	int		wildcard_count;
-	int		last_ward_length;
-	char	char_in_wildcard;
-	int		i;
-
-	wildcard_count = count_wildcard_in_tokens(wildcard_in_tokens);
-	last_ward_length = get_last_ward_length(wildcard_in_tokens);
-	if ((int)ft_strlen(d_name) < last_ward_length)
+	if (for_wildcd_check == NULL)
 		return (FALSE);
-	i = 0;
-	char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, TRUE);
-	while (char_in_wildcard != '\0' && i < wildcard_count)
-	{
-		if (char_in_wildcard == '*')
-			i++;
-		char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, FALSE);
-	}
-	i = ft_strlen(d_name) - last_ward_length;
-	while (d_name[i] != '\0' && char_in_wildcard != '\0')
-	{
-		if (char_in_wildcard == '*')
-			char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, FALSE);
-		if (d_name[i] != char_in_wildcard)
-			return (FALSE);
-		i++;
-		char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, FALSE);
-	}
-	if (char_in_wildcard == '\0')
+	if (get_ex_token(&for_wildcd_check)->type == ET_WILDCARD)
+		return (FALSE);
+	if (get_ex_token(&for_wildcd_check)->type == ET_QUOTED_STR
+		&& get_ex_token(&for_wildcd_check)->str[0] == '.')
+		return (TRUE);
+	if (get_ex_token(&for_wildcd_check)->type == ET_UNQUOTED_STR
+		&& get_ex_token(&for_wildcd_check)->str[0] == '.')
 		return (TRUE);
 	return (FALSE);
 }
 
-t_bool	is_last_word(t_list *wildcard_in_tokens)
+// 頭から文字列をstrncmpでチェックして、該当すれば、その文字列の長さ分、iを次に送る
+// 該当しなければその時点でFALSE
+// ＊の場合は、その次の文字列と合致するまで、判定を送る（＊の次の文字列が無かったらTRUE）
+// ＊の判定送り中に、最後まで行きついたら、FALSE
+t_bool	wd_check_by_list_count(char *d_name, t_list *for_wildcd_check,
+		int list_size)
 {
-	char	char_in_wildcard;
+	int	i;
 
-	char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, FALSE);
-	while (char_in_wildcard != '\0')
-	{
-		if (char_in_wildcard == '*')
-			return (FALSE);
-		char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, FALSE);
-	}
-	return (TRUE);
-}
-
-t_bool	can_expand_wildcard_to_name(char *d_name, t_list *wildcard_in_tokens)
-{
-	int		i;
-	char	char_in_wildcard;
-
-	if (wildcard_in_tokens == NULL || d_name == NULL)
-		return (FALSE);
 	i = 0;
-	char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, TRUE);
-	while (char_in_wildcard != '\0')
+	// print_expanding_token_list(for_wildcd_check);
+	// printf("d_name: %s\n", d_name);
+	// printf("list_size: %d\n", list_size);
+	while (for_wildcd_check != NULL && list_size > 0)
 	{
-		if (char_in_wildcard == '*')
+		// printf("ping\n");
+		if (get_ex_token(&for_wildcd_check)->type == ET_WILDCARD)
 		{
-			char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, FALSE);
-			if (char_in_wildcard == '\0')
+			// printf("pong\n");
+			forward_token_list(&for_wildcd_check);
+			if (for_wildcd_check == NULL)
 				return (TRUE);
-			while (d_name[i] != '\0' && d_name[i] != char_in_wildcard)
+			while (d_name[i] != '\0' && ft_strncmp(d_name + i,
+					get_ex_token(&for_wildcd_check)->str,
+					ft_strlen(get_ex_token(&for_wildcd_check)->str)) != 0)
 				i++;
 		}
-		if (d_name[i] == char_in_wildcard)
-			i++;
-		else
-		{
-			if (is_last_word(wildcard_in_tokens))
-				break ;
-			else
-				return (FALSE);
-		}
-		char_in_wildcard = wrap_get_next_char(wildcard_in_tokens, FALSE);
+		if (ft_strncmp(d_name + i, get_ex_token(&for_wildcd_check)->str,
+				ft_strlen(get_ex_token(&for_wildcd_check)->str)) != 0)
+			return (FALSE);
+		i += ft_strlen(get_ex_token(&for_wildcd_check)->str);
+		for_wildcd_check = for_wildcd_check->next;
+		list_size--;
 	}
-	return (is_same_last_ward(d_name, wildcard_in_tokens));
+	return (TRUE);
 }
 
-t_bool	has_2_prefix_in_ex_token(t_list *wildcard_in_tokens, char prefix_c1,
-		char prefix_c2)
+t_bool	wd_check_by_ends_in_str(char *d_name, t_list *for_wildcd_check,
+		int list_size)
 {
-	if (wildcard_in_tokens == NULL)
+	if (wd_check_by_list_count(d_name, for_wildcd_check, list_size
+			- 1) == FALSE)
 		return (FALSE);
-	while (wildcard_in_tokens != NULL
-		&& get_ex_token(&wildcard_in_tokens)->type != ET_SEPARATOR
-		&& get_ex_token(&wildcard_in_tokens)->str[0] == '\0')
-		wildcard_in_tokens = wildcard_in_tokens->next;
-	if (get_ex_token(&wildcard_in_tokens)->type == ET_DEATH_DOLLAR
-		|| get_ex_token(&wildcard_in_tokens)->type == ET_SEPARATOR
-		|| get_ex_token(&wildcard_in_tokens)->type == ET_WILDCARD
-		|| get_ex_token(&wildcard_in_tokens)->str[0] != prefix_c1)
-		return (FALSE);
-	if (get_ex_token(&wildcard_in_tokens)->str[1] != '\0')
-		return (get_ex_token(&wildcard_in_tokens)->str[1] == prefix_c1);
-	wildcard_in_tokens = wildcard_in_tokens->next;
-	while (wildcard_in_tokens != NULL
-		&& get_ex_token(&wildcard_in_tokens)->type != ET_SEPARATOR
-		&& get_ex_token(&wildcard_in_tokens)->str[0] == '\0')
-		wildcard_in_tokens = wildcard_in_tokens->next;
-	if (get_ex_token(&wildcard_in_tokens)->type == ET_DEATH_DOLLAR
-		|| get_ex_token(&wildcard_in_tokens)->type == ET_SEPARATOR
-		|| get_ex_token(&wildcard_in_tokens)->type == ET_WILDCARD
-		|| get_ex_token(&wildcard_in_tokens)->str[0] != prefix_c2)
+	for_wildcd_check = ft_lstlast(for_wildcd_check);
+	if (ft_strcmp(d_name + ft_strlen(d_name)
+			- ft_strlen(get_ex_token(&for_wildcd_check)->str),
+			get_ex_token(&for_wildcd_check)->str) != 0)
 		return (FALSE);
 	return (TRUE);
 }
 
-t_bool	has_1_suffix_in_ex_token(t_list *wildcard_in_tokens, char suffix_c1)
+t_bool	is_ends_in_wildcard(t_list *for_wildcd_check)
 {
-	char				end_char;
-	t_expanding_token	*ex_token;
-	int					i;
+	t_bool	result;
 
-	end_char = -1;
-	if (wildcard_in_tokens == NULL)
+	if (for_wildcd_check == NULL)
 		return (FALSE);
-	while (wildcard_in_tokens != NULL
-		&& get_ex_token(&wildcard_in_tokens)->type != ET_SEPARATOR)
+	while (for_wildcd_check != NULL)
 	{
-		ex_token = (t_expanding_token *)wildcard_in_tokens->content;
-		i = 0;
-		if (ex_token->type != ET_SEPARATOR)
-		{
-			while (ex_token->str[i] != '\0')
-			{
-				end_char = ex_token->str[i];
-				i++;
-			}
-		}
-		wildcard_in_tokens = wildcard_in_tokens->next;
+		if (get_ex_token(&for_wildcd_check)->type == ET_WILDCARD)
+			result = TRUE;
+		else
+			result = FALSE;
+		for_wildcd_check = for_wildcd_check->next;
 	}
-	if (end_char == -1)
-		return (FALSE);
-	return (end_char == suffix_c1);
+	return (result);
 }
 
-void	sort_ascending_list(t_list **wild_expanded_tokens)
+t_bool	can_replace_wildcard(char *d_name, t_list *for_wildcd_check)
 {
-	t_list				*current;
-	t_list				*next;
-	t_expanding_token	*current_token;
-	t_expanding_token	*next_token;
-
-	if (wild_expanded_tokens == NULL || *wild_expanded_tokens == NULL)
-		return ;
-	current = *wild_expanded_tokens;
-	while (current != NULL)
-	{
-		next = current->next;
-		while (next != NULL)
-		{
-			current_token = (t_expanding_token *)current->content;
-			next_token = (t_expanding_token *)next->content;
-			if (ft_strcmp(current_token->str, next_token->str) > 0)
-			{
-				ft_swap(&current->content, &next->content);
-			}
-			next = next->next;
-		}
-		current = current->next;
-	}
+	if (for_wildcd_check == NULL || d_name == NULL)
+		return (FALSE);
+	ft_lstsize(for_wildcd_check);
+	// 判定ブロック
+	// 頭文字が.で始まっていなかったら、.始まりを除外する
+	// printf("for_wildcd_check: %s\n", get_ex_token(&for_wildcd_check)->str);
+	// printf("is_hidden_file: %d\n", is_hidden_file(for_wildcd_check));
+	if (!is_hidden_file(for_wildcd_check) && d_name[0] == '.')
+		return (FALSE);
+	if (is_hidden_file(for_wildcd_check) && d_name[0] != '.')
+		return (FALSE);
+	// 最後が＊ではなかったら、最後の文字列はケツ合わせで確認する
+	if (is_ends_in_wildcard(for_wildcd_check))
+		return (wd_check_by_list_count(d_name, for_wildcd_check,
+				ft_lstsize(for_wildcd_check)));
+	else
+		return (wd_check_by_ends_in_str(d_name, for_wildcd_check,
+				ft_lstsize(for_wildcd_check)));
 }
 
-t_binary_result	expand_wildcard_before_1st_separator(t_list *wildcard_in_tokens)
+t_list	*make_d_name_ex_token(char *d_name, t_bool has_prefix_addr,
+		t_bool has_suffix_addr)
 {
-	DIR				*dir;
-	struct dirent	*entry;
-	t_list			*under_expanding;
-	t_list			*wild_expanded_tokens;
-	char			*wild_epanded_d_name;
+	char	*d_name_copy;
+	t_list	*d_name_ex_token;
 
-	if (wildcard_in_tokens == NULL)
+	d_name_copy = ft_strdup("");
+	if (has_prefix_addr == TRUE)
+		d_name_copy = strjoin_free(ft_strdup("./"), d_name_copy);
+	d_name_copy = strjoin_free(d_name_copy, ft_strdup(d_name));
+	if (has_suffix_addr == TRUE)
+		d_name_copy = strjoin_free(d_name_copy, ft_strdup("/"));
+	d_name_ex_token = expand_single_quoted_word(d_name_copy);
+	if (d_name_ex_token == NULL)
+		return (free(d_name_copy), NULL);
+	return (d_name_ex_token);
+}
+
+t_binary_result	delete_prefix_adrr(t_list **for_check, t_bool *has_prefix_addr)
+{
+	t_list	*tmp_list;
+	char	*tmp_str;
+
+	if (for_check == NULL || *for_check == NULL)
 		return (SUCCESS_BIN_R);
-	wild_expanded_tokens = NULL;
-	dir = opendir(".");
-	if (dir == NULL)
-		return (perror("opendir"), FAILURE_BIN_R);
+	if ((get_ex_token(for_check)->type != ET_UNQUOTED_STR
+			&& get_ex_token(for_check)->type != ET_QUOTED_STR))
+		return (SUCCESS_BIN_R);
+	if (ft_strcmp(get_ex_token(for_check)->str, "./") == 0)
+	{
+		tmp_list = *for_check;
+		*for_check = (*for_check)->next;
+		ft_lstdelone(tmp_list, free_expanding_token);
+		*has_prefix_addr = TRUE;
+	}
+	else if (ft_strlen(get_ex_token(for_check)->str) > 2
+		&& get_ex_token(for_check)->str[0] == '.'
+		&& get_ex_token(for_check)->str[1] == '/')
+	{
+		tmp_str = get_ex_token(for_check)->str;
+		get_ex_token(for_check)->str = ft_strdup(tmp_str + 2);
+		*has_prefix_addr = TRUE;
+		if (get_ex_token(for_check)->str == NULL)
+			return (perror(ERROR_MALLOC), free(tmp_str), FAILURE_BIN_R);
+	}
+	return (SUCCESS_BIN_R);
+}
+
+void	delete_last_list(t_list *for_check)
+{
+	t_list	*last;
+	t_list	*prev;
+
+	if (for_check == NULL)
+		return ;
+	last = ft_lstlast(for_check);
+	if (last == NULL)
+		return ;
+	prev = for_check;
+	while (prev->next != last)
+		prev = prev->next;
+	ft_lstdelone(last, free_expanding_token);
+	prev->next = NULL;
+}
+
+t_binary_result	delete_suffix_adrr(t_list *for_check, t_bool *has_suffix_addr)
+{
+	t_list	*origin;
+
+	origin = for_check;
+	if (for_check == NULL)
+		return (SUCCESS_BIN_R);
+	for_check = ft_lstlast(for_check);
+	if ((get_ex_token(&for_check)->type != ET_UNQUOTED_STR
+			&& get_ex_token(&for_check)->type != ET_QUOTED_STR))
+		return (SUCCESS_BIN_R);
+	if (ft_strcmp(get_ex_token(&for_check)->str, "/") == 0)
+	{
+		delete_last_list(origin);
+		*has_suffix_addr = TRUE;
+	}
+	else if (ft_strlen(get_ex_token(&for_check)->str) > 1
+		&& get_ex_token(&for_check)->str[ft_strlen(get_ex_token(&for_check)->str)
+		- 1] == '/')
+	{
+		get_ex_token(&for_check)->str[ft_strlen(get_ex_token(&for_check)->str)
+			- 1] = '\0';
+		*has_suffix_addr = TRUE;
+	}
+	return (SUCCESS_BIN_R);
+}
+
+t_list	*extract_tokens_for_wildcard_check(t_list *with_wildcd,
+		t_bool *has_prefix_addr, t_bool *has_suffix_addr)
+{
+	t_list	*for_check;
+	t_list	*new_token;
+	char	*new_str;
+
+	// 前工�����������������ブロ���ク
+	// ����ずは���ex_tokenのリストを、文字の塊と＊だけのリストに�����
+	// その時に、
+	// ./で始まっていたら、頭の２文字を除外する
+	// /で終わっていたら、最���を�����外する
+	// ＊が続いたら、１つだけにする
+	// 最後���空���字で終わる場合はリストは作らない
+	if (with_wildcd == NULL)
+		return (NULL);
+	for_check = NULL;
+	new_str = ft_strdup("");
+	if (new_str == NULL)
+		return (perror(ERROR_MALLOC), NULL);
+	while (with_wildcd != NULL
+		&& get_ex_token(&with_wildcd)->type != ET_SEPARATOR)
+	{
+		if (get_ex_token(&with_wildcd)->type == ET_WILDCARD)
+		{
+			if (ft_strcmp(new_str, "") != 0)
+			{
+				new_token = expand_single_quoted_word(new_str);
+				if (new_token == NULL)
+					return (ft_lstclear(&for_check, free_expanding_token),
+						free(new_str), NULL);
+				ft_lstadd_back(&for_check, new_token);
+				free(new_str);
+				new_str = ft_strdup("");
+				if (new_str == NULL)
+					return (ft_lstclear(&for_check, free_expanding_token),
+						NULL);
+			}
+			new_token = init_expanding_token(ET_WILDCARD);
+			if (new_token == NULL)
+				return (ft_lstclear(&for_check, free_expanding_token),
+					free(new_str), NULL);
+			ft_lstadd_back(&for_check, new_token);
+			while (get_ex_token(&with_wildcd)->type != ET_WILDCARD)
+				forward_token_list(&with_wildcd);
+		}
+		else if (get_ex_token(&with_wildcd)->type == ET_UNQUOTED_STR
+			|| get_ex_token(&with_wildcd)->type == ET_QUOTED_STR
+			|| get_ex_token(&with_wildcd)->type == ET_DEATH_DOLLAR)
+			new_str = strjoin_free(new_str,
+					ft_strdup(get_ex_token(&with_wildcd)->str));
+		forward_token_list(&with_wildcd);
+	}
+	if (ft_strcmp(new_str, "") != 0)
+	{
+		new_token = expand_single_quoted_word(new_str);
+		if (new_token == NULL)
+			return (ft_lstclear(&for_check, free_expanding_token),
+				free(new_str), NULL);
+		ft_lstadd_back(&for_check, new_token);
+	}
+	free(new_str);
+	if (delete_prefix_adrr(&for_check, has_prefix_addr) == FAILURE_BIN_R)
+		return (ft_lstclear(&for_check, free_expanding_token), NULL);
+	if (delete_suffix_adrr(for_check, has_suffix_addr) == FAILURE_BIN_R)
+		return (ft_lstclear(&for_check, free_expanding_token), NULL);
+	return (for_check);
+}
+
+t_binary_result	retrieve_d_names_to_replace(DIR *dir, t_list *with_wildcd,
+		t_list **replaced_d_names)
+{
+	struct dirent	*entry;
+	t_list			*d_name_ex_token;
+	t_list			*for_check;
+	t_bool			has_prefix_addr;
+	t_bool			has_suffix_addr;
+
+	has_prefix_addr = FALSE;
+	has_suffix_addr = FALSE;
+	for_check = extract_tokens_for_wildcard_check(with_wildcd, &has_prefix_addr,
+			&has_suffix_addr);
+	if (for_check == NULL)
+		return (perror(ERROR_MALLOC), FAILURE_BIN_R);
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
-		if (ft_strcmp(entry->d_name, ".") != 0 && ft_strcmp(entry->d_name,
-				"..") != 0 && entry->d_name[0] != '.')
+		if (can_replace_wildcard(entry->d_name, for_check))
 		{
-			if (can_expand_wildcard_to_name(entry->d_name, wildcard_in_tokens))
-			{
-				wild_epanded_d_name = ft_strdup("");
-				if (has_2_prefix_in_ex_token(wildcard_in_tokens, '.', '/'))
-					wild_epanded_d_name = strjoin_free(ft_strdup("./"),
-							wild_epanded_d_name);
-				wild_epanded_d_name = strjoin_free(wild_epanded_d_name,
-						ft_strdup(entry->d_name));
-				if (has_1_suffix_in_ex_token(wildcard_in_tokens, '/'))
-					wild_epanded_d_name = strjoin_free(wild_epanded_d_name,
-							ft_strdup("/"));
-				under_expanding = expand_single_quoted_word(wild_epanded_d_name);
-				if (under_expanding == NULL)
-					return (free(wild_expanded_tokens),
-						free(wild_epanded_d_name), closedir(dir),
-						FAILURE_BIN_R);
-				ft_lstadd_back(&wild_expanded_tokens, under_expanding);
-			}
+			d_name_ex_token = make_d_name_ex_token(entry->d_name,
+					has_prefix_addr, has_suffix_addr);
+			if (d_name_ex_token == NULL)
+				return (perror(ERROR_MALLOC), ft_lstclear(&for_check,
+						free_expanding_token), FAILURE_BIN_R);
+			ft_lstadd_back(replaced_d_names, d_name_ex_token);
 		}
 		entry = readdir(dir);
 	}
-	closedir(dir);
-	if (wild_expanded_tokens == NULL)
+	return (ft_lstclear(&for_check, free_expanding_token), SUCCESS_BIN_R);
+}
+
+t_binary_result	expand_wildcard_before_1st_separator(t_list *with_wildcd)
+{
+	DIR		*dir;
+	t_list	*d_names_to_replace;
+
+	if (with_wildcd == NULL)
 		return (SUCCESS_BIN_R);
-	sort_ascending_list(&wild_expanded_tokens);
-	if (insert_separator_to_quoted_ex_tokens(wild_expanded_tokens) == FAILURE_BIN_R)
-		return (free(wild_expanded_tokens), FAILURE_BIN_R);
-	reconect_wild_expanded_list(wildcard_in_tokens, wild_expanded_tokens);
+	d_names_to_replace = NULL;
+	dir = opendir(".");
+	if (dir == NULL)
+		return (perror("opendir"), FAILURE_BIN_R);
+	if (retrieve_d_names_to_replace(dir, with_wildcd,
+			&d_names_to_replace) == FAILURE_BIN_R)
+		return (ft_lstclear(&d_names_to_replace, free_expanding_token),
+			closedir(dir), FAILURE_BIN_R);
+	closedir(dir);
+	if (d_names_to_replace == NULL)
+		return (SUCCESS_BIN_R);
+	sort_ex_list_by_ascending(&d_names_to_replace);
+	if (insert_separator_to_quoted_ex_tokens(d_names_to_replace) == FAILURE_BIN_R)
+		return (ft_lstclear(&d_names_to_replace, free_expanding_token),
+			FAILURE_BIN_R);
+	replace_wildcard_with_d_names(with_wildcd, d_names_to_replace);
 	return (SUCCESS_BIN_R);
 }
 

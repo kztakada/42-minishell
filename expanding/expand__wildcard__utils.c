@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 01:57:45 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/25 03:11:07 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/27 01:10:12 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ static t_list	*free_and_get_next_separator(t_list *current_token)
 	return (next_token);
 }
 
-void	reconect_wild_expanded_list(t_list *wildcard_in_tokens,
-		t_list *wild_expanded_tokens)
+void	replace_wildcard_with_d_names(t_list *with_wildcd,
+		t_list *replaced_d_names)
 {
-	t_list	*next_block_token;
+	t_list	*next_top_token;
 
-	next_block_token = free_and_get_next_separator(wildcard_in_tokens->next);
-	wildcard_in_tokens->content = wild_expanded_tokens->content;
-	wildcard_in_tokens->next = wild_expanded_tokens->next;
-	ft_lstlast(wild_expanded_tokens)->next = next_block_token;
-	free(wild_expanded_tokens);
+	next_top_token = free_and_get_next_separator(with_wildcd->next);
+	with_wildcd->content = replaced_d_names->content;
+	with_wildcd->next = replaced_d_names->next;
+	ft_lstlast(replaced_d_names)->next = next_top_token;
+	free(replaced_d_names);
 }
 
 t_bool	has_wildcard_before_1st_separator(t_list *current_token)

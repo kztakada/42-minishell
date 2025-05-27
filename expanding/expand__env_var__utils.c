@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:53:58 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/25 00:18:07 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/27 03:44:40 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*init_expanding_token(t_e_token_type type)
 
 	expanding_token = malloc(sizeof(t_expanding_token));
 	if (expanding_token == NULL)
-		return (NULL);
+		return (perror(ERROR_MALLOC), NULL);
 	expanding_token->type = type;
 	if (type == ET_DEATH_DOLLAR)
 		expanding_token->str = ft_strdup("$");
