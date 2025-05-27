@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/27 20:32:52 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/28 01:25:01 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void				to_next_separate_top(t_list **current_token);
 t_list				*split_unquoted_word(char **to_expand);
 
 // expand__env_var__split_post_expanded__utils.c
-t_binary_result		split_unquoted_str_before_1st_separator(t_list *current_token);
+t_binary_result		split_unquoted_str_before_1st_separator(
+						t_list *current_token);
 
 // expand__env_var__split_post_expanded.c
 void				delete_prefix_separator(t_list **ex_tokens);
@@ -84,6 +85,7 @@ void				replace_wildcard_with_d_names(t_list *with_wildcd,
 						t_list *replaced_d_names);
 t_bool				has_wildcard_before_1st_separator(t_list *current_token);
 t_binary_result		separate_quoted_ex_tokens(t_list *ex_tokens);
+t_bool				is_str_ex_token_type(t_expanding_token *ex_token);
 
 // expand__wildcard.c
 t_binary_result		expand_wildcard(t_list **expanding_tokens);

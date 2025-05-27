@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 01:57:45 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/27 20:21:32 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/28 01:02:24 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,12 @@ t_binary_result	separate_quoted_ex_tokens(t_list *ex_tokens)
 		current_token = current_token->next;
 	}
 	return (SUCCESS_BIN_R);
+}
+
+t_bool	is_str_ex_token_type(t_expanding_token *ex_token)
+{
+	if (ex_token->type == ET_UNQUOTED_STR || ex_token->type == ET_QUOTED_STR
+		|| ex_token->type == ET_DEATH_DOLLAR)
+		return (TRUE);
+	return (FALSE);
 }

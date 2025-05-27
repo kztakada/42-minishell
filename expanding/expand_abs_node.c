@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:40:57 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/24 23:42:23 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/28 01:23:20 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static char	*expand_file_name(t_list *file_name_words, t_env env)
 			env);
 	if (expanding_tokens == NULL)
 		return (NULL);
-	// if (expand_wildcard(&expanding_tokens) == FAILURE_BIN_R)
-	// 	return (NULL);
+	if (expand_wildcard(&expanding_tokens) == FAILURE_BIN_R)
+		return (NULL);
 	if (is_ambiguous_redirection(expanding_tokens))
 	{
 		put_ambiguous_redirection_err(file_name_words);
