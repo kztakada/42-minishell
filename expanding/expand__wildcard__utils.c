@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 01:57:45 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/27 01:10:12 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/27 20:21:32 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_bool	has_wildcard_before_1st_separator(t_list *current_token)
 	return (FALSE);
 }
 
-t_binary_result	insert_separator_to_quoted_ex_tokens(t_list *ex_tokens)
+t_binary_result	separate_quoted_ex_tokens(t_list *ex_tokens)
 {
 	t_list				*current_token;
 	t_expanding_token	*expanding_token;

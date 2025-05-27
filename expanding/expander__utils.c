@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:43:16 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/27 01:04:51 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/27 20:28:28 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_expanding_token	*get_ex_token(t_list **expanding_tokens)
 	return (expanding_token);
 }
 
-void	sort_ex_list_by_ascending(t_list **expanded_tokens)
+void	sort_ex_tokens_by_ascending(t_list **expanded_tokens)
 {
 	t_list				*current;
 	t_list				*next;
@@ -57,4 +57,21 @@ void	sort_ex_list_by_ascending(t_list **expanded_tokens)
 		}
 		current = current->next;
 	}
+}
+
+void	delete_last_ex_token(t_list *for_check)
+{
+	t_list	*last;
+	t_list	*prev;
+
+	if (for_check == NULL)
+		return ;
+	last = ft_lstlast(for_check);
+	if (last == NULL)
+		return ;
+	prev = for_check;
+	while (prev->next != last)
+		prev = prev->next;
+	ft_lstdelone(last, free_expanding_token);
+	prev->next = NULL;
 }
