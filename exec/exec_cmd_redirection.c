@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_redirection.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 19:00:58 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/23 00:48:55 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:44:27 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,15 @@ static int	redirect_input_from_fd(int fd, int *status)
 	return (*status);
 }
 
-int	exec_redirection(t_abs_node *node)
+int	exec_redirection(t_list *redirection_list)
 {
-	t_list			*list;
 	t_redirection	*redirection;
 	char			*file_name;
 	int				status;
 
-	list = node->redirections;
-	while (list)
+	while (redirection_list)
 	{
-		redirection = list->content;
+		redirection = redirection_list->content;
 		file_name = redirection->expanded_file_name;
 		if (redirection->type == RE_OP_OUTPUT
 			&& redirect_output_to_file(file_name, &status) != EXIT_S_SUCCESS)
@@ -93,7 +91,7 @@ int	exec_redirection(t_abs_node *node)
 			&& redirect_input_from_fd(redirection->fd,
 				&status) != EXIT_S_SUCCESS)
 			return (status);
-		list = list->next;
+		redirection_list = redirection_list->next;
 	}
 	return (EXIT_S_SUCCESS);
 }

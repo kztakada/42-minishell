@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 00:13:08 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/23 02:26:35 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:28:39 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	exec(t_abs_node *abs_tree, t_env *env)
 {
 	t_exit_status	result;
-	t_std			std;
+	t_saved_std			std;
 
 	result = expander(abs_tree, *env);
 	if (result != 0)
@@ -23,9 +23,9 @@ void	exec(t_abs_node *abs_tree, t_env *env)
 		*(env->exit_status) = result;
 		return ;
 	}
-	dup2(std.saved_stdin, 0);
-	dup2(std.saved_stdout, 1);
-	result = exec_cmd(abs_tree, env, std);
+	std.saved_stdin = dup(0);
+	std.saved_stdout = dup(1);
+	result = exec_abs(abs_tree, env, std, FALSE);
 	*(env->exit_status) = result;
 	return ;
 }
