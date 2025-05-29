@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/23 00:26:47 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/28 01:25:01 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void				to_next_separate_top(t_list **current_token);
 t_list				*split_unquoted_word(char **to_expand);
 
 // expand__env_var__split_post_expanded__utils.c
-t_binary_result		split_unquoted_str_before_1st_separator(t_list *current_token);
+t_binary_result		split_unquoted_str_before_1st_separator(
+						t_list *current_token);
 
 // expand__env_var__split_post_expanded.c
 void				delete_prefix_separator(t_list **ex_tokens);
@@ -71,6 +72,21 @@ char				*use_raw_str_when_double_quoted(char **raw_str);
 t_list				*expand_env_var_with_expanding_tokens(t_list *parsed_words,
 						t_env env);
 
+// expand__wildcard__can_replace_wildcard.c
+t_bool				can_replace_wildcard(char *d_name,
+						t_list *for_wildcd_check);
+
+// expand__wildcard__extract_tokens_for_wildcard_check.c
+t_list				*extract_tokens_for_wildcard_check(t_list *with_wildcd,
+						t_bool *has_prefix_addr, t_bool *has_suffix_addr);
+
+// expand__wildcard__utils.c
+void				replace_wildcard_with_d_names(t_list *with_wildcd,
+						t_list *replaced_d_names);
+t_bool				has_wildcard_before_1st_separator(t_list *current_token);
+t_binary_result		separate_quoted_ex_tokens(t_list *ex_tokens);
+t_bool				is_str_ex_token_type(t_expanding_token *ex_token);
+
 // expand__wildcard.c
 t_binary_result		expand_wildcard(t_list **expanding_tokens);
 
@@ -85,5 +101,7 @@ t_binary_result		expand_abs_node(t_abs_node *abs_node, t_env env);
 t_expanding_token	*get_ex_token(t_list **expanding_tokens);
 void				free_expanding_token(void *content);
 char				**expanding_tokens_to_arg_list(t_list *expanding_tokens);
+void				sort_ex_tokens_by_ascending(t_list **expanded_tokens);
+void				delete_last_ex_token(t_list *for_check);
 
 #endif

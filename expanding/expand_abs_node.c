@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:40:57 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/23 02:37:32 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/28 01:23:20 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	**expand_cmd_words(t_list *cmd_words, t_env env)
 	expanding_tokens = expand_env_var_with_expanding_tokens(cmd_words, env);
 	if (expanding_tokens == NULL)
 		return (NULL);
-	// print_expanding_token_list(expanding_tokens);
-	// if (expand_wildcard(&expanding_tokens) == FAILURE_BIN_R)
-	// 	return (NULL);
+	// print_expanding_token_list(expanding_tokens); // テスト用
+	if (expand_wildcard(&expanding_tokens) == FAILURE_BIN_R)
+		return (NULL);
 	expanded_str_list = expanding_tokens_to_arg_list(expanding_tokens);
 	ft_lstclear(&expanding_tokens, free_expanding_token);
 	if (expanded_str_list == NULL)
@@ -41,8 +41,8 @@ static char	*expand_file_name(t_list *file_name_words, t_env env)
 			env);
 	if (expanding_tokens == NULL)
 		return (NULL);
-	// if (expand_wildcard(&expanding_tokens) == FAILURE_BIN_R)
-	// 	return (NULL);
+	if (expand_wildcard(&expanding_tokens) == FAILURE_BIN_R)
+		return (NULL);
 	if (is_ambiguous_redirection(expanding_tokens))
 	{
 		put_ambiguous_redirection_err(file_name_words);
