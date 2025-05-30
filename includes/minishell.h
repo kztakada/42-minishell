@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/25 19:12:07 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:08:29 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef enum e_binary_result
 // prompt
 # define PROMPT "minishell$ "
 # define HEREDOC_PROMPT "> "
+# define EXIT_PROMPT "exit\n"
 // for env    ***************************************************/
 typedef struct s_env_var
 {
@@ -74,6 +75,7 @@ enum						e_exit_status
 	EXIT_S_OUT_OF_RANGE = 255,
 };
 // error messages *************************************************/
+# define TOO_MANY_ARGS "minishell: too many arguments\n"
 # define ERROR_MALLOC "Error: Memory allocation failed\n"
 # define ERROR_SYNTAX "minishell: syntax error near unexpected token `"
 
