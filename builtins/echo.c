@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:15 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/24 20:43:23 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:06:12 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	ft_echo(char **args)
 	}
 	while (args[i] != NULL)
 	{
-		printf("%s", args[i++]);
+		ft_putstr_fd(args[i++], 1);
 		if (args[i] != NULL)
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 	}
 	if (!n_flag)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	return (EXIT_SUCCESS);
 }

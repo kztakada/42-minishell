@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:22:32 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/23 01:30:40 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:42:40 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,11 @@ t_path	create_t_path(char *cmd, int err_exit_s,
 	path.path = cmd;
 	path.err = create_t_err(err_exit_s, err_msg, err_cause);
 	return (path);
+}
+
+int	get_exit_status(int status)
+{
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (WEXITSTATUS(status));
 }

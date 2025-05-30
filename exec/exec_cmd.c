@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:17:57 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/23 02:22:51 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:48:40 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static void	reset_stds(t_std std)
+static void	reset_saved_stds(t_saved_std std, t_bool piped)
 {
+	if (piped == TRUE)
+		return ;
 	dup2(std.saved_stdin, 0);
 	dup2(std.saved_stdout, 1);
 	return ;
@@ -34,23 +36,23 @@ static t_bool	is_builtin(char *cmd)
 	return (FALSE);
 }
 
-int	exec_cmd(t_abs_node *abs, t_env *env, t_std std)
+int	exec_cmd(t_abs_node *abs_tree, t_env *env, t_saved_std std, t_bool piped)
 {
 	int	status;
 
-	if (!abs->expanded_args)
+	if (!abs_tree->expanded_args)
 	{
-		status = exec_redirection(abs);
-		return (reset_stds(std), status);
+		status = exec_redirection(abs_tree->redirections);
+		return (reset_saved_stds(std, piped), status);
 	}
-	if (is_builtin(abs->expanded_args[0]))
+	if (is_builtin(abs_tree->expanded_args[0]))
 	{
-		status = exec_redirection(abs);
+		status = exec_redirection(abs_tree->redirections);
 		if (status != EXIT_S_SUCCESS)
 			return (status);
-		status = exec_cmd_builtin(abs->expanded_args, env);
-		return (reset_stds(std), status);
+		status = exec_cmd_builtin(abs_tree->expanded_args, env);
+		return (reset_saved_stds(std, piped), status);
 	}
 	else
-		return (exec_cmd_external(abs, env->envp));
+		return (exec_cmd_external(abs_tree, env->envp));
 }
