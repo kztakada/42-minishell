@@ -6,7 +6,7 @@
 #    By: katakada <katakada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 15:59:55 by katakada          #+#    #+#              #
-#    Updated: 2025/05/23 01:20:25 by katakada         ###   ########.fr        #
+#    Updated: 2025/05/29 19:42:51 by katakada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,13 @@ DEBUG_CC		=	cc -D IS_DEBUG=1 -g -fsanitize=address
 
 CFLAGS			=	-Wall -Wextra -Werror
 
-INCS			=	-I includes/ -I $(LIBFT_DIR)
+INCS			=	-I includes/ -I $(LIBFT_DIR) 
 
 LIBFT_DIR		=	libraries/
 LIBFT			=	$(LIBFT_DIR)libft.a
+
+RLDIR_BREW		=	$(shell brew --prefix readline)
+LIBRL			=	-lreadline
 
 SRC_PATH		=	
 SRCS			=	$(wildcard *.c) $(wildcard utils/*.c) $(wildcard lexing/*.c) $(wildcard parsing/*.c) $(wildcard expanding/*.c) $(wildcard exec/*.c) $(wildcard builtins/*.c)
@@ -28,16 +31,21 @@ SRCS			=	$(wildcard *.c) $(wildcard utils/*.c) $(wildcard lexing/*.c) $(wildcard
 OBJS_PATH		=	objs/
 OBJS			=	$(SRCS:%.c=objs/%.o)
 
-ISDEBUG = 0
+ISDEBUG = 1
 
 ifeq ($(ISDEBUG), 1)
 	CC = $(DEBUG_CC)
 endif
 
+UNAME_S := $(shell uname -s)
 
+ifeq ($(UNAME_S),Darwin)
+	INCS += -I $(RLDIR_BREW)/include
+    LIBRL = -L $(RLDIR_BREW)/lib -lreadline
+endif
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(INCS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
+	$(CC) $(CFLAGS) $(INCS) $(OBJS) $(LIBFT) $(LIBRL) -o $(NAME) 
 
 $(OBJS_PATH)%.o : $(SRC_PATH)%.c
 	mkdir -p $(@D)
