@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/25 19:12:07 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/02 04:40:32 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_env_var
 typedef struct s_env
 {
 	t_list					*env_vars;
-	char					**envp;
+	t_bool					*unset_oldpwd;
 	t_exit_status			*exit_status;
 }							t_env;
 // exit status ***************************************************/
@@ -75,6 +75,7 @@ enum						e_exit_status
 };
 // error messages *************************************************/
 # define ERROR_MALLOC "Error: Memory allocation failed\n"
+# define ERROR_EXECVE "Error: Execve function error\n"
 # define ERROR_SYNTAX "minishell: syntax error near unexpected token `"
 
 // for dictionary　************************************************/
@@ -217,4 +218,13 @@ t_list						*init_envlst(char **env);
 
 // parser_utils.c
 void						free_abs_tree(t_abs_node *abs_tree);
+
+// env_utils
+int				is_env_exist(t_list *env_list, char *name);
+char			*get_env_value(t_list *env_vars, char *name);
+
+// err_msg (std_lib_func)
+int				err_msg_malloc(void);
+int				err_msg_execve(void);
+
 #endif
