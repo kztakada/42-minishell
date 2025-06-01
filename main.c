@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/24 20:14:52 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:48:11 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_bool	safe_add_history(char *input)
 	return (TRUE);
 }
 
-static void	execute_command(char *input, t_list *env_vars, char **env_origin)
+static void	execute_command(char *input, t_list *env_vars, t_bool *unset_oldpwd)
 {
 	t_list					*token_list;
 	t_abs_node				*abs_tree;
@@ -37,8 +37,8 @@ static void	execute_command(char *input, t_list *env_vars, char **env_origin)
 
 	// TODO: lexerでエラーした時にexit_statusは何番を返せば良いか？
 	env.env_vars = env_vars;
+	env.unset_oldpwd = unset_oldpwd;
 	env.exit_status = &exit_status;
-	env.envp = env_origin;
 	token_list = NULL;
 	result = lexer(input, &token_list);
 	free(input);
@@ -68,10 +68,12 @@ int	app_main(int argc, char **argv, char **env)
 	char		*input;
 	char		*newline;
 	t_list		*env_vars;
+	t_bool		unset_oldpwd;
 
 	(void)argc;
 	(void)argv;
 	env_vars = init_envlst(env);
+	unset_oldpwd = FALSE;
 	// print_env_list(env_vars); // テスト用
 	if (is_interactive)
 	{
@@ -80,7 +82,7 @@ int	app_main(int argc, char **argv, char **env)
 			input = readline(PROMPT);
 			if (safe_add_history(input) == FALSE)
 				continue ;
-			execute_command(input, env_vars, env);
+			execute_command(input, env_vars, &unset_oldpwd);
 		}
 	}
 	else
@@ -95,7 +97,7 @@ int	app_main(int argc, char **argv, char **env)
 			if (newline)
 				*newline = '\0';
 			// printf("%s\n", input); // テスト用
-			execute_command(input, env_vars, env);
+			execute_command(input, env_vars, &unset_oldpwd);
 			input = get_next_line(STDIN_FILENO);
 		}
 		free(input);
