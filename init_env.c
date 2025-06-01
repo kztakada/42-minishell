@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:19:22 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/23 00:26:37 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:14:55 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static t_env_var	*get_env_var(char *env_var_source)
 	return (env_var);
 }
 
-static t_list	**set_env_ver_to_list(t_list **env_vars, t_env_var *env_var)
+static t_list	**set_env_var_to_list(t_list **env_vars, t_env_var *env_var)
 {
 	t_list	*new_env_list;
 
@@ -104,7 +104,7 @@ t_list	*init_envlst(char **env)
 			ft_lstclear(&env_vars, free_env_var);
 			return (NULL);
 		}
-		if (!set_env_ver_to_list(&env_vars, env_var))
+		if (!set_env_var_to_list(&env_vars, env_var))
 		{
 			ft_lstclear(&env_vars, free_env_var);
 			return (NULL);
