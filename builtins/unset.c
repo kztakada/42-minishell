@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:45 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/20 02:29:53 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/30 19:55:12 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	unset_env(char *name, t_list **env_list)
 	return ;
 }
 
-int	ft_unset(char **args, t_list *env_list)
+int	ft_unset(char **args, t_list *env_list, t_bool *unset_oldpwd)
 {
 	int	i;
 	int	tmp_status;
@@ -53,7 +53,11 @@ int	ft_unset(char **args, t_list *env_list)
 		if (check_name_error(args[i]))
 			tmp_status = unset_err_msg(args[i]);
 		else
+		{
 			unset_env(args[i], &env_list);
+			if(!ft_strcmp(args[i], "OLDPWD") && *unset_oldpwd == FALSE)
+				*unset_oldpwd = TRUE;
+		}
 		i++;
 	}
 	return (tmp_status);
