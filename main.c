@@ -6,12 +6,13 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/30 19:42:11 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/01 20:54:18 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "for_test_print.h"
 #include "minishell.h"
+#include "minishell_signal.h"
 
 static t_bool	safe_add_history(char *input, t_exit_status exit_status)
 {
@@ -58,12 +59,67 @@ static void	execute_command(char *input, t_env env)
 	free_abs_tree(abs_tree);
 }
 
-int	app_main(int argc, char **argv, char **envp)
+void	reset_signal(t_env env)
 {
-	const int				is_interactive = isatty(STDIN_FILENO)
-						&& isatty(STDOUT_FILENO);
-	char					*input;
-	char					*newline;
+	if (g_sig != 0)
+	{
+		*(env.exit_status) = g_sig + EXIT_S_INVALID_ARG;
+		g_sig = 0;
+	}
+}
+
+void	dialog_minishell(t_env env)
+{
+	char	*input;
+
+	rl_event_hook = nop_event_hook;
+	while (TRUE)
+	{
+		set_sig_handlers_in_dialog();
+		input = readline(PROMPT);
+		reset_signal(env);
+		if (safe_add_history(input, *(env.exit_status)) == FALSE)
+			continue ;
+		execute_command(input, env);
+	}
+}
+
+void	exec_minishell(t_env env)
+{
+	char	*input;
+	char	*newline;
+
+	input = NULL;
+	input = get_next_line(STDIN_FILENO);
+	while (input != NULL)
+	{
+		// 複数行処理やめて、１行の未処理対応にするか検討すること
+		newline = ft_strchr(input, '\n'); // TODO: 複数行実行した場合、出力パイプがどうなるか確認
+		if (newline)
+			*newline = '\0';
+		// printf("%s\n", input); // テスト用
+		execute_command(input, env);
+		input = get_next_line(STDIN_FILENO);
+	}
+	free(input);
+}
+
+void	minishell(t_env env)
+{
+	const int	is_interactive = isatty(STDIN_FILENO);
+
+	// print_env_list(env_vars); // テスト用
+	rl_outstream = stderr;
+	if (is_interactive)
+		dialog_minishell(env);
+	else
+		exec_minishell(env);
+	ft_lstclear(&(env.env_vars), free_env_var);
+	rl_clear_history();
+}
+
+int	main(int argc, char **argv, char **envp)
+{
 	static t_exit_status	exit_status = 0;
 	t_env					env;
 
@@ -75,43 +131,6 @@ int	app_main(int argc, char **argv, char **envp)
 		return (perror(ERROR_MALLOC), EXIT_FAILURE);
 	env.exit_status = &exit_status;
 	env.envp = envp;
-	// print_env_list(env_vars); // テスト用
-	if (is_interactive)
-	{
-		while (TRUE)
-		{
-			input = readline(PROMPT);
-			if (safe_add_history(input, exit_status) == FALSE)
-				continue ;
-			execute_command(input, env);
-		}
-	}
-	else
-	{
-		input = NULL;
-		input = get_next_line(STDIN_FILENO);
-		// TODO: 複数行実行した場合、出力パイプがどうなるか確認
-		// 複数行処理やめて、１行の未処理対応にするか検討すること
-		while (input != NULL)
-		{
-			newline = ft_strchr(input, '\n');
-			if (newline)
-				*newline = '\0';
-			// printf("%s\n", input); // テスト用
-			execute_command(input, env);
-			input = get_next_line(STDIN_FILENO);
-		}
-		free(input);
-	}
-	ft_lstclear(&(env.env_vars), free_env_var);
-	rl_clear_history();
-	return (EXIT_S_SUCCESS);
+	minishell(env);
+	return (exit_status);
 }
-
-#ifndef TEST
-
-int	main(int argc, char **argv, char **env)
-{
-	return (app_main(argc, argv, env));
-}
-#endif // TEST
