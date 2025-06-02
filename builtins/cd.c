@@ -3,54 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:52:52 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/23 01:39:11 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:02:24 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-static void	update_oldpwd_env(t_list *env_lst)
+static int	update_oldpwd_env(t_list *env_list, t_bool *unset_oldpwd)
 {
-	if (is_alredy_exist(env_lst, "OLDPWD"))
-		update_env_value(&env_lst, "OLDPWD", getenv("PWD"));
+	if (is_env_exist(env_list, "OLDPWD"))
+	{
+		if (is_env_exist(env_list, "PWD"))
+			update_env_value(&env_list, "OLDPWD", getenv("PWD"));
+		else
+			update_env_value(&env_list, "OLDPWD", "");
+	}
 	else
-		create_add_new_env(&env_lst, "OLDPWD", getenv("PWD"));
-	return ;
+	{
+		if (!*unset_oldpwd)
+		{
+			if (is_env_exist(env_list, "PWD"))
+				create_add_new_env(&env_list, "OLDPWD", getenv("PWD"));
+			else
+				create_add_new_env(&env_list, "OLDPWD", "");
+		}
+	}
+	return (EXIT_S_SUCCESS);
 }
 
-static void	update_pwd_env(t_list *env_lst)
+static int	update_pwd_env(t_list *env_list)
 {
-	if (is_alredy_exist(env_lst, "PWD"))
-		update_env_value(&env_lst, "PWD", getcwd(NULL, 0));
-	else
-		create_add_new_env(&env_lst, "PWD", getcwd(NULL, 0));
-	return ;
+	if (is_env_exist(env_list, "PWD"))
+		update_env_value(&env_list, "PWD", getcwd(NULL, 0));
+	return (EXIT_S_SUCCESS);
 }
 
-static int	ft_cd_home(t_list *env_list)
+static int	ft_cd_home(t_list *env_list, t_bool *unset_oldpwd)
 {
 	char	*home;
 
-	home = getenv("HOME");
+	home = get_env_value(env_list, "HOME");
 	if (!home)
 		return (cd_err_msg_home());
-	if (!chdir(home))
-		return (cd_err_msg_file(home));
-	update_oldpwd_env(env_list);
+	chdir(home);
+	update_oldpwd_env(env_list, unset_oldpwd);
 	update_pwd_env(env_list);
 	return (EXIT_SUCCESS);
 }
 
-int	ft_cd(char *path, t_list *env_list)
+int	ft_cd(char *path, t_list *env_list, t_bool *unset_oldpwd)
 {
 	if (!path)
-		return (ft_cd_home(env_list));
+		return (ft_cd_home(env_list, unset_oldpwd));
 	if (chdir(path) == -1)
 		return (cd_err_msg_file(path));
-	update_oldpwd_env(env_list);
+	update_oldpwd_env(env_list, unset_oldpwd);
 	update_pwd_env(env_list);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:40:49 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/29 22:12:16 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/05/30 01:25:35 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	exec_abs(t_abs_node *abs_tree, t_env *env, t_saved_std std, t_bool piped)
 	int status;
 
 	if (!abs_tree)
-		return (EXIT_S_SUCCESS);
+		return (*(env->exit_status));
 	if (abs_tree->type == ABS_PIPE)
 		return (exec_pipe(abs_tree, env, std));
 	else if(abs_tree->type == ABS_BIN_AND)

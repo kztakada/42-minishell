@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctrl_env.c                                         :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 02:14:28 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/23 01:39:29 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:24:54 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_bool	create_add_new_env(t_list **env_list, char *name, char *value)
 	return (TRUE);
 }
 
-int	is_alredy_exist(t_list *env_list, char *name)
+int	is_env_exist(t_list *env_list, char *name)
 {
 	t_env_var	*env;
 
@@ -59,10 +59,10 @@ int	is_alredy_exist(t_list *env_list, char *name)
 	{
 		env = (t_env_var *)env_list->content;
 		if (!ft_strcmp(env->name, name))
-			return (1);
+			return (TRUE);
 		env_list = env_list->next;
 	}
-	return (0);
+	return (FALSE);
 }
 
 int	check_name_error(char *arg)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_msg_lib_func.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:39:34 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/23 01:32:04 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/02 04:39:20 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,9 @@ int	err_msg_malloc(void)
 	return (EXIT_S_FAILURE);
 }
 
-// ここではエラーメッセージと共にfreeが必要なものをfreeするが、
-//まだ構造体の構成がはっきりしていないので、後から処理を追加する。
+int	err_msg_execve(void)
+{
+	perror(ERROR_EXECVE);
+	return (EXIT_S_FAILURE);
+}
+

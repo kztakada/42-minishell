@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander__utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:43:16 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/27 20:28:28 by katakada         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:51:50 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ void	sort_ex_tokens_by_ascending(t_list **expanded_tokens)
 			current_token = (t_expanding_token *)current->content;
 			next_token = (t_expanding_token *)next->content;
 			if (ft_strcmp(current_token->str, next_token->str) > 0)
-			{
 				ft_swap(&current->content, &next->content);
-			}
 			next = next->next;
 		}
 		current = current->next;

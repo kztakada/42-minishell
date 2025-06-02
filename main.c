@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/01 20:54:18 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:05:34 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	minishell(t_env env)
 int	main(int argc, char **argv, char **envp)
 {
 	static t_exit_status	exit_status = 0;
+	t_bool					unset_oldpwd;
 	t_env					env;
 
 	(void)argv;
@@ -130,7 +131,8 @@ int	main(int argc, char **argv, char **envp)
 	if (env.env_vars == NULL)
 		return (perror(ERROR_MALLOC), EXIT_FAILURE);
 	env.exit_status = &exit_status;
-	env.envp = envp;
+	unset_oldpwd = FALSE;
+	env.unset_oldpwd = &unset_oldpwd;
 	minishell(env);
 	return (exit_status);
 }

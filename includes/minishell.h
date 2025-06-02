@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/01 17:38:51 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:05:40 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_env_var
 typedef struct s_env
 {
 	t_list						*env_vars;
-	char						**envp;
+	t_bool						*unset_oldpwd;
 	t_exit_status				*exit_status;
 }								t_env;
 // exit status ***************************************************/
@@ -80,6 +80,7 @@ enum							e_exit_status
 // error messages *************************************************/
 # define TOO_MANY_ARGS "minishell: too many arguments\n"
 # define ERROR_MALLOC "Error: Memory allocation failed\n"
+# define ERROR_EXECVE "Error: Execve function error\n"
 # define ERROR_SYNTAX "minishell: syntax error near unexpected token `"
 
 // for dictionary　************************************************/
@@ -222,4 +223,13 @@ t_list							*init_envlst(char **env);
 
 // parser_utils.c
 void							free_abs_tree(t_abs_node *abs_tree);
+
+// env_utils
+int								is_env_exist(t_list *env_list, char *name);
+char							*get_env_value(t_list *env_vars, char *name);
+
+// err_msg (std_lib_func)
+int								err_msg_malloc(void);
+int								err_msg_execve(void);
+
 #endif
