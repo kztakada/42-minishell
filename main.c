@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 19:19:43 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:47:13 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include "minishell.h"
 #include "signal_for_minishell.h"
 
-static t_bool	safe_add_history(char *input, t_exit_status exit_status)
+static t_bool	safe_add_history(char *input, t_env env)
 {
 	if (input == NULL)
 		return (ft_putstr_fd(EXIT_PROMPT, STDOUT_FILENO), rl_clear_history(),
-			exit(exit_status), FALSE);
+			exit(*(env.exit_status)), FALSE);
 	if (*input)
 		add_history(input);
 	else
@@ -26,6 +26,7 @@ static t_bool	safe_add_history(char *input, t_exit_status exit_status)
 		free(input);
 		return (FALSE);
 	}
+	*(env.line_count) += 1;
 	return (TRUE);
 }
 
@@ -78,7 +79,7 @@ void	dialog_minishell(t_env env)
 		set_sig_handlers_in_dialog();
 		input = readline(PROMPT);
 		reset_signal(env);
-		if (safe_add_history(input, *(env.exit_status)) == FALSE)
+		if (safe_add_history(input, env) == FALSE)
 			continue ;
 		execute_command(input, env);
 	}
@@ -97,6 +98,7 @@ void	exec_minishell(t_env env)
 		newline = ft_strchr(input, '\n'); // TODO: 複数行実行した場合、出力パイプがどうなるか確認
 		if (newline)
 			*newline = '\0';
+		*(env.line_count) += 1;
 		// printf("%s\n", input); // テスト用
 		execute_command(input, env);
 		input = get_next_line(STDIN_FILENO);
@@ -123,6 +125,7 @@ int	main(int argc, char **argv, char **envp)
 	static t_exit_status	exit_status = 0;
 	t_bool					unset_oldpwd;
 	t_env					env;
+	int						line_count;
 
 	(void)argv;
 	if (argc != 1)
@@ -133,6 +136,8 @@ int	main(int argc, char **argv, char **envp)
 	env.exit_status = &exit_status;
 	unset_oldpwd = FALSE;
 	env.unset_oldpwd = &unset_oldpwd;
+	line_count = 0;
+	env.line_count = &line_count;
 	minishell(env);
 	return (exit_status);
 }

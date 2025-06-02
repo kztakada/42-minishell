@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:50:07 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 19:01:29 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:37:27 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ static char	*expand_heredoc_input(char *to_expand, t_env env)
 	return (expanded_str);
 }
 
-static void	put_warning_for_heredoc(int line_number, char *eof)
+static void	put_warning_for_heredoc(t_env env, char *eof)
 {
 	ft_putstr_fd("minishell: warning: here-document at line ", STDERR_FILENO);
-	ft_putstr_fd(ft_itoa(line_number), STDERR_FILENO);
+	ft_putstr_fd(ft_itoa(*(env.line_count)), STDERR_FILENO);
 	ft_putstr_fd(" delimited by end-of-file (wanted `", STDERR_FILENO);
 	ft_putstr_fd(eof, STDERR_FILENO);
 	ft_putstr_fd("')\n", STDERR_FILENO);
@@ -54,14 +54,14 @@ static void	ask_heredoc_child_process(int fd, char *eof, t_bool is_quote,
 	char	*input;
 
 	if (!isatty(STDIN_FILENO))
-		return (put_warning_for_heredoc(1, eof), exit(EXIT_S_SUCCESS));
+		return (put_warning_for_heredoc(env, eof), exit(EXIT_S_SUCCESS));
 	while (TRUE)
 	{
 		input = readline(HEREDOC_PROMPT);
 		if (g_sig == SIGINT)
 			return (free(input), exit(128 + SIGINT));
 		if (input == NULL)
-			return (put_warning_for_heredoc(1, eof), exit(EXIT_S_SUCCESS));
+			return (put_warning_for_heredoc(env, eof), exit(EXIT_S_SUCCESS));
 		if (ft_strcmp(input, eof) == 0)
 			break ;
 		if (!is_quote)

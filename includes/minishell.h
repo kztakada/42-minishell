@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 16:05:40 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:32:22 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_env
 	t_list						*env_vars;
 	t_bool						*unset_oldpwd;
 	t_exit_status				*exit_status;
+	int							*line_count;
 }								t_env;
 // exit status ***************************************************/
 enum							e_exit_status
