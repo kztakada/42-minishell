@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_signal.h                                 :+:      :+:    :+:   */
+/*   signal__utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/01 17:34:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/01 20:42:04 by katakada         ###   ########.fr       */
+/*   Created: 2025/06/02 19:29:12 by katakada          #+#    #+#             */
+/*   Updated: 2025/06/02 19:29:48 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNAL_H
-# define SIGNAL_H
+#include "signal_for_minishell.h"
 
-# include "minishell.h"
+// event_hook
+// rl_event_hook func:
+// 0: continue reading input
+// non zero: stop reading input
+int	nop_event_hook(void)
+{
+	return (0);
+}
 
-// signal.c
-int		nop_event_hook(void);
-int		heredoc_event_hook(void);
-void	set_sig_handlers_in_dialog(void);
-
-#endif
+// int	heredoc_event_hook(void)
+// {
+// 	if (g_sig == SIGINT)
+// 	{
+// 		// rl_done = TRUE;
+// 	}
+// 	return (0); // continue reading input
+// }

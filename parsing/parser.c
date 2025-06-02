@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:57:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 23:43:58 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:03:53 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,11 @@ static t_parsing	parse_input(t_list *input_tokens, t_abs_node **abs_tree,
 			break ;
 		if (parsing_state->heredoc_list != NULL
 			&& parsing_state->subshell_depth == 0)
-			if (call_heredoc(parsing_state, env) == FAILURE_BIN_R)
-				return (FAILURE_P);
+			p_result = call_heredoc(parsing_state, env);
 		if (p_result == SUCCESS_P)
 			input_tokens = sequence_end;
+		else
+			return (p_result);
 	}
 	if (parsing_state->heredoc_list != NULL)
 		ft_lstclear(&(parsing_state->heredoc_list), no_del);
@@ -86,16 +87,13 @@ t_exit_status	parser(t_list *input_tokens, t_abs_node **abs_tree, t_env env)
 	p_result = parse_input(input_tokens, abs_tree, &parsing_state, env);
 	// printf("parse result: %d\n", p_result); // テスト用
 	// print_abs_tree(*abs_tree); // テスト用
-	if (p_result == FAILURE_P)
-	{
-		free_abs_tree(*abs_tree);
-		return (EXIT_S_FAILURE);
-	}
-	else if (p_result == SYNTAX_ERROR_P)
-	{
-		free_abs_tree(*abs_tree);
-		return (EXIT_S_SYNTAX_ERROR);
-	}
-	else
+	if (p_result == SUCCESS_P)
 		return (EXIT_S_SUCCESS);
+	free_abs_tree(*abs_tree);
+	if (p_result == FAILURE_P)
+		return (EXIT_S_FAILURE);
+	else if (p_result == SYNTAX_ERROR_P)
+		return (EXIT_S_SYNTAX_ERROR);
+	else
+		return ((int)p_result);
 }

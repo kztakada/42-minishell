@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 19:09:45 by katakada          #+#    #+#             */
+/*   Updated: 2025/06/02 19:09:46 by katakada         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSING_H
 # define PARSING_H
 
@@ -21,10 +33,10 @@ typedef enum e_grammar
 
 typedef enum e_parsing
 {
-	FAILURE_P = -1,
-	SYNTAX_ERROR_P = 0,
-	SUCCESS_P = 1,
-
+	SUCCESS_P = 0,
+	FAILURE_P = 1,
+	SYNTAX_ERROR_P = 2,
+	HEREDOC_SIGINT_P = 130,
 }				t_parsing;
 
 typedef enum e_loop_status
@@ -113,7 +125,7 @@ t_bool			has_quoted_text(t_list *parsed_words);
 char			*get_heredoc_delimiter(t_list *file_name_words);
 
 // heredoc.c
-t_binary_result	call_heredoc(t_parsing_state *parsing_state, t_env env);
+t_parsing		call_heredoc(t_parsing_state *parsing_state, t_env env);
 
 // parser.c
 t_parsing		parse_one_sequence(t_list *input_tokens, t_list **sequence_end,

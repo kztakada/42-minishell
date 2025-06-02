@@ -6,13 +6,13 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 16:05:34 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:19:43 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "for_test_print.h"
 #include "minishell.h"
-#include "minishell_signal.h"
+#include "signal_for_minishell.h"
 
 static t_bool	safe_add_history(char *input, t_exit_status exit_status)
 {
