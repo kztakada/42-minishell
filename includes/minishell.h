@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 19:32:22 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:46:21 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ void							no_del(void *target);
 
 // util_tools.c
 int								is_ifs(char c);
-t_list							**forward_token_list(t_list **current_token_list);
+t_list							**forward_token_list(t_list **current_tokens);
 char							*strjoin_free(char *s1, char *s2);
 void							free_str_list_by_size(char **str_list,
 									int str_list_size);
@@ -218,6 +218,7 @@ void							free_token(void *target);
 
 // init_env__utils.c
 void							free_env_var(void *env_var);
+t_env_var						*copy_deep_env_var(t_env_var *env_var);
 
 // init_env.c
 t_list							*init_envlst(char **env);

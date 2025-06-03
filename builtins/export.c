@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/02 04:44:13 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/03 21:45:39 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,17 @@ static t_list	*copy_env_list(t_list *env_list)
 {
 	t_list		*new;
 	t_list		*env_list_cpy;
-
+	t_env_var	*new_env_var;
 
 	env_list_cpy = NULL;
 	while (env_list)
 	{
-		new = ft_lstnew(env_list->content);
+		new_env_var = copy_deep_env_var((t_env_var *)env_list->content);
+		if (!new_env_var)
+			return (ft_lstclear(&env_list_cpy, free_env_var), NULL);
+		new = ft_lstnew((void *)new_env_var);
 		if (!new)
-			return (NULL);
+			return (ft_lstclear(&env_list_cpy, free_env_var), NULL);
 		ft_lstadd_back(&env_list_cpy, new);
 		env_list = env_list->next;
 	}
