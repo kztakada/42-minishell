@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:59:24 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 16:04:17 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 21:05:50 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int	exec_cmd_external(t_abs_node *abs_tree, t_list *env_vars)
 			exit(err_msg_external(path.err));
 		envp = convert_list_to_envp(env_vars);
 		if (!envp)
-			exit(err_msg_malloc());
+			exit(perror(ERROR_MALLOC), EXIT_S_FAILURE);
 		if (execve(path.path, abs_tree->expanded_args, envp) == -1)
-			exit(err_msg_execve());
+			exit(perror(ERROR_EXECVE), EXIT_S_FAILURE);
 		exit(EXIT_S_SUCCESS);
 	}
 	set_sig_handlers_in_exec_parent();

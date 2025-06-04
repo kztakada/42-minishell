@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 04:49:33 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 16:00:17 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 21:01:52 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	update_env_value(t_list **env_list, char *name, char *value)
 			free(env->value);
 			env->value = ft_strdup(value);
 			if (env->value == NULL)
-				return (err_msg_malloc());
+				return (perror(ERROR_MALLOC), EXIT_S_FAILURE);
 			return (EXIT_S_SUCCESS);
 		}
 		current = current->next;
@@ -43,21 +43,21 @@ int	create_add_new_env(t_list **env_list, char *name, char *value)
 
 	new_env = (t_env_var *)malloc(sizeof(t_env_var) * 1);
 	if (!new_env)
-		return (err_msg_malloc());
+		return (perror(ERROR_MALLOC), EXIT_S_FAILURE);
 	new_env->name = ft_strdup(name);
 	if (!new_env->name)
-		return (free_env_var(new_env), err_msg_malloc());
+		return (free_env_var(new_env), perror(ERROR_MALLOC), EXIT_S_FAILURE);
 	if (value)
 	{
 		new_env->value = ft_strdup(value);
 		if (!new_env->value)
-			return (free_env_var(new_env), err_msg_malloc());
+			return (free_env_var(new_env), perror(ERROR_MALLOC), EXIT_S_FAILURE);
 	}
 	else
 		new_env->value = NULL;
 	new_list = (t_list *)malloc(sizeof(t_list) * 1);
 	if (!new_env)
-		return (free_env_var(new_env), err_msg_malloc());
+		return (free_env_var(new_env), perror(ERROR_MALLOC), EXIT_S_FAILURE);
 	new_list->content = new_env;
 	new_list->next = NULL;
 	ft_lstadd_back(&env_list, new_list);
