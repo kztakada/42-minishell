@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:12:10 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/28 16:24:58 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/02 05:34:47 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	redirect_to_pipe(int pfds[2], t_pipe_access_mode mode)
 	return ;
 }
 
-static void	exec_pipe_left(t_abs_node *abs_tree, t_env *env, t_saved_std std,
+static void	exec_pipe_left(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
 			int pfds[2])
 {
 	int	status;
@@ -48,7 +48,7 @@ static void	exec_pipe_left(t_abs_node *abs_tree, t_env *env, t_saved_std std,
 	exit(status);
 }
 
-static void	exec_pipe_right(t_abs_node *abs_tree, t_env *env, t_saved_std std,
+static void	exec_pipe_right(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
 			int pfds[2])
 {
 	int	status;
@@ -58,7 +58,7 @@ static void	exec_pipe_right(t_abs_node *abs_tree, t_env *env, t_saved_std std,
 	exit(status);
 }
 
-int	exec_pipe(t_abs_node *abs_tree, t_env *env, t_saved_std std)
+int	exec_pipe(t_abs_node *abs_tree, t_env *env, t_saved_std *std)
 {
 	int		pfds[2];
 	pid_t	pid_left;

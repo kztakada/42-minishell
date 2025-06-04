@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:22:32 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/30 16:16:37 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/02 05:36:13 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_err	create_t_err(int err_exit_s, int err_msg, char *err_cause)
 {
-	t_err err;
+	t_err	err;
 
 	err.exit_s = err_exit_s;
 	err.msg = err_msg;
