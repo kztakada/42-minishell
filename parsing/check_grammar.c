@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 20:09:41 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 23:47:42 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/03 19:27:47 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,6 @@ int	check_one_phrase_grammar(t_list **current_tokens, int *subshell_depth)
 	while (can_keep_phrasing_tokens(phrase_top_token,
 			get_token(*current_tokens)) == CONTINUE)
 	{
-		if (get_token(*current_tokens)->type == OPERAND_TEXT
-			&& has_ifs(get_token(*current_tokens)->value))
-		{
-			if (!is_ifs(get_token(*current_tokens)->value[0]))
-				*current_tokens = (*current_tokens)->next;
-			break ;
-		}
 		g_result = check_atomic_token_grammar(current_tokens, subshell_depth);
 		if (g_result == NG_G)
 			return (NG_G);

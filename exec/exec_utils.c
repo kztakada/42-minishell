@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:22:32 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/02 05:36:13 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:30:43 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ t_err	create_t_err(int err_exit_s, int err_msg, char *err_cause)
 	return (err);
 }
 
-t_path	create_t_path(char *cmd, int err_exit_s,
-	int err_msg, char *err_cause)
+t_path	create_t_path(char *cmd, int err_exit_s, int err_msg, char *err_cause)
 {
 	t_path	path;
 
@@ -34,8 +33,15 @@ t_path	create_t_path(char *cmd, int err_exit_s,
 
 int	get_exit_status(int status)
 {
+	int	sig;
+
+	sig = WTERMSIG(status);
 	if (WIFSIGNALED(status))
+	{
+		if (sig == SIGQUIT)
+			ft_putstr_fd("Quit\n", STDOUT_FILENO);
 		return (128 + WTERMSIG(status));
+	}
 	return (WEXITSTATUS(status));
 }
 

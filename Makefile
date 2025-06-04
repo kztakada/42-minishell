@@ -6,7 +6,7 @@
 #    By: katakada <katakada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 15:59:55 by katakada          #+#    #+#              #
-#    Updated: 2025/05/29 19:42:51 by katakada         ###   ########.fr        #
+#    Updated: 2025/06/02 15:41:20 by katakada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ RLDIR_BREW		=	$(shell brew --prefix readline)
 LIBRL			=	-lreadline
 
 SRC_PATH		=	
-SRCS			=	$(wildcard *.c) $(wildcard utils/*.c) $(wildcard lexing/*.c) $(wildcard parsing/*.c) $(wildcard expanding/*.c) $(wildcard exec/*.c) $(wildcard builtins/*.c)
+SRCS			=	$(wildcard *.c) $(wildcard utils/*.c) $(wildcard lexing/*.c) $(wildcard parsing/*.c) $(wildcard expanding/*.c) $(wildcard exec/*.c) $(wildcard builtins/*.c) $(wildcard signal/*.c)
 
 OBJS_PATH		=	objs/
 OBJS			=	$(SRCS:%.c=objs/%.o)

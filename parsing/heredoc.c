@@ -6,13 +6,14 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:50:07 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/03 21:21:51 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:33:49 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
 #include "for_test_print.h"
 #include "parsing.h"
+#include "signal_for_minishell.h"
 
 static char	*expand_heredoc_input(char *to_expand, t_env env)
 {
@@ -38,17 +39,29 @@ static char	*expand_heredoc_input(char *to_expand, t_env env)
 	return (expanded_str);
 }
 
+static void	put_warning_for_heredoc(t_env env, char *eof)
+{
+	ft_putstr_fd("minishell: warning: here-document at line ", STDERR_FILENO);
+	ft_putstr_fd(ft_itoa(*(env.line_count)), STDERR_FILENO);
+	ft_putstr_fd(" delimited by end-of-file (wanted `", STDERR_FILENO);
+	ft_putstr_fd(eof, STDERR_FILENO);
+	ft_putstr_fd("')\n", STDERR_FILENO);
+}
+
 static void	ask_heredoc_child_process(int fd, char *eof, t_bool is_quote,
 		t_env env)
 {
 	char	*input;
 
-	// signal(SIGINT, SIG_DFL);
+	if (!isatty(STDIN_FILENO))
+		return (put_warning_for_heredoc(env, eof), exit(EXIT_S_SUCCESS));
 	while (TRUE)
 	{
 		input = readline(HEREDOC_PROMPT);
+		if (g_sig == SIGINT)
+			return (free(input), exit(128 + SIGINT));
 		if (input == NULL)
-			exit(EXIT_S_FAILURE);
+			return (put_warning_for_heredoc(env, eof), exit(EXIT_S_SUCCESS));
 		if (ft_strcmp(input, eof) == 0)
 			break ;
 		if (!is_quote)
@@ -80,23 +93,27 @@ static int	ask_user_for_heredoc(char *eof, t_bool is_quote, t_env env)
 	{
 		waitpid(pid, &pid, 0);
 		close(p[1]);
-		if (WIFEXITED(pid) && WEXITSTATUS(pid) == SIGINT)
+		if (WIFEXITED(pid) == FALSE)
+			return (WEXITSTATUS(pid) * -1);
+		if (WEXITSTATUS(pid) == 128 + SIGINT)
+			return (-130);
+		if (WEXITSTATUS(pid) == EXIT_S_FAILURE)
 			return (-1);
 	}
 	return (p[0]);
 }
 
-t_binary_result	call_heredoc(t_parsing_state *parsing_state, t_env env)
+t_parsing	call_heredoc(t_parsing_state *parsing_state, t_env env)
 {
 	t_list			*current_heredoc;
 	t_list			*file_name_words;
 	char			*eof_str;
 	t_redirection	*redirection;
-	t_binary_result	result;
+	t_parsing		result;
 
-	result = SUCCESS_BIN_R;
+	result = SUCCESS_P;
 	current_heredoc = parsing_state->heredoc_list;
-	while (current_heredoc && result == SUCCESS_BIN_R)
+	while (current_heredoc && result == SUCCESS_P)
 	{
 		if (current_heredoc->content != NULL)
 		{
@@ -107,7 +124,7 @@ t_binary_result	call_heredoc(t_parsing_state *parsing_state, t_env env)
 			redirection->fd = ask_user_for_heredoc(eof_str,
 					has_quoted_text(redirection->file_name_words), env);
 			if (redirection->fd < 0)
-				result = FAILURE_BIN_R;
+				result = (redirection->fd) * -1;
 			// all_get_line(redirection->fd); //テスト用
 		}
 		current_heredoc = current_heredoc->next;

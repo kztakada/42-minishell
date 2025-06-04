@@ -6,17 +6,55 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 20:11:14 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 23:12:38 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/03 20:59:06 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
 
+static t_bool	is_existing_arg(t_list **expanding_tokens)
+{
+	if (*expanding_tokens == NULL)
+		return (FALSE);
+	if (get_ex_token(expanding_tokens)->type == ET_SEPARATOR)
+		return (FALSE);
+	if (get_ex_token(expanding_tokens)->type == ET_UNQUOTED_STR)
+	{
+		if (get_ex_token(expanding_tokens)->str == NULL)
+			return (FALSE);
+		if (ft_strcmp(get_ex_token(expanding_tokens)->str, "") == 0)
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
+static int	get_existing_arg_size(t_list *expanding_tokens)
+{
+	t_list	*current_token;
+	int		arg_count;
+
+	arg_count = 0;
+	if (expanding_tokens == NULL)
+		return (arg_count);
+	if (is_existing_arg(&expanding_tokens))
+		arg_count++;
+	current_token = expanding_tokens;
+	while (current_token != NULL)
+	{
+		to_next_separate_top(&current_token);
+		if (current_token == NULL)
+			break ;
+		if (is_existing_arg(&current_token))
+			arg_count++;
+	}
+	return (arg_count);
+}
+
 t_bool	is_ambiguous_redirection(t_list *expanding_tokens)
 {
 	int	arg_count;
 
-	arg_count = get_arg_size(expanding_tokens);
+	arg_count = get_existing_arg_size(expanding_tokens);
 	if (arg_count == 0)
 		return (TRUE);
 	if (arg_count == 1)

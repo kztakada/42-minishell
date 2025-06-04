@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 05:00:08 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:29:03 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_list	*copy_env_list(t_list *env_list)
 			return (NULL);
 		new = ft_lstnew(content_cpy);
 		if (!new)
-			return (NULL);
+			return (ft_lstclear(&env_list_cpy, free_env_var), NULL);
 		ft_lstadd_back(&env_list_cpy, new);
 		env_list = env_list->next;
 	}
