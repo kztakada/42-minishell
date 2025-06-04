@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:51:35 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/30 17:53:21 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/02 05:37:05 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_path	get_absolute(char *cmd)
 
 static t_path	get_relative(char *cmd, t_list *env_vars)
 {
-	char 	*path_env_value;
+	char	*path_env_value;
 	char	**split_path_env;
 	char	*tmp_path;
 	int		i;
@@ -62,5 +62,6 @@ t_path	get_path(char *cmd, t_list *env_vars)
 			return (get_relative(cmd, env_vars));
 	}
 	else
-		return (create_t_path(cmd, EXIT_S_CMD_NOT_FOUND, ERRMSG_NO_SUCH_FILE, cmd));
+		return (create_t_path(cmd, EXIT_S_CMD_NOT_FOUND,
+				ERRMSG_NO_SUCH_FILE, cmd));
 }

@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/04 15:51:38 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:52:57 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,10 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	if (argc != 1)
-		return (ft_putstr_fd(TOO_MANY_ARGS, STDERR_FILENO), EXIT_FAILURE);
+		return (ft_putstr_fd(TOO_MANY_ARGS, STDERR_FILENO), EXIT_S_FAILURE);
 	env.env_vars = init_envlst(envp);
 	if (env.env_vars == NULL)
-		return (perror(ERROR_MALLOC), EXIT_FAILURE);
+		return (perror(ERROR_MALLOC), EXIT_S_FAILURE);
 	env.exit_status = &exit_status;
 	unset_oldpwd = FALSE;
 	env.unset_oldpwd = &unset_oldpwd;

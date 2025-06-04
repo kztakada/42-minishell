@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:15 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/28 17:06:12 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/03 19:19:48 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_echo(char **args)
 		n_flag = TRUE;
 		i++;
 		if (args[i] == NULL)
-			return (EXIT_SUCCESS);
+			return (EXIT_S_SUCCESS);
 	}
 	while (args[i] != NULL)
 	{
@@ -34,5 +34,5 @@ int	ft_echo(char **args)
 	}
 	if (!n_flag)
 		ft_putstr_fd("\n", 1);
-	return (EXIT_SUCCESS);
+	return (EXIT_S_SUCCESS);
 }

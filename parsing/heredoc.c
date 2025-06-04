@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:50:07 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 19:37:27 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:33:49 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*expand_heredoc_input(char *to_expand, t_env env)
 	origin = to_expand;
 	expanded_str = ft_strdup("");
 	if (expanded_str == NULL)
-		return (exit(EXIT_FAILURE), NULL);
+		return (exit(EXIT_S_FAILURE), NULL);
 	while (*to_expand != '\0')
 	{
 		if (*to_expand == '$')
@@ -33,7 +33,7 @@ static char	*expand_heredoc_input(char *to_expand, t_env env)
 			expanded_str = strjoin_free(expanded_str,
 					use_raw_str_when_double_quoted(&to_expand));
 		if (expanded_str == NULL)
-			return (free(origin), exit(EXIT_FAILURE), NULL);
+			return (free(origin), exit(EXIT_S_FAILURE), NULL);
 	}
 	free(origin);
 	return (expanded_str);

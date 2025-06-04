@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/03 21:46:21 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:32:41 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ enum							e_exit_status
 // error messages *************************************************/
 # define TOO_MANY_ARGS "minishell: too many arguments\n"
 # define ERROR_MALLOC "Error: Memory allocation failed\n"
-# define ERROR_EXECVE "Error: Execve function error\n"
+# define ERROR_EXECVE "Error: Command execution error\n"
+# define ERROR_GETCWD "Error: Failed to get current path.\n"
 # define ERROR_SYNTAX "minishell: syntax error near unexpected token `"
 
 // for dictionary　************************************************/
@@ -231,7 +232,7 @@ int								is_env_exist(t_list *env_list, char *name);
 char							*get_env_value(t_list *env_vars, char *name);
 
 // err_msg (std_lib_func)
-int								err_msg_malloc(void);
-int								err_msg_execve(void);
-
+int				err_msg_malloc(void);
+int				err_msg_execve(void);
+int				err_msg_getcwd(void);
 #endif

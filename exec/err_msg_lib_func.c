@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:39:34 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/02 04:39:20 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/02 20:13:40 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,3 +24,8 @@ int	err_msg_execve(void)
 	return (EXIT_S_FAILURE);
 }
 
+int	err_msg_getcwd(void)
+{
+	perror(ERROR_GETCWD);
+	return (EXIT_S_FAILURE);
+}

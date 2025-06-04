@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:45 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/30 19:55:12 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/03 21:39:29 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	unset_env(char *name, t_list **env_list)
 				pre->next = curr->next;
 			else
 				*env_list = curr->next;
-			free(env_curr);
+			free_env_var(env_curr);
 			free(curr);
 			return ;
 		}
@@ -45,9 +45,9 @@ int	ft_unset(char **args, t_list *env_list, t_bool *unset_oldpwd)
 	int	tmp_status;
 
 	if (!args[1])
-		return (EXIT_SUCCESS);
+		return (EXIT_S_SUCCESS);
 	i = 1;
-	tmp_status = EXIT_SUCCESS;
+	tmp_status = EXIT_S_SUCCESS;
 	while (args[i])
 	{
 		if (check_name_error(args[i]))
@@ -55,7 +55,7 @@ int	ft_unset(char **args, t_list *env_list, t_bool *unset_oldpwd)
 		else
 		{
 			unset_env(args[i], &env_list);
-			if(!ft_strcmp(args[i], "OLDPWD") && *unset_oldpwd == FALSE)
+			if (!ft_strcmp(args[i], "OLDPWD") && *unset_oldpwd == FALSE)
 				*unset_oldpwd = TRUE;
 		}
 		i++;

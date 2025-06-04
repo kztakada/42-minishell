@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 00:13:08 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/30 01:23:38 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/02 05:33:08 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_saved_std	save_std(void)
 void	exec(t_abs_node *abs_tree, t_env *env)
 {
 	t_exit_status	result;
-	t_saved_std			std;
+	t_saved_std		std;
 
 	result = expander(abs_tree, *env);
 	if (result != 0)
@@ -33,7 +33,7 @@ void	exec(t_abs_node *abs_tree, t_env *env)
 		return ;
 	}
 	std = save_std();
-	result = exec_abs(abs_tree, env, std, FALSE);
+	result = exec_abs(abs_tree, env, &std, FALSE);
 	*(env->exit_status) = result;
 	return ;
 }
