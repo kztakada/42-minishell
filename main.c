@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/30 19:48:11 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/03 21:21:51 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static t_bool	safe_add_history(char *input)
 {
 	if (input == NULL)
-		return (exit(EXIT_FAILURE), FALSE);
+		return (exit(EXIT_S_FAILURE), FALSE);
 	if (*input)
 		add_history(input);
 	else
