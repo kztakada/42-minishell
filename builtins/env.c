@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:19 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/30 20:07:11 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 02:35:55 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ int	ft_env(t_list *env_list)
 			printf("%s=%s\n", env->name, env->value);
 		env_list = env_list->next;
 	}
-	return (EXIT_SUCCESS);
+	return (EXIT_S_SUCCESS);
 }

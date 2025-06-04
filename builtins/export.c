@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/02 04:44:13 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 05:00:08 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@ static t_list	*copy_env_list(t_list *env_list)
 {
 	t_list		*new;
 	t_list		*env_list_cpy;
-
+	t_env_var	*content_cpy;
 
 	env_list_cpy = NULL;
 	while (env_list)
 	{
-		new = ft_lstnew(env_list->content);
+		content_cpy = copy_t_env_var(env_list->content);
+		if (!content_cpy)
+			return (NULL);
+		new = ft_lstnew(content_cpy);
 		if (!new)
 			return (NULL);
 		ft_lstadd_back(&env_list_cpy, new);
@@ -76,34 +79,39 @@ static int	print_env_list(t_list *env_list)
 			}
 			printf("\"\n");
 		}
-		else if (env->value == NULL && (ft_strcmp(env->name, "_") != 0))
+		else if (env->value == NULL && ft_strcmp(env->name, "_") != 0)
 			printf("declare -x %s\n", env->name);
 		env_list = env_list->next;
 	}
-	return (EXIT_SUCCESS);
+	return (EXIT_S_SUCCESS);
 }
 
-static void	update_env_list(char *arg, t_list *env_list)
+static int	update_env_list(char *arg, t_list *env_list)
 {
 	char	*name;
 	char	*value;
+	int 	exit_status;
 
 	if (!ft_strchr(arg, '='))
 	{
 		name = ft_strdup(arg);
+		if (!name)
+			return (err_msg_malloc());
 		value = NULL;
 	}
 	else
 	{
 		name = ft_substr(arg, 0, ft_strchr(arg, '=') - arg);
+		if (!name)
+			return (err_msg_malloc());
 		value = ft_strchr(arg, '=') + 1;
 	}
 	if (is_env_exist(env_list, name))
-		update_env_value(&env_list, name, value);
+		exit_status = update_env_value(&env_list, name, value);
 	else
-		create_add_new_env(&env_list, name, value);
+		exit_status = create_add_new_env(&env_list, name, value);
 	free(name);
-	return ;
+	return (exit_status);
 }
 
 int	ft_export(char **argv, t_list *env_list)
@@ -123,13 +131,13 @@ int	ft_export(char **argv, t_list *env_list)
 		return (tmp_status);
 	}
 	i = 1;
-	tmp_status = EXIT_SUCCESS;
+	tmp_status = EXIT_S_SUCCESS;
 	while (argv[i])
 	{
 		if (check_name_error(argv[i]))
 			tmp_status = export_err_msg(argv[i]);
 		else
-			update_env_list(argv[i], env_list);
+			tmp_status = update_env_list(argv[i], env_list);
 		i++;
 	}
 	return (tmp_status);
