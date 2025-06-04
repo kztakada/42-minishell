@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_external.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:59:24 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 15:29:51 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:54:51 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	exec_cmd_external(t_abs_node *abs_tree, t_list *env_vars)
 	int		status;
 	pid_t	pid;
 	t_path	path;
-	char	**envp;
 	char	**envp;
 
 	// シグナルの処理は後回し
