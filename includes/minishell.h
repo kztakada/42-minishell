@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/04 15:32:41 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 21:23:09 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include "../libraries/libft.h"
-# include "./for_test.h" // for test
 # include <dirent.h>
 # include <fcntl.h>
 # include <limits.h>
@@ -232,7 +231,7 @@ int								is_env_exist(t_list *env_list, char *name);
 char							*get_env_value(t_list *env_vars, char *name);
 
 // err_msg (std_lib_func)
-int				err_msg_malloc(void);
-int				err_msg_execve(void);
-int				err_msg_getcwd(void);
+int								err_msg_malloc(void);
+int								err_msg_execve(void);
+int								err_msg_getcwd(void);
 #endif
