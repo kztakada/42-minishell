@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:13:23 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 22:09:43 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/04 23:16:46 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static t_binary_result	split_unquoted_str(char *to_split, t_list **first_token)
 	result = split_to_expanding_tokens(to_split, &split_list);
 	if (result == FAILURE_BIN_R)
 		return (FAILURE_BIN_R);
+	free(to_split);
 	(*first_token)->content = split_list->content;
 	(*first_token)->next = split_list->next;
 	free(split_list);
