@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:59:24 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 15:44:45 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 16:04:17 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	exec_cmd_external(t_abs_node *abs_tree, t_list *env_vars)
 	int		status;
 	pid_t	pid;
 	t_path	path;
-	char	**envp;
 	char	**envp;
 
 	pid = fork();
