@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:59:24 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 15:29:51 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:44:45 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ int	exec_cmd_external(t_abs_node *abs_tree, t_list *env_vars)
 	char	**envp;
 	char	**envp;
 
-	// シグナルの処理は後回し
 	pid = fork();
-	if (!pid)
+	if (pid == -1)
+		return ();
+	if (pid == 0)
 	{
 		set_sig_handlers_in_exec_child();
 		status = exec_redirection(abs_tree->redirections);

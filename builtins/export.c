@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 15:29:03 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:43:12 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_list	*copy_env_list(t_list *env_list)
 	env_list_cpy = NULL;
 	while (env_list)
 	{
-		content_cpy = copy_t_env_var(env_list->content);
+		copy_deep_env_var(env_list->content);
 		if (!content_cpy)
 			return (NULL);
 		new = ft_lstnew(content_cpy);
