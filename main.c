@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 19:47:13 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:51:38 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	minishell(t_env env)
 
 	// print_env_list(env_vars); // テスト用
 	rl_outstream = stderr;
+	// rl_inhibit_completion = 1;
 	if (is_interactive)
 		dialog_minishell(env);
 	else
