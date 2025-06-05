@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:50:07 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/04 15:33:49 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/05 15:19:56 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*expand_heredoc_input(char *to_expand, t_env env)
 	origin = to_expand;
 	expanded_str = ft_strdup("");
 	if (expanded_str == NULL)
-		return (exit(EXIT_S_FAILURE), NULL);
+		return (perror(ERROR_MALLOC), exit(EXIT_S_FAILURE), NULL);
 	while (*to_expand != '\0')
 	{
 		if (*to_expand == '$')
@@ -41,11 +41,17 @@ static char	*expand_heredoc_input(char *to_expand, t_env env)
 
 static void	put_warning_for_heredoc(t_env env, char *eof)
 {
+	char	*line_count_str;
+
+	line_count_str = ft_itoa(*(env.line_count));
+	if (line_count_str == NULL)
+		return (perror(ERROR_MALLOC), exit(EXIT_S_FAILURE));
 	ft_putstr_fd("minishell: warning: here-document at line ", STDERR_FILENO);
-	ft_putstr_fd(ft_itoa(*(env.line_count)), STDERR_FILENO);
+	ft_putstr_fd(line_count_str, STDERR_FILENO);
 	ft_putstr_fd(" delimited by end-of-file (wanted `", STDERR_FILENO);
 	ft_putstr_fd(eof, STDERR_FILENO);
 	ft_putstr_fd("')\n", STDERR_FILENO);
+	free(line_count_str);
 }
 
 static void	ask_heredoc_child_process(int fd, char *eof, t_bool is_quote,
@@ -61,7 +67,8 @@ static void	ask_heredoc_child_process(int fd, char *eof, t_bool is_quote,
 		if (g_sig == SIGINT)
 			return (free(input), exit(128 + SIGINT));
 		if (input == NULL)
-			return (put_warning_for_heredoc(env, eof), exit(EXIT_S_SUCCESS));
+			return (free(input), put_warning_for_heredoc(env, eof),
+				exit(EXIT_S_SUCCESS));
 		if (ft_strcmp(input, eof) == 0)
 			break ;
 		if (!is_quote)
