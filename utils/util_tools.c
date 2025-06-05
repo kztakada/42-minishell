@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 21:47:55 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/25 19:11:44 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:50:42 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_ifs(char c)
 {
-	if (lookup_dict(&c, IFS_DICT).in_d)
+	if (c == ' ' || c == '\t' || c == '\n')
 		return (TRUE);
 	return (FALSE);
 }

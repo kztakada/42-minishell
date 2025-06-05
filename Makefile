@@ -6,14 +6,14 @@
 #    By: katakada <katakada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 15:59:55 by katakada          #+#    #+#              #
-#    Updated: 2025/06/02 15:41:20 by katakada         ###   ########.fr        #
+#    Updated: 2025/06/05 14:45:40 by katakada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	minishell
 
 CC				=	cc
-DEBUG_CC		=	cc -D IS_DEBUG=1 -g -fsanitize=address
+DEBUG_CC		=	cc -D IS_DEBUG=1 -g -fsanitize=address,undefined
 
 CFLAGS			=	-Wall -Wextra -Werror
 
@@ -31,7 +31,7 @@ SRCS			=	$(wildcard *.c) $(wildcard utils/*.c) $(wildcard lexing/*.c) $(wildcard
 OBJS_PATH		=	objs/
 OBJS			=	$(SRCS:%.c=objs/%.o)
 
-ISDEBUG = 1
+ISDEBUG = 0
 
 ifeq ($(ISDEBUG), 1)
 	CC = $(DEBUG_CC)
@@ -60,6 +60,9 @@ all:	$(NAME)
 debug:
 	$(MAKE) ISDEBUG=1 all
 
+va:
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=.suppression ./$(NAME)
+
 
 clean:
 	make clean -C $(LIBFT_DIR)
@@ -72,4 +75,4 @@ fclean:
 
 re:		fclean all
 
-.PHONY:	all clean fclean re debug
+.PHONY:	all clean fclean re debug va

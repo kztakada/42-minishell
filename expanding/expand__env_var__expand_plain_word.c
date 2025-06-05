@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:50:46 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 00:36:30 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/04 22:37:35 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static t_list	*expand_unquoted_word(char **to_expand, t_env env)
 
 	unquoted_str = ft_strdup("");
 	if (unquoted_str == NULL)
-		return (NULL);
+		return (perror(ERROR_MALLOC), NULL);
 	while (!is_delimiter_for_unquoted(*to_expand))
 	{
 		if (**to_expand == '$')

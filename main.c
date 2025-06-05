@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/04 15:52:57 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:48:45 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 static t_bool	safe_add_history(char *input, t_env env)
 {
 	if (input == NULL)
-		return (ft_putstr_fd(EXIT_PROMPT, STDOUT_FILENO), rl_clear_history(),
-			exit(*(env.exit_status)), FALSE);
+		return (ft_putstr_fd(EXIT_PROMPT, STDOUT_FILENO),
+			ft_lstclear(&(env.env_vars), free_env_var), free(input),
+			rl_clear_history(), exit(*(env.exit_status)), FALSE);
 	if (*input)
 		add_history(input);
 	else
@@ -32,13 +33,10 @@ static t_bool	safe_add_history(char *input, t_env env)
 
 static void	execute_command(char *input, t_env env)
 {
-	t_list			*token_list;
-	t_abs_node		*abs_tree;
 	t_exit_status	result;
 
 	// TODO: lexerでエラーした時にexit_statusは何番を返せば良いか？
-	token_list = NULL;
-	result = lexer(input, &token_list);
+	result = lexer(input, &(env.token_list));
 	free(input);
 	if (result != 0)
 	{
@@ -46,18 +44,17 @@ static void	execute_command(char *input, t_env env)
 		return ;
 	}
 	// print_token_list(token_list); // テスト用
-	abs_tree = NULL;
-	result = parser(token_list, &abs_tree, env);
-	ft_lstclear(&token_list, free_token);
+	result = parser(env.token_list, &(env.abs_tree), env);
+	ft_lstclear(&(env.token_list), free_token);
 	if (result != 0)
 	{
 		*(env.exit_status) = result;
 		return ;
 	}
 	// 空文字入力など、exec_が実行されない場合は、exit_statusを更新しないこと
-	exec(abs_tree, &env);
+	exec(env.abs_tree, &env);
 	// printf("exit status: %d\n", exit_status); // テスト用
-	free_abs_tree(abs_tree);
+	free_abs_tree(env.abs_tree);
 }
 
 void	reset_signal(t_env env)
@@ -139,6 +136,8 @@ int	main(int argc, char **argv, char **envp)
 	env.unset_oldpwd = &unset_oldpwd;
 	line_count = 0;
 	env.line_count = &line_count;
+	env.token_list = NULL;
+	env.abs_tree = NULL;
 	minishell(env);
 	return (exit_status);
 }

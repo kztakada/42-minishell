@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:32:36 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 15:08:30 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:14:22 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_quote(char c)
 {
-	if (lookup_dict(&c, QUOTE_DICT).in_d)
+	if (c == '\'' || c == '\"')
 		return (TRUE);
 	return (FALSE);
 }

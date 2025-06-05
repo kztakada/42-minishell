@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/05 02:57:08 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/05 21:14:51 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include "../libraries/libft.h"
-# include "./for_test.h" // for test
 # include <dirent.h>
 # include <fcntl.h>
 # include <limits.h>
@@ -53,20 +52,7 @@ typedef enum e_binary_result
 
 // for signal ***************************************************/
 extern volatile sig_atomic_t	g_sig;
-// for env    ***************************************************/
-typedef struct s_env_var
-{
-	char						*name;
-	char						*value;
-}								t_env_var;
 
-typedef struct s_env
-{
-	t_list						*env_vars;
-	t_bool						*unset_oldpwd;
-	t_exit_status				*exit_status;
-	int							*line_count;
-}								t_env;
 // exit status ***************************************************/
 enum							e_exit_status
 {
@@ -183,6 +169,22 @@ struct							s_abs_node
 	t_abs_node					*left;
 	t_abs_node					*right;
 };
+// for env    ***************************************************/
+typedef struct s_env_var
+{
+	char						*name;
+	char						*value;
+}								t_env_var;
+
+typedef struct s_env
+{
+	t_list						*env_vars;
+	t_bool						*unset_oldpwd;
+	t_exit_status				*exit_status;
+	int							*line_count;
+	t_list						*token_list;
+	t_abs_node					*abs_tree;
+}								t_env;
 //*****************************************************************/
 
 // lexer.c
@@ -207,7 +209,7 @@ char							*get_dict_word(int d_index, char *dict);
 // free_tools.c
 void							free_str_list(char **str_list);
 void							no_del(void *target);
-;
+void							free_all_env(t_env env);
 
 // util_tools.c
 int								is_ifs(char c);
