@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:22:32 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 15:30:43 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/05 03:28:57 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ char	**convert_list_to_envp(t_list *env_vars)
 	{
 		env = (t_env_var *)env_vars->content;
 		envp[i] = ft_strjoin_3(env->name, "=", env->value);
+		if (!envp[i])
+			return (free(envp), NULL);
 		env_vars = env_vars->next;
 		i++;
 	}
