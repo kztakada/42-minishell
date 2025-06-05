@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 00:13:37 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 19:59:54 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/05 03:07:17 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef enum e_err_msg
 	ERRMSG_PERM_DENIED,
 	ERRMSG_AMBIGUOUS,
 	ERRMSG_IS_DIRECTORY,
+	ERRMSG_MALLOC,
 }				t_err_msg;
 typedef struct s_err
 {
