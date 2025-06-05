@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/04 21:07:07 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/05 02:57:08 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ enum							e_exit_status
 # define ERROR_MALLOC "Error: Memory allocation failed\n"
 # define ERROR_EXECVE "Error: Command execution error\n"
 # define ERROR_GETCWD "Error: Failed to get current path.\n"
+# define ERROR_FORK "Error: Failed to create child process.\n"
+# define ERROR_WAITPID "Error: Failed to wait child process.\n"
+# define ERROR_PIPE "Error: Failed to generate pipe.\n"
 # define ERROR_SYNTAX "minishell: syntax error near unexpected token `"
 
 // for dictionary　************************************************/
