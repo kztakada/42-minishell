@@ -1,4 +1,12 @@
 minishell
 
 *.o
+*.a
+.suppression
 .DS_Store
+.github
+.github/*
+.gitignore
+
+settings.json
+test
