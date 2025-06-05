@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 01:57:45 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/28 01:02:24 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/05 19:08:37 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	replace_wildcard_with_d_names(t_list *with_wildcd,
 	t_list	*next_top_token;
 
 	next_top_token = free_and_get_next_separator(with_wildcd->next);
+	free_expanding_token(with_wildcd->content);
 	with_wildcd->content = replaced_d_names->content;
 	with_wildcd->next = replaced_d_names->next;
 	ft_lstlast(replaced_d_names)->next = next_top_token;

@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:50:07 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/05 15:19:56 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:17:21 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ static void	ask_heredoc_child_process(int fd, char *eof, t_bool is_quote,
 	{
 		input = readline(HEREDOC_PROMPT);
 		if (g_sig == SIGINT)
-			return (free(input), exit(128 + SIGINT));
+			return (free(input), free_all_env(env), exit(128 + SIGINT));
 		if (input == NULL)
 			return (free(input), put_warning_for_heredoc(env, eof),
-				exit(EXIT_S_SUCCESS));
+				free_all_env(env), exit(EXIT_S_SUCCESS));
 		if (ft_strcmp(input, eof) == 0)
 			break ;
 		if (!is_quote)
@@ -77,13 +77,16 @@ static void	ask_heredoc_child_process(int fd, char *eof, t_bool is_quote,
 			exit(EXIT_S_FAILURE);
 		ft_putstr_fd(input, fd);
 		ft_putstr_fd("\n", fd);
+		free(input);
 	}
 	if (input != NULL)
 		free(input);
+	free_all_env(env);
 	exit(EXIT_S_SUCCESS);
 }
 
-static int	ask_user_for_heredoc(char *eof, t_bool is_quote, t_env env)
+static int	ask_user_for_heredoc(char *eof, t_bool is_quote, t_env env,
+		t_parsing_state *parsing_state)
 {
 	int	p[2];
 	int	pid;
@@ -94,6 +97,8 @@ static int	ask_user_for_heredoc(char *eof, t_bool is_quote, t_env env)
 		return (-1);
 	if (pid == 0)
 	{
+		ft_lstclear(&(parsing_state->heredoc_list), no_del);
+		env.abs_tree = *(parsing_state->tree_top_node);
 		ask_heredoc_child_process(p[1], eof, is_quote, env);
 	}
 	else
@@ -129,7 +134,8 @@ t_parsing	call_heredoc(t_parsing_state *parsing_state, t_env env)
 			eof_str = get_heredoc_delimiter(file_name_words);
 			redirection->expanded_file_name = eof_str;
 			redirection->fd = ask_user_for_heredoc(eof_str,
-					has_quoted_text(redirection->file_name_words), env);
+					has_quoted_text(redirection->file_name_words), env,
+					parsing_state);
 			if (redirection->fd < 0)
 				result = (redirection->fd) * -1;
 			// all_get_line(redirection->fd); //テスト用

@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 20:07:15 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/27 20:31:24 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:18:50 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ t_list	*make_d_name_ex_token(char *d_name, t_bool has_prefix_addr,
 	if (has_suffix_addr == TRUE)
 		d_name_copy = strjoin_free(d_name_copy, ft_strdup("/"));
 	d_name_ex_token = expand_single_quoted_word(d_name_copy);
+	free(d_name_copy);
 	if (d_name_ex_token == NULL)
-		return (free(d_name_copy), NULL);
+		return (NULL);
 	return (d_name_ex_token);
 }
 
