@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 04:49:33 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 21:01:52 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/05 03:13:28 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	create_add_new_env(t_list **env_list, char *name, char *value)
 		return (free_env_var(new_env), perror(ERROR_MALLOC), EXIT_S_FAILURE);
 	new_list->content = new_env;
 	new_list->next = NULL;
-	ft_lstadd_back(&env_list, new_list);
+	ft_lstadd_back(env_list, new_list);
 	return (EXIT_S_SUCCESS);
 }
 
