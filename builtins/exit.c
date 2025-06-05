@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:27 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/03 19:32:43 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/05 18:37:35 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static	int	is_digit(char *arg)
 {
 	while (*arg)
 	{
-		if (*arg < '0' || *arg > '9')
+		if ((*arg < '0' || *arg > '9')
+			&& *arg != '+' && *arg != '-')
 			return (0);
 		arg++;
 	}
