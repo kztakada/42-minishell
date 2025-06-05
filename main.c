@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/04 15:52:57 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:54:29 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 static t_bool	safe_add_history(char *input, t_env env)
 {
 	if (input == NULL)
-		return (ft_putstr_fd(EXIT_PROMPT, STDOUT_FILENO), rl_clear_history(),
-			exit(*(env.exit_status)), FALSE);
+		return (ft_putstr_fd(EXIT_PROMPT, STDOUT_FILENO),
+			ft_lstclear(&(env.env_vars), free_env_var), free(input),
+			rl_clear_history(), exit(*(env.exit_status)), FALSE);
 	if (*input)
 		add_history(input);
 	else
