@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:12:10 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/02 05:34:47 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/05 02:53:29 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ static int	wait_child_process(pid_t pid_left, pid_t pid_right)
 {
 	int	status;
 
-	waitpid(pid_left, &status, 0);
-	waitpid(pid_right, &status, 0);
+	if (waitpid(pid_left, &status, 0) == -1)
+		return (perror(ERROR_WAITPID), EXIT_S_FAILURE);
+	if (waitpid(pid_right, &status, 0) == -1)
+		return (perror(ERROR_WAITPID), EXIT_S_FAILURE);
 	return (get_exit_status(status));
 }
 
@@ -64,22 +66,23 @@ int	exec_pipe(t_abs_node *abs_tree, t_env *env, t_saved_std *std)
 	pid_t	pid_left;
 	pid_t	pid_right;
 
-	// シグナルの処理は後回し
-	pipe(pfds);
+	if (pipe(pfds) == -1)
+		return (perror(ERROR_PIPE), EXIT_S_FAILURE);
 	pid_left = fork();
+	if (pid_left == -1)
+		return (perror(ERROR_FORK), EXIT_S_FAILURE);
 	if (pid_left == 0)
 		exec_pipe_left(abs_tree, env, std, pfds);
 	else
 	{
 		pid_right = fork();
+		if (pid_right == -1)
+			return (perror(ERROR_FORK), EXIT_S_FAILURE);
 		if (pid_right == 0)
 			exec_pipe_right(abs_tree, env, std, pfds);
 		else
-		{
-			close(pfds[0]);
-			close(pfds[1]);
-			return (wait_child_process(pid_left, pid_right));
-		}
+			return (close(pfds[0]), close(pfds[1]),
+				wait_child_process(pid_left, pid_right));
 	}
 	return (EXIT_S_FAILURE);
 }

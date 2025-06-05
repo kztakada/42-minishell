@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 15:29:03 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/05 03:10:09 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_list	*copy_env_list(t_list *env_list)
 	env_list_cpy = NULL;
 	while (env_list)
 	{
-		content_cpy = copy_t_env_var(env_list->content);
+		content_cpy = copy_deep_env_var(env_list->content);
 		if (!content_cpy)
 			return (NULL);
 		new = ft_lstnew(content_cpy);
@@ -96,14 +96,14 @@ static int	update_env_list(char *arg, t_list *env_list)
 	{
 		name = ft_strdup(arg);
 		if (!name)
-			return (err_msg_malloc());
+			return (perror(ERROR_MALLOC), EXIT_S_FAILURE);
 		value = NULL;
 	}
 	else
 	{
 		name = ft_substr(arg, 0, ft_strchr(arg, '=') - arg);
 		if (!name)
-			return (err_msg_malloc());
+			return (perror(ERROR_MALLOC), EXIT_S_FAILURE);
 		value = ft_strchr(arg, '=') + 1;
 	}
 	if (is_env_exist(env_list, name))
@@ -124,7 +124,7 @@ int	ft_export(char **argv, t_list *env_list)
 	{
 		env_list_cpy = copy_env_list(env_list);
 		if (!env_list_cpy)
-			return (err_msg_malloc());
+			return (perror(ERROR_MALLOC), EXIT_S_FAILURE);
 		sort_env_vars_by_ascending(&env_list_cpy);
 		tmp_status = print_env_list(env_list_cpy);
 		ft_lstclear(&env_list_cpy, free_env_var);

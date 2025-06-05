@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/05 15:56:11 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/05 21:14:51 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ enum							e_exit_status
 # define ERROR_MALLOC "Error: Memory allocation failed\n"
 # define ERROR_EXECVE "Error: Command execution error\n"
 # define ERROR_GETCWD "Error: Failed to get current path.\n"
+# define ERROR_FORK "Error: Failed to create child process.\n"
+# define ERROR_WAITPID "Error: Failed to wait child process.\n"
+# define ERROR_PIPE "Error: Failed to generate pipe.\n"
 # define ERROR_SYNTAX "minishell: syntax error near unexpected token `"
 
 // for dictionary　************************************************/
@@ -233,8 +236,4 @@ void							free_abs_tree(t_abs_node *abs_tree);
 int								is_env_exist(t_list *env_list, char *name);
 char							*get_env_value(t_list *env_vars, char *name);
 
-// err_msg (std_lib_func)
-int								err_msg_malloc(void);
-int								err_msg_execve(void);
-int								err_msg_getcwd(void);
 #endif
