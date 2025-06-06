@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/05 15:48:45 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:10:13 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,10 @@
 #include "minishell.h"
 #include "signal_for_minishell.h"
 
-static t_bool	safe_add_history(char *input, t_env env)
-{
-	if (input == NULL)
-		return (ft_putstr_fd(EXIT_PROMPT, STDOUT_FILENO),
-			ft_lstclear(&(env.env_vars), free_env_var), free(input),
-			rl_clear_history(), exit(*(env.exit_status)), FALSE);
-	if (*input)
-		add_history(input);
-	else
-	{
-		free(input);
-		return (FALSE);
-	}
-	*(env.line_count) += 1;
-	return (TRUE);
-}
-
 static void	execute_command(char *input, t_env env)
 {
 	t_exit_status	result;
 
-	// TODO: lexerでエラーした時にexit_statusは何番を返せば良いか？
 	result = lexer(input, &(env.token_list));
 	free(input);
 	if (result != 0)
@@ -57,13 +39,30 @@ static void	execute_command(char *input, t_env env)
 	free_abs_tree(env.abs_tree);
 }
 
-void	reset_signal(t_env env)
+void	reset_g_sig(t_env env)
 {
 	if (g_sig != 0)
 	{
 		*(env.exit_status) = g_sig + EXIT_S_INVALID_ARG;
 		g_sig = 0;
 	}
+}
+
+static t_bool	safe_add_history(char *input, t_env env)
+{
+	if (input == NULL)
+		return (ft_putstr_fd(EXIT_PROMPT, STDOUT_FILENO),
+			ft_lstclear(&(env.env_vars), free_env_var), free(input),
+			rl_clear_history(), exit(*(env.exit_status)), FALSE);
+	if (*input)
+		add_history(input);
+	else
+	{
+		free(input);
+		return (FALSE);
+	}
+	*(env.line_count) += 1;
+	return (TRUE);
 }
 
 void	dialog_minishell(t_env env)
@@ -75,7 +74,7 @@ void	dialog_minishell(t_env env)
 	{
 		set_sig_handlers_in_dialog();
 		input = readline(PROMPT);
-		reset_signal(env);
+		reset_g_sig(env);
 		if (safe_add_history(input, env) == FALSE)
 			continue ;
 		execute_command(input, env);
