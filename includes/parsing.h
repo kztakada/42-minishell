@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:09:45 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 19:09:46 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:39:57 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int				grammar_operand_text(t_token *test_token, t_list **next_tokens,
 // heredoc__utils.c
 t_bool			has_quoted_text(t_list *parsed_words);
 char			*get_heredoc_delimiter(t_list *file_name_words);
+void			exit_warning_for_heredoc(t_env env, char *eof);
 
 // heredoc.c
 t_parsing		call_heredoc(t_parsing_state *parsing_state, t_env env);
