@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/05 21:14:51 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/06 00:36:01 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,13 +155,13 @@ typedef enum e_abs_node_type
 	ABS_BIN_AND,
 	ABS_BIN_OR,
 	ABS_PIPE,
-	ABS_COMMAND
+	ABS_COMMAND,
+	ABS_SUBSHELL,
 }								t_abs_node_type;
 // cmd_words is list of t_parsed_word
 // redirections is list of t_redirection
 struct							s_abs_node
 {
-	t_bool						is_subshell;
 	t_abs_node_type				type;
 	t_list						*cmd_words;
 	char						**expanded_args;

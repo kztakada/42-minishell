@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 19:09:45 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 19:09:46 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/06 00:08:28 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef enum s_node_pos
 	LEFT,
 	B_OP_RIGHT,
 	PIPE_RIGHT,
+	SUBSHELL_TOP
 }				t_node_pos;
 // heredoc_list is list of t_redirection of heredoc only
 typedef struct s_parsing_state
