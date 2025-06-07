@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:52:52 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 21:06:45 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/05 23:04:50 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static int	update_pwd_env(t_list *env_list)
 		if (!value)
 			return (perror(ERROR_GETCWD), EXIT_S_FAILURE);
 		update_env_value(&env_list, "PWD", value);
+		free(value);
 	}
 	return (EXIT_S_SUCCESS);
 }
