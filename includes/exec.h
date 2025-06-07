@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 00:13:37 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/05 03:07:17 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/08 06:37:52 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int				msg_is_directory(t_err err);
 
 // prototypes exec
 int				exec_abs(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool piped);
+int				exec_subshell(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool piped);
 int				exec_cmd(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool piped);
 int				exec_cmd_external(t_abs_node *abs_tree, t_list *env_vars);
 int				exec_cmd_builtin(char **args, t_env *env);
@@ -74,5 +75,7 @@ t_path			create_t_path(char *cmd, int err_exit_s, int err_msg,
 					char *err_cause);
 t_err			create_t_err(int err_exit_s, int err_msg, char *err_cause);
 char			**convert_list_to_envp(t_list *env_vars);
+t_saved_std		save_stds(void);
+void			reset_stds(t_saved_std *std, t_bool piped);
 
 #endif
