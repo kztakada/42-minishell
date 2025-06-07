@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 04:49:33 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/05 03:13:28 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/08 01:13:24 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	create_add_new_env(t_list **env_list, char *name, char *value)
 	{
 		new_env->value = ft_strdup(value);
 		if (!new_env->value)
-			return (free_env_var(new_env), perror(ERROR_MALLOC), EXIT_S_FAILURE);
+			return (free_env_var(new_env), perror(ERROR_MALLOC),
+				EXIT_S_FAILURE);
 	}
 	else
 		new_env->value = NULL;

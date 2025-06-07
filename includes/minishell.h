@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/05 21:14:51 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/08 02:05:44 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,18 +222,28 @@ void							ft_swap(void **a, void **b);
 // lexing_utils.c
 void							free_token(void *target);
 
+// init_env__shlvl.c
+t_binary_result					init_env_shlvl(t_list **env_list);
+
 // init_env__utils.c
 void							free_env_var(void *env_var);
 t_env_var						*copy_deep_env_var(t_env_var *env_var);
 
 // init_env.c
 t_list							*init_envlst(char **env);
+t_env_var						*get_env_var(char *env_var_source);
+t_list							**set_env_var_to_list(t_list **env_vars,
+									t_env_var *env_var);
 
 // parser_utils.c
 void							free_abs_tree(t_abs_node *abs_tree);
 
 // env_utils
 int								is_env_exist(t_list *env_list, char *name);
+int								create_add_new_env(t_list **env_list,
+									char *name, char *value);
+int								update_env_value(t_list **env_list, char *name,
+									char *value);
 char							*get_env_value(t_list *env_vars, char *name);
 
 #endif
