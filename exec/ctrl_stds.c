@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   ctrl_stds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/23 00:13:08 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/08 06:59:04 by kharuya          ###   ########.fr       */
+/*   Created: 2025/06/08 06:28:06 by kharuya           #+#    #+#             */
+/*   Updated: 2025/06/08 06:31:41 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	exec(t_abs_node *abs_tree, t_env *env)
+t_saved_std	save_stds(void)
 {
-	t_exit_status	result;
-	t_saved_std		std;
+	t_saved_std	std;
 
-	result = expander(abs_tree, *env);
-	if (result != 0)
-	{
-		*(env->exit_status) = result;
+	std.saved_stdin = dup(0);
+	std.saved_stdout = dup(1);
+	return (std);
+}
+
+void	reset_stds(t_saved_std *std, t_bool piped)
+{
+	if (piped == TRUE)
 		return ;
-	}
-	std = save_stds();
-	result = exec_abs(abs_tree, env, &std, FALSE);
-	*(env->exit_status) = result;
+	dup2(std->saved_stdin, 0);
+	dup2(std->saved_stdout, 1);
 	return ;
 }
