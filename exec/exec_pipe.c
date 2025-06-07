@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:12:10 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/05 02:53:29 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/08 05:34:34 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	exec_pipe_left(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
 
 	redirect_to_pipe(pfds, PIPE_WRITE_MODE);
 	status = exec_abs(abs_tree->left, env, std, TRUE);
-	exit(status);
+	clean_and_exit(status, env);
 }
 
 static void	exec_pipe_right(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
@@ -57,7 +57,7 @@ static void	exec_pipe_right(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
 
 	redirect_to_pipe(pfds, PIPE_READ_MODE);
 	status = exec_abs(abs_tree->right, env, std, TRUE);
-	exit(status);
+	clean_and_exit(status, env);
 }
 
 int	exec_pipe(t_abs_node *abs_tree, t_env *env, t_saved_std *std)

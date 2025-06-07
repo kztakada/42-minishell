@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:58:56 by kharuya           #+#    #+#             */
-/*   Updated: 2025/05/30 19:51:01 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/08 05:53:41 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int	exec_cmd_builtin(char **args, t_env *env)
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		return (ft_pwd());
 	else if (ft_strcmp(args[0], "exit") == 0)
-		return (ft_exit(args, *(env->exit_status)));
+		ft_exit(args, env, *(env->exit_status));
 	return (EXIT_S_FAILURE);
 }

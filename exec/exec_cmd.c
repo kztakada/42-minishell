@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:17:57 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/02 05:34:09 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/08 05:31:31 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ int	exec_cmd(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool piped)
 		return (reset_saved_stds(std, piped), status);
 	}
 	else
-		return (exec_cmd_external(abs_tree, env->env_vars));
+		return (exec_cmd_external(abs_tree, env->env_vars, env));
 }

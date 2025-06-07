@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:27 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/05 18:37:35 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/08 05:51:31 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,19 @@ static int	get_exit_s(char *arg)
 	}
 }
 
-int	ft_exit(char **args, t_exit_status exit_s)
+void	ft_exit(char **args, t_env *env, t_exit_status exit_s)
 {
+	int	status;
+
+	status = exit_s;
 	if (args[1])
 	{
 		if (!is_digit(args[1]))
-			exit(exit_err_msg_digit(args[1]));
+			status = exit_err_msg_digit(args[1]);
 		else if (args[2])
-			exit(exit_err_msg_format());
+			status = exit_err_msg_format();
 		else
-			exit(get_exit_s(args[1]));
+			status = get_exit_s(args[1]);
 	}
-	exit(exit_s);
+	clean_and_exit(status, env);
 }

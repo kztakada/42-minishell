@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/08 02:05:44 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/08 05:29:27 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ t_exit_status					parser(t_list *input_tokens,
 t_exit_status					expander(t_abs_node *abs_tree, t_env env);
 
 // exec.c
-void							exec(t_abs_node *abs_tree, t_env *env);
+void							exec(t_env *env);
 
 // utils **********************************************************/
 
@@ -245,5 +245,8 @@ int								create_add_new_env(t_list **env_list,
 int								update_env_value(t_list **env_list, char *name,
 									char *value);
 char							*get_env_value(t_list *env_vars, char *name);
+
+// clean_and_exit.c
+void	clean_and_exit(int exit_status, t_env *env);
 
 #endif
