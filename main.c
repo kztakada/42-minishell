@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/06 17:10:13 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/08 08:17:27 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	execute_command(char *input, t_env env)
 		return ;
 	}
 	// 空文字入力など、exec_が実行されない場合は、exit_statusを更新しないこと
-	exec(env.abs_tree, &env);
+	exec(&env);
 	// printf("exit status: %d\n", exit_status); // テスト用
 	free_abs_tree(env.abs_tree);
 }
