@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/08 08:17:27 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/08 16:39:34 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@ void	reset_g_sig(t_env env)
 static t_bool	safe_add_history(char *input, t_env env)
 {
 	if (input == NULL)
-		return (ft_putstr_fd(EXIT_PROMPT, STDOUT_FILENO),
-			ft_lstclear(&(env.env_vars), free_env_var), free(input),
-			rl_clear_history(), exit(*(env.exit_status)), FALSE);
+	{
+		ft_putstr_fd(EXIT_PROMPT, STDOUT_FILENO);
+		return (free_all_env(env), exit(*(env.exit_status)), FALSE);
+	}
 	if (*input)
 		add_history(input);
 	else
@@ -84,22 +85,16 @@ void	dialog_minishell(t_env env)
 void	exec_minishell(t_env env)
 {
 	char	*input;
-	char	*newline;
 
 	input = NULL;
-	input = get_next_line(STDIN_FILENO);
-	while (input != NULL)
+	input = readline("");
+	if (input != NULL)
 	{
-		// 複数行処理やめて、１行の未処理対応にするか検討すること
-		newline = ft_strchr(input, '\n'); // TODO: 複数行実行した場合、出力パイプがどうなるか確認
-		if (newline)
-			*newline = '\0';
 		*(env.line_count) += 1;
-		// printf("%s\n", input); // テスト用
 		execute_command(input, env);
-		input = get_next_line(STDIN_FILENO);
 	}
-	free(input);
+	free_all_env(env);
+	exit(*(env.exit_status));
 }
 
 void	minishell(t_env env)
