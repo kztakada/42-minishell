@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 06:28:06 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/08 06:31:41 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/10 01:24:50 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ t_saved_std	save_stds(void)
 	return (std);
 }
 
-void	reset_stds(t_saved_std *std, t_bool piped)
+void	reset_stds(t_saved_std *std, t_bool redirected)
 {
-	if (piped == TRUE)
+	if (redirected == TRUE)
 		return ;
 	dup2(std->saved_stdin, 0);
 	dup2(std->saved_stdout, 1);

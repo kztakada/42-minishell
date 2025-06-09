@@ -6,14 +6,14 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 06:14:11 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/09 20:50:50 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/10 01:29:41 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "signal_for_minishell.h"
 
-int	exec_subshell(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool piped)
+int	exec_subshell(t_abs_node *abs_tree, t_env *env, t_saved_std *std)
 {
 	int		status;
 	pid_t	pid;
@@ -27,7 +27,8 @@ int	exec_subshell(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool pip
 		status = exec_redirection(abs_tree->redirections);
 		if (status != EXIT_S_SUCCESS)
 			return (status);
-		status = exec_abs(abs_tree->left, env, std, piped);
+		status = exec_abs(abs_tree->left, env, std, TRUE);
+		reset_stds(std, FALSE);
 		exit(status);
 	}
 	set_sig_handlers_in_exec_parent();
