@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 00:13:37 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/08 06:37:52 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/10 01:28:29 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int				msg_cmd_not_found(t_err err);
 int				msg_is_directory(t_err err);
 
 // prototypes exec
-int				exec_abs(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool piped);
-int				exec_subshell(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool piped);
-int				exec_cmd(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool piped);
+int				exec_abs(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool redirected);
+int				exec_subshell(t_abs_node *abs_tree, t_env *env, t_saved_std *std);
+int				exec_cmd(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool redirected);
 int				exec_cmd_external(t_abs_node *abs_tree, t_list *env_vars);
 int				exec_cmd_builtin(char **args, t_env *env);
 int				exec_redirection(t_list	*redirection_list);
@@ -76,6 +76,6 @@ t_path			create_t_path(char *cmd, int err_exit_s, int err_msg,
 t_err			create_t_err(int err_exit_s, int err_msg, char *err_cause);
 char			**convert_list_to_envp(t_list *env_vars);
 t_saved_std		save_stds(void);
-void			reset_stds(t_saved_std *std, t_bool piped);
+void			reset_stds(t_saved_std *std, t_bool redirected);
 
 #endif
