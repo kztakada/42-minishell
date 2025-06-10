@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:35:21 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/06 16:39:33 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:41:11 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	exit_warning_for_heredoc(t_env env, char *eof)
 
 	line_count_str = ft_itoa(*(env.line_count));
 	if (line_count_str == NULL)
-		return (perror(ERROR_MALLOC), exit(EXIT_S_FAILURE));
+		return (perror(ERROR_MALLOC), free_all_env(env), exit(EXIT_S_FAILURE));
 	ft_putstr_fd("minishell: warning: here-document at line ", STDERR_FILENO);
 	ft_putstr_fd(line_count_str, STDERR_FILENO);
 	ft_putstr_fd(" delimited by end-of-file (wanted `", STDERR_FILENO);

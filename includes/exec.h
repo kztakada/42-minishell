@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 00:13:37 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/10 15:16:27 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:26:42 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int				exec_subshell(t_abs_node *abs_tree, t_env *env,
 					t_saved_std *std);
 int				exec_cmd(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
 					t_bool redirected);
-int				exec_cmd_external(t_abs_node *abs_tree, t_list *env_vars);
+int				exec_cmd_external(t_abs_node *abs_tree, t_list *env_vars,
+					t_env *env);
 int				exec_cmd_builtin(char **args, t_env *env);
 int				exec_redirection(t_list *redirection_list);
 int				exec_pipe(t_abs_node *abs_tree, t_env *env, t_saved_std *std);
