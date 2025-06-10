@@ -6,7 +6,7 @@
 #    By: katakada <katakada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 15:59:55 by katakada          #+#    #+#              #
-#    Updated: 2025/06/05 14:45:40 by katakada         ###   ########.fr        #
+#    Updated: 2025/06/08 02:16:00 by katakada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ $(LIBFT):
 all:	$(NAME)
 
 debug:
+	make fclean
 	$(MAKE) ISDEBUG=1 all
 
 va:

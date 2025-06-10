@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin_3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 03:24:28 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/05 03:39:25 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/06 16:06:47 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*ft_strjoin_3(char *s1, char *s2, char *s3)
 
 	if (s1 && s2)
 	{
-
 		len = ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3);
 		ans = (char *)malloc(sizeof(char) * (len + 1));
 		if (ans == NULL)

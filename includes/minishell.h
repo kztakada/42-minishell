@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/06 00:36:01 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:15:45 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ t_exit_status					parser(t_list *input_tokens,
 t_exit_status					expander(t_abs_node *abs_tree, t_env env);
 
 // exec.c
-void							exec(t_abs_node *abs_tree, t_env *env);
+void							exec(t_env *env);
 
 // utils **********************************************************/
 
@@ -222,18 +222,31 @@ void							ft_swap(void **a, void **b);
 // lexing_utils.c
 void							free_token(void *target);
 
+// init_env__shlvl.c
+t_binary_result					init_env_shlvl(t_list **env_list);
+
 // init_env__utils.c
 void							free_env_var(void *env_var);
 t_env_var						*copy_deep_env_var(t_env_var *env_var);
 
 // init_env.c
 t_list							*init_envlst(char **env);
+t_env_var						*get_env_var(char *env_var_source);
+t_list							**set_env_var_to_list(t_list **env_vars,
+									t_env_var *env_var);
 
 // parser_utils.c
 void							free_abs_tree(t_abs_node *abs_tree);
 
 // env_utils
 int								is_env_exist(t_list *env_list, char *name);
+int								create_add_new_env(t_list **env_list,
+									char *name, char *value);
+int								update_env_value(t_list **env_list, char *name,
+									char *value);
 char							*get_env_value(t_list *env_vars, char *name);
+
+// clean_and_exit.c
+void							clean_and_exit(int exit_status, t_env *env);
 
 #endif

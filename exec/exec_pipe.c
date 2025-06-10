@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:12:10 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/10 01:30:19 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:23:29 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	exec_pipe_left(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
 	redirect_to_pipe(pfds, PIPE_WRITE_MODE);
 	status = exec_abs(abs_tree->left, env, std, TRUE);
 	reset_stds(std, FALSE);
-	exit(status);
+	clean_and_exit(status, env);
 }
 
 static void	exec_pipe_right(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
@@ -59,7 +59,7 @@ static void	exec_pipe_right(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
 	redirect_to_pipe(pfds, PIPE_READ_MODE);
 	status = exec_abs(abs_tree->right, env, std, TRUE);
 	reset_stds(std, FALSE);
-	exit(status);
+	clean_and_exit(status, env);
 }
 
 int	exec_pipe(t_abs_node *abs_tree, t_env *env, t_saved_std *std)
