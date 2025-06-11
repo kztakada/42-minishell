@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 15:56:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/05 03:08:55 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/11 17:19:14 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	err_msg_external(t_err err)
 		return (msg_no_such_file(err));
 	else if (err.msg == ERRMSG_PERM_DENIED)
 		return (msg_perm_denied(err));
+	else if (err.msg == ERRMSG_IS_DIRECTORY)
+		return (msg_is_directory(err));
 	else if (err.msg == ERRMSG_MALLOC)
 		return (perror(ERROR_MALLOC), EXIT_S_FAILURE);
 	return (EXIT_S_SUCCESS);
