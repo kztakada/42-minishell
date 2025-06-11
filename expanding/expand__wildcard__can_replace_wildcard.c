@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:13:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/27 20:15:36 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/11 22:07:07 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,22 @@ static t_bool	wd_check_by_ends_in_str(char *d_name, t_list *for_wildcd_check,
 	return (TRUE);
 }
 
-t_bool	can_replace_wildcard(char *d_name, t_list *for_wildcd_check)
+t_bool	can_replace_wildcard(struct dirent *entry, t_list *for_wildcd_check,
+		t_bool has_suffix_addr)
 {
-	if (for_wildcd_check == NULL || d_name == NULL)
+	if (for_wildcd_check == NULL || entry == NULL)
+		return (FALSE);
+	if (has_suffix_addr == TRUE && entry->d_type != DT_DIR)
 		return (FALSE);
 	ft_lstsize(for_wildcd_check);
-	if (!is_hidden_file(for_wildcd_check) && d_name[0] == '.')
+	if (!is_hidden_file(for_wildcd_check) && entry->d_name[0] == '.')
 		return (FALSE);
-	if (is_hidden_file(for_wildcd_check) && d_name[0] != '.')
+	if (is_hidden_file(for_wildcd_check) && entry->d_name[0] != '.')
 		return (FALSE);
 	if (is_ends_in_wildcard(for_wildcd_check))
-		return (wd_check_by_list_count(d_name, for_wildcd_check,
+		return (wd_check_by_list_count(entry->d_name, for_wildcd_check,
 				ft_lstsize(for_wildcd_check)));
 	else
-		return (wd_check_by_ends_in_str(d_name, for_wildcd_check,
+		return (wd_check_by_ends_in_str(entry->d_name, for_wildcd_check,
 				ft_lstsize(for_wildcd_check)));
 }

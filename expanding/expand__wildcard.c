@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 20:07:15 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/05 20:18:50 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/11 22:05:05 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_binary_result	retrieve_d_names_to_replace(DIR *dir, t_list *with_wildcd,
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
-		if (can_replace_wildcard(entry->d_name, for_check))
+		if (can_replace_wildcard(entry, for_check, has_suffix_addr))
 		{
 			d_name_ex_token = make_d_name_ex_token(entry->d_name,
 					has_prefix_addr, has_suffix_addr);
