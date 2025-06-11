@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:51:35 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/05 03:16:55 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/11 17:20:35 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 static t_path	check_exec(char *path, char *cmd)
 {
+	struct stat buf;
+
+	stat(path, &buf);
+	if (S_ISDIR(buf.st_mode))
+		return (create_t_path(cmd, EXIT_S_FAILURE, ERRMSG_IS_DIRECTORY, cmd));
 	if ((access(path, X_OK) == 0))
 		return (create_t_path(path, EXIT_S_SUCCESS, NONE, NULL));
 	else
@@ -27,7 +32,7 @@ static t_path	get_absolute(char *cmd)
 		return (check_exec(cmd, cmd));
 	else
 		return (create_t_path(cmd, EXIT_S_CMD_NOT_FOUND,
-				ERRMSG_CMD_NOT_FOUND, cmd));
+				ERRMSG_NO_SUCH_FILE, cmd));
 }
 
 static t_path	get_relative(char *cmd, t_list *env_vars)
