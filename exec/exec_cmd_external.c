@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:59:24 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/08 05:33:47 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/11 17:51:50 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int	exec_cmd_external(t_abs_node *abs_tree, t_list *env_vars, t_env *env)
 		}
 		if (execve(path.path, abs_tree->expanded_args, envp) == -1)
 		{
-			perror(ERROR_EXECVE);
+			ft_putstr_fd(abs_tree->expanded_args[0], 2);
+			ft_putstr_fd(": line 1: This: command not found\n", 2);
+			ft_free_char2(envp);
 			clean_and_exit(EXIT_S_FAILURE, env);
 		}
 	}
