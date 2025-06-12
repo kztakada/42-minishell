@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/05 03:10:09 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/13 00:09:40 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,19 @@ static int	print_env_list(t_list *env_list)
 		env = (t_env_var *)env_list->content;
 		if (env->value != NULL && (ft_strcmp(env->name, "_") != 0))
 		{
-			printf("declare -x %s=\"", env->name);
+			put_export_declare(env->name);
 			i = 0;
 			while ((env->value)[i])
 			{
 				if ((env->value)[i] == '$' || (env->value)[i] == '"')
-					printf("\\%c", (env->value)[i++]);
+					put_export_escape_value((env->value)[i++]);
 				else
-					printf("%c", (env->value)[i++]);
+					ft_putchar_fd((env->value)[i++], 1);
 			}
-			printf("\"\n");
+			ft_putstr_fd("\"\n", 1);
 		}
 		else if (env->value == NULL && ft_strcmp(env->name, "_") != 0)
-			printf("declare -x %s\n", env->name);
+			put_export_declare_null(env->name);
 		env_list = env_list->next;
 	}
 	return (EXIT_S_SUCCESS);
@@ -90,7 +90,7 @@ static int	update_env_list(char *arg, t_list *env_list)
 {
 	char	*name;
 	char	*value;
-	int 	exit_status;
+	int		exit_status;
 
 	if (!ft_strchr(arg, '='))
 	{

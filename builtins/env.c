@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:19 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/04 02:35:55 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/12 23:51:52 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ int	ft_env(t_list *env_list)
 	{
 		env = (t_env_var *)env_list->content;
 		if (env->value)
-			printf("%s=%s\n", env->name, env->value);
+		{
+			ft_putstr_fd(env->name, 1);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(env->value, 1);
+			ft_putstr_fd("\n", 1);
+		}
 		env_list = env_list->next;
 	}
 	return (EXIT_S_SUCCESS);
