@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 01:10:10 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 14:34:45 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:04:28 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,9 @@ static t_dict_out	search_in_dict(t_dict_out d_out, char *dict_nx_str,
 	return (d_out);
 }
 
-/**
- * @brief dictionary format: 1st char is separator in the dictionary
- *
- * @param subject object to be searched
- */
+// Function that returns the index number of the corresponding
+// dictionary word and the string of the next dictionary word
+// when a dictionary string and dictionary are assigned as arguments
 t_dict_out	lookup_dict(char *subject, char *dict)
 {
 	char		*dict_nx_str;
@@ -98,7 +96,9 @@ t_dict_out	lookup_dict(char *subject, char *dict)
 	return (d_out);
 }
 
-// 辞書のインデックス番号と辞書を引数に代入すると、該当の辞書ワードをft_substrで複製した文字列を返す関数
+// Function that returns a string that duplicates the corresponding
+// dictionary word by ft_substr when the index number and dictionary
+// are assigned to the argument
 char	*get_dict_word(int d_index, char *dict)
 {
 	char	*dict_nx_str;

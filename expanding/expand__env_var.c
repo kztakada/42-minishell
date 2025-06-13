@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 20:06:51 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 20:49:13 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:43:49 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*use_raw_str_when_double_quoted(char **raw_str)
 		i++;
 	raw_str_value = ft_substr(*raw_str, 0, i);
 	if (raw_str_value == NULL)
-		return (NULL);
+		return (perror(ERROR_MALLOC), NULL);
 	*raw_str = *raw_str + i;
 	return (raw_str_value);
 }

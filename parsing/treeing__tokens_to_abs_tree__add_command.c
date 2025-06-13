@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 22:28:30 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 23:48:55 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:23:40 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_redirection	*init_redirection(t_token_type token_type)
 
 	redirection = (t_redirection *)malloc(sizeof(t_redirection));
 	if (redirection == NULL)
-		return (NULL);
+		return (perror(ERROR_MALLOC), NULL);
 	redirection->fd = 0;
 	redirection->expanded_file_name = NULL;
 	redirection->file_name_words = NULL;

@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:40:57 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 21:39:21 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:51:16 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*expand_file_name(t_list *file_name_words, t_env env)
 	expanded_file_name = ft_strdup(expanded_str_list[0]);
 	free_str_list(expanded_str_list);
 	if (expanded_file_name == NULL)
-		return (NULL);
+		return (perror(ERROR_MALLOC), NULL);
 	return (expanded_file_name);
 }
 

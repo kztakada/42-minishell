@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 22:34:14 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 17:52:24 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:55:08 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_binary_result	append_quoted_to_parsed_words(t_list **current_tokens,
 
 	parsed_word = (t_parsed_word *)malloc(sizeof(t_parsed_word));
 	if (parsed_word == NULL)
-		return (FAILURE_BIN_R);
+		return (perror(ERROR_MALLOC), FAILURE_BIN_R);
 	if (get_token(*current_tokens)->type == QUOTE_SINGLE)
 		parsed_word->type = W_SINGLE_QUOTED;
 	else
@@ -29,7 +29,7 @@ t_binary_result	append_quoted_to_parsed_words(t_list **current_tokens,
 	if (parsed_word->str == NULL)
 	{
 		free(parsed_word);
-		return (FAILURE_BIN_R);
+		return (perror(ERROR_MALLOC), FAILURE_BIN_R);
 	}
 	forward_token_list(current_tokens);
 	forward_token_list(current_tokens);
@@ -44,13 +44,13 @@ t_binary_result	append_plain_word_to_parsed_words(t_list **current_tokens,
 
 	parsed_word = (t_parsed_word *)malloc(sizeof(t_parsed_word));
 	if (parsed_word == NULL)
-		return (FAILURE_BIN_R);
+		return (perror(ERROR_MALLOC), FAILURE_BIN_R);
 	parsed_word->type = W_PLAIN;
 	parsed_word->str = ft_strdup(get_token(*current_tokens)->value);
 	if (parsed_word->str == NULL)
 	{
 		free(parsed_word);
-		return (FAILURE_BIN_R);
+		return (perror(ERROR_MALLOC), FAILURE_BIN_R);
 	}
 	forward_token_list(current_tokens);
 	return (add_back_new_list((void *)parsed_word, parsed_words,
@@ -69,7 +69,7 @@ static t_binary_result	avoid_parsed_word_from_token(t_list **current_tokens,
 		dup_str = dup_str + i;
 		tmp = ft_strdup(dup_str);
 		if (tmp == NULL)
-			return (FAILURE_BIN_R);
+			return (perror(ERROR_MALLOC), FAILURE_BIN_R);
 		free(get_token(*current_tokens)->value);
 		get_token(*current_tokens)->value = tmp;
 	}
@@ -85,7 +85,7 @@ t_binary_result	append_only1st_word_to_parsed_words(t_list **current_tokens,
 
 	parsed_word = (t_parsed_word *)malloc(sizeof(t_parsed_word));
 	if (parsed_word == NULL)
-		return (FAILURE_BIN_R);
+		return (perror(ERROR_MALLOC), FAILURE_BIN_R);
 	parsed_word->type = W_PLAIN;
 	dup_str = get_token(*current_tokens)->value;
 	while (is_ifs(dup_str[0]))
@@ -95,7 +95,7 @@ t_binary_result	append_only1st_word_to_parsed_words(t_list **current_tokens,
 		i++;
 	parsed_word->str = ft_substr(dup_str, 0, i);
 	if (parsed_word->str == NULL)
-		return (free(parsed_word), FAILURE_BIN_R);
+		return (perror(ERROR_MALLOC), free(parsed_word), FAILURE_BIN_R);
 	if (avoid_parsed_word_from_token(current_tokens, dup_str,
 			i) == FAILURE_BIN_R)
 		return (free(parsed_word), FAILURE_BIN_R);

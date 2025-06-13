@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:35:21 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/10 15:41:11 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:53:44 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*get_heredoc_delimiter(t_list *file_name_words)
 		tmp = eof_str;
 		eof_str = ft_strjoin(eof_str, file_name_word->str);
 		if (eof_str == NULL)
-			return (free(tmp), perror(ERROR_MALLOC), NULL);
+			return (perror(ERROR_MALLOC), free(tmp), NULL);
 		free(tmp);
 		current_word = current_word->next;
 	}

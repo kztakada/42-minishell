@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 00:59:37 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/08 02:50:52 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:12:45 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_binary_result	init_env_shlvl(t_list **env_list)
 		shlvl_value = get_shlvl_value(*env_list);
 		shlvl_str = ft_itoa(shlvl_value);
 		if (shlvl_str == NULL)
-			return (FAILURE_BIN_R);
+			return (perror(ERROR_MALLOC), FAILURE_BIN_R);
 		if (update_env_value(env_list, "SHLVL", shlvl_str) == EXIT_S_FAILURE)
 			return (free(shlvl_str), FAILURE_BIN_R);
 		free(shlvl_str);

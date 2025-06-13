@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 00:59:48 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 01:21:47 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:38:57 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	*use_raw_word_post_expanded(char **raw_str)
 		i++;
 	raw_str_value = ft_substr(*raw_str, 0, i);
 	if (raw_str_value == NULL)
-		return (NULL);
+		return (perror(ERROR_MALLOC), NULL);
 	*raw_str = *raw_str + i;
 	return (raw_str_value);
 }

@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:31:00 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/28 01:03:16 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:45:10 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static t_binary_result	make_new_str_token(t_list **for_check, char **new_str)
 		free(*new_str);
 		*new_str = ft_strdup("");
 		if (*new_str == NULL)
-			return (FAILURE_BIN_R);
+			return (perror(ERROR_MALLOC), FAILURE_BIN_R);
 	}
 	return (SUCCESS_BIN_R);
 }

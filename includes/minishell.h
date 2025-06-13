@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 21:56:57 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:12:52 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ enum							e_exit_status
 # define TOO_MANY_ARGS "minishell: too many arguments\n"
 # define ERROR_MALLOC "Error: Memory allocation failed\n"
 # define ERROR_STDREAD "Error: Failed to read STDIN\n"
+# define ERROR_OPENDIR "Error: Failed to exec opendir\n"
+# define ERROR_OVERTOKEN "Error: Too many Tokens. ID overflow\n"
 # define ERROR_EXECVE "Error: Command execution error\n"
 # define ERROR_GETCWD "Error: Failed to get current path.\n"
 # define ERROR_FORK "Error: Failed to create child process.\n"

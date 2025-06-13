@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 04:49:33 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/08 01:13:24 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:08:43 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,19 @@ int	create_add_new_env(t_list **env_list, char *name, char *value)
 		return (perror(ERROR_MALLOC), EXIT_S_FAILURE);
 	new_env->name = ft_strdup(name);
 	if (!new_env->name)
-		return (free_env_var(new_env), perror(ERROR_MALLOC), EXIT_S_FAILURE);
+		return (perror(ERROR_MALLOC), free_env_var(new_env), EXIT_S_FAILURE);
 	if (value)
 	{
 		new_env->value = ft_strdup(value);
 		if (!new_env->value)
-			return (free_env_var(new_env), perror(ERROR_MALLOC),
+			return (perror(ERROR_MALLOC), free_env_var(new_env),
 				EXIT_S_FAILURE);
 	}
 	else
 		new_env->value = NULL;
 	new_list = (t_list *)malloc(sizeof(t_list) * 1);
 	if (!new_env)
-		return (free_env_var(new_env), perror(ERROR_MALLOC), EXIT_S_FAILURE);
+		return (perror(ERROR_MALLOC), free_env_var(new_env), EXIT_S_FAILURE);
 	new_list->content = new_env;
 	new_list->next = NULL;
 	ft_lstadd_back(env_list, new_list);

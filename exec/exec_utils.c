@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:22:32 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 21:02:31 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:30:10 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ char	**convert_list_to_envp(t_list *env_vars)
 	lst_size = ft_lstsize(env_vars);
 	envp = (char **)malloc(sizeof(char *) * (lst_size + 1));
 	if (!envp)
-		return (NULL);
+		return (perror(ERROR_MALLOC), NULL);
 	i = 0;
 	while (i < lst_size)
 	{
 		env = (t_env_var *)env_vars->content;
 		envp[i] = ft_strjoin_3(env->name, "=", env->value);
 		if (!envp[i])
-			return (free(envp), NULL);
+			return (perror(ERROR_MALLOC), free(envp), NULL);
 		env_vars = env_vars->next;
 		i++;
 	}

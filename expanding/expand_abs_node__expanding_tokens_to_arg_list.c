@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 04:08:51 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 18:36:48 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:50:27 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*expanding_tokens_to_str(t_list *expanding_tokens)
 		tmp = str;
 		str = append_expanding_token_to_str(str, expanding_tokens);
 		if (str == NULL)
-			return (free(tmp), perror(ERROR_MALLOC), NULL);
+			return (perror(ERROR_MALLOC), free(tmp), NULL);
 		free(tmp);
 		expanding_tokens = expanding_tokens->next;
 	}

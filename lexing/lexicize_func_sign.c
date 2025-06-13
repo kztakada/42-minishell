@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 01:10:29 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 14:33:43 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:12:58 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_list	*get_listable_token(t_token *token, t_list **token_list)
 	{
 		token_id = ((t_token *)(ft_lstlast(*token_list)->content))->id;
 		if (token_id == UINT_MAX)
-			return (perror("Token ID overflow"), NULL);
+			return (perror(ERROR_OVERTOKEN), NULL);
 		else
 			token_id++;
 	}

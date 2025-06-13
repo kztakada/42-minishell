@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:18:10 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/06 02:12:21 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:55:40 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_binary_result	add_back_new_list(void *content, t_list **existing_list,
 	{
 		if (del != NULL)
 			ft_lstclear(existing_list, del);
-		return (FAILURE_BIN_R);
+		return (perror(ERROR_MALLOC), FAILURE_BIN_R);
 	}
 	if (*existing_list == NULL)
 		*existing_list = new_list;

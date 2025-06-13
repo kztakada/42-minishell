@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:56:19 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/20 19:36:21 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:33:29 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_list	*expand_single_quoted_word(char *str)
 	expanding_token = (t_expanding_token *)expanded_token->content;
 	expanding_token->str = ft_strdup(str);
 	if (expanding_token->str == NULL)
-		return (ft_lstclear(&expanded_token, free_expanding_token), NULL);
+		return (perror(ERROR_MALLOC), ft_lstclear(&expanded_token,
+				free_expanding_token), NULL);
 	return (expanded_token);
 }
 

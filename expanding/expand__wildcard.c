@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 20:07:15 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 21:38:57 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:10:09 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_list	*make_d_name_ex_token(char *d_name, t_bool has_prefix_addr,
 	d_name_copy = strjoin_free(d_name_copy, ft_strdup(d_name));
 	if (has_suffix_addr == TRUE)
 		d_name_copy = strjoin_free(d_name_copy, ft_strdup("/"));
+	if (d_name_copy == NULL)
+		return (perror(ERROR_MALLOC), NULL);
 	d_name_ex_token = expand_single_quoted_word(d_name_copy);
 	free(d_name_copy);
 	if (d_name_ex_token == NULL)
@@ -71,7 +73,7 @@ t_binary_result	expand_wildcard_before_1st_separator(t_list *with_wildcd)
 	d_names_to_replace = NULL;
 	dir = opendir(".");
 	if (dir == NULL)
-		return (perror("opendir"), FAILURE_BIN_R);
+		return (perror(ERROR_OPENDIR), FAILURE_BIN_R);
 	if (retrieve_d_names_to_replace(dir, with_wildcd,
 			&d_names_to_replace) == FAILURE_BIN_R)
 		return (ft_lstclear(&d_names_to_replace, free_expanding_token),
