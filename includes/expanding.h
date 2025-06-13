@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:01:43 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/28 01:25:01 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/11 22:05:48 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ void				to_next_separate_top(t_list **current_token);
 t_list				*split_unquoted_word(char **to_expand);
 
 // expand__env_var__split_post_expanded__utils.c
-t_binary_result		split_unquoted_str_before_1st_separator(
-						t_list *current_token);
+t_binary_result		split_unquoted_str_before_1st_separator(t_list *current_token);
 
 // expand__env_var__split_post_expanded.c
 void				delete_prefix_separator(t_list **ex_tokens);
@@ -73,8 +72,8 @@ t_list				*expand_env_var_with_expanding_tokens(t_list *parsed_words,
 						t_env env);
 
 // expand__wildcard__can_replace_wildcard.c
-t_bool				can_replace_wildcard(char *d_name,
-						t_list *for_wildcd_check);
+t_bool				can_replace_wildcard(struct dirent *entry,
+						t_list *for_wildcd_check, t_bool has_suffix_addr);
 
 // expand__wildcard__extract_tokens_for_wildcard_check.c
 t_list				*extract_tokens_for_wildcard_check(t_list *with_wildcd,

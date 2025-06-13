@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 00:08:34 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/17 14:28:02 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/06 00:35:21 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_binary_result	insert_binary_node_to_abs_tree(t_list *tokens_begin,
 static t_bool	is_subshell_node_state(t_parsing_state *parsing_state)
 {
 	if (get_tree_top_node(parsing_state) != NULL
-		&& get_tree_top_node(parsing_state)->is_subshell == TRUE)
+		&& get_tree_top_node(parsing_state)->type == ABS_SUBSHELL)
 		return (TRUE);
 	return (FALSE);
 }

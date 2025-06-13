@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:18:59 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 23:28:03 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/06 03:11:35 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,19 @@ void UNUSED	print_abs_tree(t_abs_node *abs_tree) //テスト用
 		print_abs_tree(abs_tree->right);
 		printf(":right node\n");
 	}
-	printf("abs node type: %d\n", abs_tree->type);
-	if (abs_tree->is_subshell)
-		printf("is_subshell\n");
+	if (abs_tree->type == ABS_BIN_AND)
+		printf("\x1b[34m【abs node type: ABS_BIN_AND】\x1b[39m\n");
+	else if (abs_tree->type == ABS_BIN_OR)
+		printf("\x1b[34m【abs node type: ABS_BIN_OR】\x1b[39m\n");
+	else if (abs_tree->type == ABS_PIPE)
+		printf("\x1b[33m【abs node type: ABS_PIPE】\x1b[39m\n");
+	else if (abs_tree->type == ABS_COMMAND)
+		printf("\x1b[31m【abs node type: ABS_COMMAND】\x1b[39m\n");
+	else if (abs_tree->type == ABS_SUBSHELL)
+		printf("\x1b[32m【abs node type: ABS_SUBSHELL】\x1b[39m\n");
+	// printf("abs node type: %d\n", abs_tree->type);
+	// if (abs_tree->is_subshell)
+	// 	printf("is_subshell\n");
 
 	if (abs_tree->cmd_words != NULL)
 	{

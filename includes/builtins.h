@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 01:32:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/08 05:52:13 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/13 00:07:13 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,10 @@ int		ft_pwd(void);
 int		ft_unset(char **args, t_list *env_list, t_bool *unset_oldpwd);
 int		check_name_error(char *arg);
 void	ft_exit(char **args, t_env *env, t_exit_status exit_s);
+
+// export_utils.c
+void	put_export_declare(char *name);
+void	put_export_escape_value(char value_c);
+void	put_export_declare_null(char *name);
 
 #endif

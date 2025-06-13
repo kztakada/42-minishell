@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/08 05:29:27 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/13 21:30:57 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ enum							e_exit_status
 // error messages *************************************************/
 # define TOO_MANY_ARGS "minishell: too many arguments\n"
 # define ERROR_MALLOC "Error: Memory allocation failed\n"
+# define ERROR_STDREAD "Error: Failed to read STDIN\n"
 # define ERROR_EXECVE "Error: Command execution error\n"
 # define ERROR_GETCWD "Error: Failed to get current path.\n"
 # define ERROR_FORK "Error: Failed to create child process.\n"
@@ -155,13 +156,13 @@ typedef enum e_abs_node_type
 	ABS_BIN_AND,
 	ABS_BIN_OR,
 	ABS_PIPE,
-	ABS_COMMAND
+	ABS_COMMAND,
+	ABS_SUBSHELL,
 }								t_abs_node_type;
 // cmd_words is list of t_parsed_word
 // redirections is list of t_redirection
 struct							s_abs_node
 {
-	t_bool						is_subshell;
 	t_abs_node_type				type;
 	t_list						*cmd_words;
 	char						**expanded_args;
@@ -222,6 +223,10 @@ void							ft_swap(void **a, void **b);
 // lexing_utils.c
 void							free_token(void *target);
 
+// dialog_minishell.c
+void							dialog_minishell(t_env env);
+void							execute_command(char *input, t_env env);
+
 // init_env__shlvl.c
 t_binary_result					init_env_shlvl(t_list **env_list);
 
@@ -247,6 +252,6 @@ int								update_env_value(t_list **env_list, char *name,
 char							*get_env_value(t_list *env_vars, char *name);
 
 // clean_and_exit.c
-void	clean_and_exit(int exit_status, t_env *env);
+void							clean_and_exit(int exit_status, t_env *env);
 
 #endif

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 00:13:08 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/08 04:59:31 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/13 17:26:17 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "signal_for_minishell.h"
 
 static t_saved_std	save_std(void)
 {
@@ -33,6 +34,7 @@ void	exec(t_env *env)
 		return ;
 	}
 	std = save_std();
+	set_sig_handlers_in_exec_parent();
 	result = exec_abs(env->abs_tree, env, &std, FALSE);
 	*(env->exit_status) = result;
 	return ;

@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:18:10 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 23:49:06 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/06 02:12:21 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ t_abs_node	*init_abs_node(t_abs_node_type abs_node_type)
 
 	abs_node = (t_abs_node *)malloc(sizeof(t_abs_node));
 	if (abs_node == NULL)
-		return (NULL);
-	abs_node->is_subshell = FALSE;
+		return (perror(ERROR_MALLOC), NULL);
 	abs_node->type = abs_node_type;
 	abs_node->cmd_words = NULL;
 	abs_node->expanded_args = NULL;

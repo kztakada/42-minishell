@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:22:32 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/05 03:28:57 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/13 21:02:31 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	get_exit_status(int status)
 	if (WIFSIGNALED(status))
 	{
 		if (sig == SIGQUIT)
-			ft_putstr_fd("Quit\n", STDOUT_FILENO);
+			ft_putstr_fd("Quit\n", STDERR_FILENO);
 		return (128 + WTERMSIG(status));
 	}
 	return (WEXITSTATUS(status));

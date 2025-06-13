@@ -1,38 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 21:53:15 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 21:06:09 by katakada         ###   ########.fr       */
+/*   Created: 2025/06/12 23:56:32 by katakada          #+#    #+#             */
+/*   Updated: 2025/06/13 21:07:00 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-int	ft_echo(char **args)
+void	put_export_declare(char *name)
 {
-	int		i;
-	t_bool	n_flag;
+	ft_putstr_fd("declare -x ", STDOUT_FILENO);
+	ft_putstr_fd(name, STDOUT_FILENO);
+	ft_putstr_fd("=\"", STDOUT_FILENO);
+}
 
-	i = 1;
-	n_flag = FALSE;
-	while (args[i] != NULL && ft_strcmp(args[i], "-n") == 0)
-	{
-		n_flag = TRUE;
-		i++;
-		if (args[i] == NULL)
-			return (EXIT_S_SUCCESS);
-	}
-	while (args[i] != NULL)
-	{
-		ft_putstr_fd(args[i++], STDOUT_FILENO);
-		if (args[i] != NULL)
-			ft_putstr_fd(" ", STDOUT_FILENO);
-	}
-	if (!n_flag)
-		ft_putstr_fd("\n", STDOUT_FILENO);
-	return (EXIT_S_SUCCESS);
+void	put_export_escape_value(char value_c)
+{
+	ft_putstr_fd("\\", STDOUT_FILENO);
+	ft_putchar_fd(value_c, STDOUT_FILENO);
+}
+
+void	put_export_declare_null(char *name)
+{
+	ft_putstr_fd("declare -x ", STDOUT_FILENO);
+	ft_putstr_fd(name, STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 }

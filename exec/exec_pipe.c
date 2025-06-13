@@ -3,25 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:12:10 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/08 05:34:34 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/13 16:59:43 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-static int	wait_child_process(pid_t pid_left, pid_t pid_right)
-{
-	int	status;
-
-	if (waitpid(pid_left, &status, 0) == -1)
-		return (perror(ERROR_WAITPID), EXIT_S_FAILURE);
-	if (waitpid(pid_right, &status, 0) == -1)
-		return (perror(ERROR_WAITPID), EXIT_S_FAILURE);
-	return (get_exit_status(status));
-}
+#include "signal_for_minishell.h"
 
 static void	redirect_to_pipe(int pfds[2], t_pipe_access_mode mode)
 {
@@ -40,24 +30,42 @@ static void	redirect_to_pipe(int pfds[2], t_pipe_access_mode mode)
 	return ;
 }
 
-static void	exec_pipe_left(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
-			int pfds[2])
+static void	exec_pipe_child_left(t_abs_node *abs_tree, t_env *env,
+		t_saved_std *std, int pfds[2])
 {
 	int	status;
 
+	set_sig_handlers_in_exec_child();
 	redirect_to_pipe(pfds, PIPE_WRITE_MODE);
 	status = exec_abs(abs_tree->left, env, std, TRUE);
+	reset_stds(std, FALSE);
 	clean_and_exit(status, env);
 }
 
-static void	exec_pipe_right(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
-			int pfds[2])
+static void	exec_pipe_child_right(t_abs_node *abs_tree, t_env *env,
+		t_saved_std *std, int pfds[2])
 {
 	int	status;
 
+	set_sig_handlers_in_exec_child();
 	redirect_to_pipe(pfds, PIPE_READ_MODE);
 	status = exec_abs(abs_tree->right, env, std, TRUE);
+	reset_stds(std, FALSE);
 	clean_and_exit(status, env);
+}
+
+static int	handle_pipe_parent(int pfds[2], pid_t pid_left, pid_t pid_right)
+{
+	int	status_left;
+	int	status_right;
+
+	close(pfds[0]);
+	close(pfds[1]);
+	if (waitpid(pid_left, &status_left, 0) == -1)
+		return (perror(ERROR_WAITPID), EXIT_S_FAILURE);
+	if (waitpid(pid_right, &status_right, 0) == -1)
+		return (perror(ERROR_WAITPID), EXIT_S_FAILURE);
+	return (get_exit_status(status_right));
 }
 
 int	exec_pipe(t_abs_node *abs_tree, t_env *env, t_saved_std *std)
@@ -72,17 +80,16 @@ int	exec_pipe(t_abs_node *abs_tree, t_env *env, t_saved_std *std)
 	if (pid_left == -1)
 		return (perror(ERROR_FORK), EXIT_S_FAILURE);
 	if (pid_left == 0)
-		exec_pipe_left(abs_tree, env, std, pfds);
+		exec_pipe_child_left(abs_tree, env, std, pfds);
 	else
 	{
 		pid_right = fork();
 		if (pid_right == -1)
 			return (perror(ERROR_FORK), EXIT_S_FAILURE);
 		if (pid_right == 0)
-			exec_pipe_right(abs_tree, env, std, pfds);
+			exec_pipe_child_right(abs_tree, env, std, pfds);
 		else
-			return (close(pfds[0]), close(pfds[1]),
-				wait_child_process(pid_left, pid_right));
+			return (handle_pipe_parent(pfds, pid_left, pid_right));
 	}
 	return (EXIT_S_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:40:57 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/28 01:23:20 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/09 22:37:48 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ t_binary_result	expand_abs_node(t_abs_node *abs_node, t_env env)
 
 	if (abs_node == NULL)
 		return (SUCCESS_BIN_R);
-	if (abs_node->type != ABS_COMMAND)
+	if (abs_node->type != ABS_COMMAND && abs_node->type != ABS_SUBSHELL)
 		return (SUCCESS_BIN_R);
-	if (has_cmd_words(abs_node))
+	if (abs_node->type == ABS_COMMAND && has_cmd_words(abs_node))
 	{
 		expanded_args = expand_cmd_words(abs_node->cmd_words, env);
 		if (expanded_args == NULL)
