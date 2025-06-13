@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:36:36 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 19:29:57 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:08:27 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	set_sig_handlers_in_exec_child(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+	// signal(SIGPIPE, SIG_IGN);
 }
 
 static void	handle_sigint_in_exec_parent(int signum)

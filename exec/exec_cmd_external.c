@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_external.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:59:24 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/11 17:51:50 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/13 16:38:23 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	exec_cmd_external(t_abs_node *abs_tree, t_list *env_vars, t_env *env)
 			clean_and_exit(EXIT_S_FAILURE, env);
 		}
 	}
-	set_sig_handlers_in_exec_parent();
 	waitpid(pid, &status, 0);
 	return (get_exit_status(status));
 }
