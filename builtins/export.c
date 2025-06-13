@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 22:15:27 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 03:17:26 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	sort_env_vars_by_ascending(t_list **env_vars)
 	}
 }
 
-static int	print_env_list(t_list *env_list)
+static int	print_env_list(t_list *env_list, t_bool is_interactive)
 {
 	t_env_var	*env;
 	size_t		i;
@@ -67,7 +67,7 @@ static int	print_env_list(t_list *env_list)
 	while (env_list)
 	{
 		env = (t_env_var *)env_list->content;
-		if (env->value != NULL && (ft_strcmp(env->name, "_") != 0))
+		if (env->value != NULL && is_valid_env_name(env->name, is_interactive))
 		{
 			put_export_declare(env->name);
 			i = 0;
@@ -115,7 +115,7 @@ static int	update_env_list(char *arg, t_list *env_list)
 	return (exit_status);
 }
 
-int	ft_export(char **argv, t_list *env_list)
+int	ft_export(char **argv, t_list *env_list, t_bool is_interactive)
 {
 	t_list	*env_list_cpy;
 	int		i;
@@ -127,7 +127,7 @@ int	ft_export(char **argv, t_list *env_list)
 		if (!env_list_cpy)
 			return (perror(ERROR_MALLOC), EXIT_S_FAILURE);
 		sort_env_vars_by_ascending(&env_list_cpy);
-		tmp_status = print_env_list(env_list_cpy);
+		tmp_status = print_env_list(env_list_cpy, is_interactive);
 		ft_lstclear(&env_list_cpy, free_env_var);
 		return (tmp_status);
 	}

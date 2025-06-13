@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 23:12:52 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 03:12:11 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ typedef struct s_env
 {
 	t_list						*env_vars;
 	t_bool						*unset_oldpwd;
+	t_bool						is_interactive;
 	t_exit_status				*exit_status;
 	int							*line_count;
 	t_list						*token_list;
@@ -234,6 +235,8 @@ void							execute_command(char *input, t_env env);
 
 // init_env__shlvl.c
 t_binary_result					init_env_shlvl(t_list **env_list);
+t_bool							has_numeric_chars(const char *str);
+t_bool							has_only_numbers(const char *str);
 
 // init_env__utils.c
 void							free_env_var(void *env_var);

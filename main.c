@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/14 01:36:48 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 03:09:33 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	exec_minishell(t_env env)
 
 void	minishell(t_env env)
 {
-	const int	is_interactive = isatty(STDIN_FILENO);
-
-	if (is_interactive)
+	if (env.is_interactive)
 		dialog_minishell(env);
 	else
 		exec_minishell(env);
@@ -62,6 +60,7 @@ int	main(int argc, char **argv, char **envp)
 	line_count = 0;
 	env.exit_status = &exit_status;
 	env.unset_oldpwd = &unset_oldpwd;
+	env.is_interactive = isatty(STDIN_FILENO);
 	env.line_count = &line_count;
 	env.env_vars = init_envlst(envp);
 	if (env.env_vars == NULL)

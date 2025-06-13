@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_builtin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:58:56 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/08 05:53:41 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/14 03:18:11 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	exec_cmd_builtin(char **args, t_env *env)
 	else if (ft_strcmp(args[0], "env") == 0)
 		return (ft_env(env->env_vars));
 	else if (ft_strcmp(args[0], "export") == 0)
-		return (ft_export(args, env->env_vars));
+		return (ft_export(args, env->env_vars, env->is_interactive));
 	else if (ft_strcmp(args[0], "unset") == 0)
 		return (ft_unset(args, env->env_vars, env->unset_oldpwd));
 	else if (ft_strcmp(args[0], "pwd") == 0)

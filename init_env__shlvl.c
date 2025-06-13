@@ -6,13 +6,13 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 00:59:37 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 22:12:45 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 03:29:10 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	put_warning_shlvl_value(int shlvl_value)
+static void	put_warning_shlvl_value(int shlvl_value)
 {
 	ft_putstr_fd("minishell: warning: shell level (", STDERR_FILENO);
 	ft_putnbr_fd(shlvl_value, STDERR_FILENO);
@@ -53,7 +53,7 @@ t_bool	has_only_numbers(const char *str)
 	return (TRUE);
 }
 
-int	get_shlvl_value(t_list *env_list)
+static int	get_shlvl_value(t_list *env_list)
 {
 	char	*shlvl_str;
 	int		shlvl_value;
