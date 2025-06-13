@@ -6,7 +6,7 @@
 #    By: katakada <katakada@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/01 15:59:55 by katakada          #+#    #+#              #
-#    Updated: 2025/06/08 02:16:00 by katakada         ###   ########.fr        #
+#    Updated: 2025/06/13 23:33:22 by katakada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,8 @@ $(LIBFT):
 
 all:	$(NAME)
 
+bonus:	$(NAME)
+
 debug:
 	make fclean
 	$(MAKE) ISDEBUG=1 all
@@ -76,4 +78,4 @@ fclean:
 
 re:		fclean all
 
-.PHONY:	all clean fclean re debug va
+.PHONY:	all bonus clean fclean re debug va
