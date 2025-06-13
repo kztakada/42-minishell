@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/08 16:39:34 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:50:29 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	dialog_minishell(t_env env)
 {
 	char	*input;
 
+	rl_outstream = stderr;
 	rl_event_hook = nop_event_hook;
 	while (TRUE)
 	{
@@ -85,14 +86,23 @@ void	dialog_minishell(t_env env)
 void	exec_minishell(t_env env)
 {
 	char	*input;
+	char	*end_of_line;
 
 	input = NULL;
-	input = readline("");
-	if (input != NULL)
+	input = get_next_line(STDIN_FILENO);
+	if (input == NULL)
+		return (perror(ERROR_MALLOC), free_all_env(env), exit(EXIT_S_FAILURE));
+	end_of_line = ft_strchr(input, '\n');
+	if (!end_of_line)
+		return (free_all_env(env), exit(EXIT_S_FAILURE));
+	*end_of_line = '\0';
+	while (end_of_line)
 	{
-		*(env.line_count) += 1;
-		execute_command(input, env);
+		end_of_line = get_next_line(STDIN_FILENO);
+		free(end_of_line);
 	}
+	*(env.line_count) += 1;
+	execute_command(input, env);
 	free_all_env(env);
 	exit(*(env.exit_status));
 }
@@ -102,7 +112,6 @@ void	minishell(t_env env)
 	const int	is_interactive = isatty(STDIN_FILENO);
 
 	// print_env_list(env_vars); // テスト用
-	rl_outstream = stderr;
 	// rl_inhibit_completion = 1;
 	if (is_interactive)
 		dialog_minishell(env);
