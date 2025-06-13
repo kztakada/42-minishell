@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:27 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/08 05:51:31 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/13 22:25:47 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-static	int	is_digit(char *arg)
+static int	is_digit(char *arg)
 {
 	while (*arg)
 	{
-		if ((*arg < '0' || *arg > '9')
-			&& *arg != '+' && *arg != '-')
+		if ((*arg < '0' || *arg > '9') && *arg != '+' && *arg != '-')
 			return (0);
 		arg++;
 	}
@@ -26,8 +25,8 @@ static	int	is_digit(char *arg)
 
 static int	get_exit_s(char *arg)
 {
-	int		num;
-	int		overflow_flag;
+	int	num;
+	int	overflow_flag;
 
 	overflow_flag = false;
 	num = ft_atol(arg, &overflow_flag);
@@ -50,6 +49,7 @@ void	ft_exit(char **args, t_env *env, t_exit_status exit_s)
 	int	status;
 
 	status = exit_s;
+	ft_putendl_fd("exit", STDERR_FILENO);
 	if (args[1])
 	{
 		if (!is_digit(args[1]))
