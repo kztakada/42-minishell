@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 21:38:47 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 01:36:48 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ void	exec_minishell(t_env env)
 
 	input = get_next_line(STDIN_FILENO);
 	if (input == NULL)
-		return (perror(ERROR_STDREAD), free_all_env(env), exit(EXIT_S_FAILURE));
+		return (free_all_env(env), exit(EXIT_S_SUCCESS));
 	end_of_line = ft_strchr(input, '\n');
-	if (!end_of_line)
-		return (perror(ERROR_STDREAD), free_all_env(env), exit(EXIT_S_FAILURE));
-	*end_of_line = '\0';
+	if (end_of_line)
+		*end_of_line = '\0';
 	while (end_of_line)
 	{
 		end_of_line = get_next_line(STDIN_FILENO);
