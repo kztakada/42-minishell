@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 05:37:49 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 22:25:28 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 02:21:41 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	exit_err_msg_digit(char *arg)
 	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-	return (EXIT_S_OUT_OF_RANGE);
+	return (EXIT_S_SYNTAX_ERROR);
 }
 
 int	exit_err_msg_format(void)
