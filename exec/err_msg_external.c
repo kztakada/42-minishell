@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_msg_external.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 15:56:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/11 17:19:14 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/13 21:09:41 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,33 @@
 
 int	msg_cmd_not_found(t_err err)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(err.cause, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(err.cause, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	return (err.exit_s);
 }
 
 int	msg_no_such_file(t_err err)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(err.cause, 2);
-	ft_putstr_fd(": No such file or directory\n", 2);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(err.cause, STDERR_FILENO);
+	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 	return (err.exit_s);
 }
 
 int	msg_perm_denied(t_err err)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(err.cause, 2);
-	ft_putstr_fd(": Permission denied\n", 2);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(err.cause, STDERR_FILENO);
+	ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 	return (err.exit_s);
 }
 
 int	msg_is_directory(t_err err)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(err.cause, 2);
-	ft_putstr_fd(": Is a directory\n", 2);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(err.cause, STDERR_FILENO);
+	ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
 	return (err.exit_s);
 }
 

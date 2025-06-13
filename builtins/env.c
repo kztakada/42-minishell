@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:19 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/12 23:51:52 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:06:34 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	ft_env(t_list *env_list)
 		env = (t_env_var *)env_list->content;
 		if (env->value)
 		{
-			ft_putstr_fd(env->name, 1);
-			ft_putstr_fd("=", 1);
-			ft_putstr_fd(env->value, 1);
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd(env->name, STDOUT_FILENO);
+			ft_putstr_fd("=", STDOUT_FILENO);
+			ft_putstr_fd(env->value, STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
 		}
 		env_list = env_list->next;
 	}

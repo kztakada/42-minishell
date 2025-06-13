@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 17:36:36 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 16:08:27 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:13:11 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	handle_sigint_in_exec_parent(int signum)
 {
 	if (signum == SIGINT)
 	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putchar_fd('\n', STDERR_FILENO);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	}

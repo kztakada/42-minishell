@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 00:09:40 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:07:21 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ static int	print_env_list(t_list *env_list)
 				if ((env->value)[i] == '$' || (env->value)[i] == '"')
 					put_export_escape_value((env->value)[i++]);
 				else
-					ft_putchar_fd((env->value)[i++], 1);
+					ft_putchar_fd((env->value)[i++], STDOUT_FILENO);
 			}
-			ft_putstr_fd("\"\n", 1);
+			ft_putstr_fd("\"\n", STDOUT_FILENO);
 		}
 		else if (env->value == NULL && ft_strcmp(env->name, "_") != 0)
 			put_export_declare_null(env->name);

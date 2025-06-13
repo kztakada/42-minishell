@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 20:19:22 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/08 01:46:17 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 20:30:22 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ t_env_var	*get_env_var(char *env_var_source)
 	env_var_name = extract_env_var_name(env_var_source, &is_error);
 	env_var_value = extract_env_var_value(env_var_source, &is_error);
 	if (!env_var_name || is_error)
-		return (NULL);
+		return (perror(ERROR_MALLOC), NULL);
 	env_var = malloc(sizeof(t_env_var));
 	if (!env_var)
 	{
 		free(env_var_name);
 		free(env_var_value);
-		return (NULL);
+		return (perror(ERROR_MALLOC), NULL);
 	}
 	env_var->name = env_var_name;
 	env_var->value = env_var_value;

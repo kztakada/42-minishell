@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:59:24 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 16:38:23 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:10:08 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	exec_cmd_external(t_abs_node *abs_tree, t_list *env_vars, t_env *env)
 		}
 		if (execve(path.path, abs_tree->expanded_args, envp) == -1)
 		{
-			ft_putstr_fd(abs_tree->expanded_args[0], 2);
-			ft_putstr_fd(": line 1: This: command not found\n", 2);
+			ft_putstr_fd(abs_tree->expanded_args[0], STDERR_FILENO);
+			ft_putstr_fd(": line 1: This: command not found\n", STDERR_FILENO);
 			ft_free_char2(envp);
 			clean_and_exit(EXIT_S_FAILURE, env);
 		}
