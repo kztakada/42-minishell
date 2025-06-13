@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 21:30:57 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:56:57 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,21 +96,24 @@ typedef struct s_dict_out
 }								t_dict_out;
 
 // token ************************************************************/
+// 	OP_HEREDOC: << OP_APPEND: >> OP_AND: && OP_OR: || OP_PIPE: |
+// OP_INPUT: < OP_OUTPUT: > OP_OPEN: ( OP_CLOSE: )
+// QUOTE_SINGLE: ' QUOTE_DOUBLE: " TERMINATOR: \n OPERAND_TEXT: identifier
 typedef enum e_token_type
 {
-	OP_HEREDOC,   // <<
-	OP_APPEND,    // >>
-	OP_AND,       // &&
-	OP_OR,        // ||
-	OP_PIPE,      // |
-	OP_INPUT,     // <
-	OP_OUTPUT,    // >
-	OP_OPEN,      // (
-	OP_CLOSE,     // )
-	QUOTE_SINGLE, // '
-	QUOTE_DOUBLE, // "
-	TERMINATOR,   // \n
-	OPERAND_TEXT, // identifier
+	OP_HEREDOC,
+	OP_APPEND,
+	OP_AND,
+	OP_OR,
+	OP_PIPE,
+	OP_INPUT,
+	OP_OUTPUT,
+	OP_OPEN,
+	OP_CLOSE,
+	QUOTE_SINGLE,
+	QUOTE_DOUBLE,
+	TERMINATOR,
+	OPERAND_TEXT,
 }								t_token_type;
 
 typedef struct s_token			t_token;

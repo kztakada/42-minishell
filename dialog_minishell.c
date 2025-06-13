@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 21:28:21 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 21:32:27 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:40:49 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	execute_command(char *input, t_env env)
 		*(env.exit_status) = result;
 		return ;
 	}
-	// print_token_list(token_list); // テスト用
 	result = parser(env.token_list, &(env.abs_tree), env);
 	ft_lstclear(&(env.token_list), free_token);
 	if (result != 0)
@@ -33,7 +32,6 @@ void	execute_command(char *input, t_env env)
 		return ;
 	}
 	exec(&env);
-	// printf("exit status: %d\n", exit_status); // テスト用
 	free_abs_tree(env.abs_tree);
 }
 

@@ -6,12 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:50:07 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/08 15:53:02 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:39:38 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
-#include "for_test_print.h"
 #include "parsing.h"
 #include "signal_for_minishell.h"
 
@@ -114,7 +113,6 @@ static t_parsing	exec_heredoc(t_redirection *redirection,
 			has_quoted_text(redirection->file_name_words), env, parsing_state);
 	if (redirection->fd < 0)
 		return ((redirection->fd) * -1);
-	// all_get_line(redirection->fd); //テスト用
 	return (SUCCESS_P);
 }
 

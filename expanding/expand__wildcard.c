@@ -6,12 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 20:07:15 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/11 22:05:05 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:38:57 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
-#include "for_test_print.h"
 
 t_list	*make_d_name_ex_token(char *d_name, t_bool has_prefix_addr,
 		t_bool has_suffix_addr)

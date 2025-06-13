@@ -6,11 +6,10 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 17:57:01 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/02 19:03:53 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:39:53 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "for_test_print.h"
 #include "parsing.h"
 
 // one sequence means one of the following
@@ -85,8 +84,6 @@ t_exit_status	parser(t_list *input_tokens, t_abs_node **abs_tree, t_env env)
 	parsing_state.working_node_pos = LEFT;
 	parsing_state.heredoc_list = NULL;
 	p_result = parse_input(input_tokens, abs_tree, &parsing_state, env);
-	// printf("parse result: %d\n", p_result); // テスト用
-	// print_abs_tree(*abs_tree); // テスト用
 	if (p_result == SUCCESS_P)
 		return (EXIT_S_SUCCESS);
 	free_abs_tree(*abs_tree);

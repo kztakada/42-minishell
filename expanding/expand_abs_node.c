@@ -6,12 +6,11 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:40:57 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/09 22:37:48 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:39:21 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expanding.h"
-#include "for_test_print.h"
 
 char	**expand_cmd_words(t_list *cmd_words, t_env env)
 {
@@ -21,7 +20,6 @@ char	**expand_cmd_words(t_list *cmd_words, t_env env)
 	expanding_tokens = expand_env_var_with_expanding_tokens(cmd_words, env);
 	if (expanding_tokens == NULL)
 		return (NULL);
-	// print_expanding_token_list(expanding_tokens); // テスト用
 	if (expand_wildcard(&expanding_tokens) == FAILURE_BIN_R)
 		return (NULL);
 	expanded_str_list = expanding_tokens_to_arg_list(expanding_tokens);
@@ -114,11 +112,9 @@ t_binary_result	expand_abs_node(t_abs_node *abs_node, t_env env)
 		if (expanded_args == NULL)
 			return (FAILURE_BIN_R);
 		abs_node->expanded_args = expanded_args;
-		// print_str_list(abs_node->expanded_args); // テスト用
 	}
 	e_r_result = expand_redirections(abs_node->redirections, env);
 	if (e_r_result == FAILURE_BIN_R)
 		return (FAILURE_BIN_R);
-	// print_expanded_file_names(abs_node->redirections); // テスト用
 	return (SUCCESS_BIN_R);
 }

@@ -6,11 +6,10 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:49:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 21:31:27 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:38:47 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "for_test_print.h"
 #include "minishell.h"
 
 void	exec_minishell(t_env env)
@@ -40,7 +39,6 @@ void	minishell(t_env env)
 {
 	const int	is_interactive = isatty(STDIN_FILENO);
 
-	// print_env_list(env_vars); // テスト用
 	if (is_interactive)
 		dialog_minishell(env);
 	else

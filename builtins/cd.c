@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:52:52 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/05 23:04:50 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/13 21:41:05 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	update_oldpwd_env(t_list *env_list, t_bool *unset_oldpwd)
 	{
 		if (is_env_exist(env_list, "PWD"))
 			status = update_env_value(&env_list, "OLDPWD",
-				get_env_value(env_list, "PWD"));
+					get_env_value(env_list, "PWD"));
 		else
 			status = update_env_value(&env_list, "OLDPWD", "");
 	}
@@ -31,7 +31,7 @@ static int	update_oldpwd_env(t_list *env_list, t_bool *unset_oldpwd)
 		{
 			if (is_env_exist(env_list, "PWD"))
 				status = create_add_new_env(&env_list, "OLDPWD",
-					get_env_value(env_list, "PWD"));
+						get_env_value(env_list, "PWD"));
 			else
 				status = create_add_new_env(&env_list, "OLDPWD", "");
 		}
@@ -41,7 +41,7 @@ static int	update_oldpwd_env(t_list *env_list, t_bool *unset_oldpwd)
 
 static int	update_pwd_env(t_list *env_list)
 {
-	char *value;
+	char	*value;
 
 	if (is_env_exist(env_list, "PWD"))
 	{

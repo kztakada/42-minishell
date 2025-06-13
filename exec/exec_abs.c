@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_abs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:40:49 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/10 01:45:55 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/13 21:41:30 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	exec_abs(t_abs_node *abs_tree, t_env *env, t_saved_std *std, t_bool redirected)
+int	exec_abs(t_abs_node *abs_tree, t_env *env, t_saved_std *std,
+		t_bool redirected)
 {
 	int	status;
 

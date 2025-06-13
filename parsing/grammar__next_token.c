@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:51:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/05/22 23:56:48 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:57:48 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	grammar_operator(t_token *test_token, t_list **next_tokens,
 		grammar_quote_double,
 	};
 	return (g_operator[gf(test_token, G_OPERATORS)](next_tokens,
-			subshell_depth));
+		subshell_depth));
 }
 
 static int	grammar_redirect(t_token *test_token, t_list **next_tokens,
@@ -40,7 +40,7 @@ static int	grammar_redirect(t_token *test_token, t_list **next_tokens,
 		grammar_re_output,
 	};
 	return (g_redirect[gf(test_token, REDIRECT_OP)](next_tokens, subshell_depth,
-			strict_mode));
+		strict_mode));
 }
 
 static int	grammar_subshell(t_token *test_token, t_list **next_tokens,
@@ -50,7 +50,7 @@ static int	grammar_subshell(t_token *test_token, t_list **next_tokens,
 
 	g_subshell = (t_gram_shell_term[]){grammar_sub_open, grammar_sub_close};
 	return (g_subshell[gf(test_token, SUBSHELL_OP)](next_tokens,
-			subshell_depth));
+		subshell_depth));
 }
 
 int	grammar_next_token(t_token *test_token, t_list **next_tokens,

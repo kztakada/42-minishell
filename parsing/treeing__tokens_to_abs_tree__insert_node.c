@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 00:08:34 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/06 00:35:21 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:58:23 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,15 @@ t_binary_result	insert_binary_node_to_abs_tree(t_list *tokens_begin,
 {
 	t_abs_node	*new_node;
 
-	// 新規ノード作成
 	if (get_token(tokens_begin)->type == OP_AND)
 		new_node = init_abs_node(ABS_BIN_AND);
 	else
 		new_node = init_abs_node(ABS_BIN_OR);
 	if (new_node == NULL)
 		return (FAILURE_BIN_R);
-	// 条件分岐
 	new_node->left = get_tree_top_node(parsing_state);
 	parsing_state->working_node = &(new_node->right);
 	parsing_state->working_node_pos = B_OP_RIGHT;
-	// サブシェルかどうかで分岐
 	if (abs_tree && abs_tree == parsing_state->tree_top_node)
 		*abs_tree = new_node;
 	*(parsing_state->tree_top_node) = new_node;
