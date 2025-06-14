@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:10:44 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 21:08:10 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:22:08 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,11 @@ int	cd_err_msg_file(char *path)
 int	cd_err_msg_home(void)
 {
 	ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
+	return (EXIT_S_FAILURE);
+}
+
+int	cd_err_msg_args(void)
+{
+	ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
 	return (EXIT_S_FAILURE);
 }

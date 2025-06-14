@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:52:52 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 21:41:05 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:40:06 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,18 @@ static int	ft_cd_home(t_list *env_list, t_bool *unset_oldpwd)
 	return (EXIT_S_SUCCESS);
 }
 
-int	ft_cd(char *path, t_list *env_list, t_bool *unset_oldpwd)
+int	ft_cd(char **args, t_list *env_list, t_bool *unset_oldpwd)
 {
-	int	exit_status;
+	int		exit_status;
+	char	*path;
 
+	path = NULL;
+	if (args[1] != NULL)
+	{
+		path = args[1];
+		if (args[2] != NULL)
+			return (cd_err_msg_args());
+	}
 	if (!path)
 		return (ft_cd_home(env_list, unset_oldpwd));
 	if (chdir(path) == -1)
