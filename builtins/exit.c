@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:27 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/14 02:30:20 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 20:48:51 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	ft_exit(char **args, t_env *env, t_exit_status exit_s)
 	int	status;
 
 	status = exit_s;
-	ft_putendl_fd("exit", STDERR_FILENO);
+	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
+		ft_putendl_fd("exit", STDERR_FILENO);
 	if (args[1])
 	{
 		if (!is_digit(args[1]) || ft_strcmp("", args[1]) == 0)
