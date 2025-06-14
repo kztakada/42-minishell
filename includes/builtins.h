@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 01:32:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/14 23:25:09 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/15 02:20:51 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 // err_msg (builtin)
 int		env_err_msg_path_env(void);
 int		cd_err_msg_file(char *path);
+int		cd_err_msg_permission(char *path);
 int		cd_err_msg_home(void);
 int		cd_err_msg_args(void);
 int		export_err_msg(char *arg);
@@ -34,6 +35,10 @@ int		ft_pwd(void);
 int		ft_unset(char **args, t_list *env_list, t_bool *unset_oldpwd);
 int		check_name_error(char *arg);
 void	ft_exit(char **args, t_env *env, t_exit_status exit_s);
+int		exec_cd(char *path, t_list *env_list, t_bool *unset_oldpwd,
+			char *err_msg);
+int		update_oldpwd_env(t_list *env_list, t_bool *unset_oldpwd);
+int		update_pwd_env(t_list *env_list);
 
 // export_utils.c
 t_bool	is_valid_env_name(char *name, t_bool is_interactive);

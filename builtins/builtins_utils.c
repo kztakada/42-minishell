@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 04:49:33 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/14 23:13:51 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/15 02:17:30 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,23 @@ int	check_name_error(char *arg)
 		arg++;
 	}
 	return (0);
+}
+
+int	exec_cd(char *path, t_list *env_list, t_bool *unset_oldpwd, char *err_msg)
+{
+	int	exit_status;
+
+	if (access(path, F_OK) == -1)
+		return (cd_err_msg_file(path));
+	if (access(path, X_OK) == -1)
+		return (cd_err_msg_permission(err_msg));
+	if (chdir(path) == -1)
+		return (cd_err_msg_file(err_msg));
+	exit_status = update_oldpwd_env(env_list, unset_oldpwd);
+	if (exit_status != EXIT_S_SUCCESS)
+		return (exit_status);
+	exit_status = update_pwd_env(env_list);
+	if (exit_status != EXIT_S_SUCCESS)
+		return (exit_status);
+	return (EXIT_S_SUCCESS);
 }

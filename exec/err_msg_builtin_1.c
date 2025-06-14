@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:10:44 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/14 23:22:08 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/15 00:10:11 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ int	cd_err_msg_file(char *path)
 	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
 	ft_putstr_fd(path, STDERR_FILENO);
 	ft_putendl_fd(": No such file or directory", STDERR_FILENO);
+	return (EXIT_S_FAILURE);
+}
+
+int	cd_err_msg_permission(char *path)
+{
+	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+	ft_putstr_fd(path, STDERR_FILENO);
+	ft_putendl_fd(": Permission denied", STDERR_FILENO);
 	return (EXIT_S_FAILURE);
 }
 
