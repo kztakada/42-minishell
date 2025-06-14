@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 04:49:33 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 22:08:43 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:13:51 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,11 @@ int	is_env_exist(t_list *env_list, char *name)
 
 int	check_name_error(char *arg)
 {
+	if (!arg || !*arg)
+		return (1);
 	if (ft_isdigit(*arg))
+		return (1);
+	if (arg[0] == '=')
 		return (1);
 	while (*arg != '=' && *arg)
 	{
