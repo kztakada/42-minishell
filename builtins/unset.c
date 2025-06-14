@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:45 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/03 21:39:29 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/14 17:35:35 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	ft_unset(char **args, t_list *env_list, t_bool *unset_oldpwd)
 	{
 		if (check_name_error(args[i]))
 			tmp_status = unset_err_msg(args[i]);
+		else if (ft_strcmp(args[i], "_") == 0)
+			update_env_value(&env_list, "_", "_");
 		else
 		{
 			unset_env(args[i], &env_list);

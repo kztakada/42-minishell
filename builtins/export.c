@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:37 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/14 03:17:26 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:28:16 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	print_env_list(t_list *env_list, t_bool is_interactive)
 	return (EXIT_S_SUCCESS);
 }
 
-static int	update_env_list(char *arg, t_list *env_list)
+int	update_env_list(char *arg, t_list *env_list)
 {
 	char	*name;
 	char	*value;

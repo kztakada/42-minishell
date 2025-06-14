@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 00:13:37 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/10 15:26:42 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:21:38 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,7 @@ t_err			create_t_err(int err_exit_s, int err_msg, char *err_cause);
 char			**convert_list_to_envp(t_list *env_vars);
 t_saved_std		save_stds(void);
 void			reset_stds(t_saved_std *std, t_bool redirected);
+
+t_bool			is_builtin(char *cmd);
 
 #endif
