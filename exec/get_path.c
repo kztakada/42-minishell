@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:51:35 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 21:52:27 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:35:06 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static t_path	get_relative(char *cmd, t_list *env_vars)
 
 t_path	get_path(char *cmd, t_list *env_vars)
 {
-	if (is_env_exist(env_vars, "PATH"))
+	if (is_env_exist(env_vars, "PATH") || ft_strchr(cmd, '/') != NULL)
 	{
 		if (ft_strchr(cmd, '/'))
 			return (get_absolute(cmd));
