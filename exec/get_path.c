@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:51:35 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/14 23:01:27 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/15 02:42:04 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static t_path	check_exec(char *path, char *cmd)
 
 	stat(path, &buf);
 	if (S_ISDIR(buf.st_mode))
-		return (create_t_path(cmd, EXIT_S_FAILURE, ERRMSG_IS_DIRECTORY, cmd));
+		return (create_t_path(cmd, EXIT_S_CMD_FAILURE, ERRMSG_IS_DIRECTORY,
+				cmd));
 	if ((access(path, X_OK) == 0))
 		return (create_t_path(path, EXIT_S_SUCCESS, NONE, NULL));
 	else
