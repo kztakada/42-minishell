@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:52:52 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/15 13:49:38 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/15 14:48:14 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,5 @@ int	ft_cd(char **args, t_list *env_list, t_bool *unset_oldpwd)
 	}
 	if (!path)
 		return (ft_cd_home(env_list, unset_oldpwd));
-	return (exec_cd(path, env_list, unset_oldpwd, path));
+	return (exec_cd(path, env_list, unset_oldpwd));
 }

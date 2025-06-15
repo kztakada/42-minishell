@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 01:32:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/15 07:52:15 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/15 14:48:35 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int		ft_pwd(t_list *env_list);
 int		ft_unset(char **args, t_list *env_list, t_bool *unset_oldpwd);
 int		check_name_error(char *arg);
 void	ft_exit(char **args, t_env *env, t_exit_status exit_s);
-int		exec_cd(char *path, t_list *env_list, t_bool *unset_oldpwd,
-			char *err_msg);
+int		exec_cd(char *path, t_list *env_list, t_bool *unset_oldpwd);
 int		update_oldpwd_env(t_list *env_list, t_bool *unset_oldpwd);
 int		update_pwd_env(t_list *env_list);
 
