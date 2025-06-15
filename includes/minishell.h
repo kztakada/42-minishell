@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:55:38 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/14 03:12:11 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:18:42 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ enum							e_exit_status
 # define ERROR_FORK "Error: Failed to create child process.\n"
 # define ERROR_WAITPID "Error: Failed to wait child process.\n"
 # define ERROR_PIPE "Error: Failed to generate pipe.\n"
+# define ERROR_CHDIR "Error: Failed to change directory.\n"
 # define ERROR_SYNTAX "minishell: syntax error near unexpected token `"
 
 // for dictionary　************************************************/
