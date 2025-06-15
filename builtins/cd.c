@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:52:52 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/15 14:48:14 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:32:36 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static int	ft_cd_home(t_list *env_list, t_bool *unset_oldpwd)
 
 int	ft_cd(char **args, t_list *env_list, t_bool *unset_oldpwd)
 {
+	int		exit_status;
 	char	*path;
 
 	path = NULL;
@@ -90,5 +91,11 @@ int	ft_cd(char **args, t_list *env_list, t_bool *unset_oldpwd)
 	}
 	if (!path)
 		return (ft_cd_home(env_list, unset_oldpwd));
+	if (access(".", F_OK) == -1 && access(".", X_OK) == -1
+		&& ft_strcmp(path, "..") == 0)
+		return (ft_cd_parent(env_list, unset_oldpwd));
+	exit_status = access_check(path);
+	if (exit_status != EXIT_S_SUCCESS)
+		return (exit_status);
 	return (exec_cd(path, env_list, unset_oldpwd));
 }
