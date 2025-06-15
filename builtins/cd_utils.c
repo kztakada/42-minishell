@@ -6,15 +6,15 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 07:36:26 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/15 07:49:50 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/15 13:27:42 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-static int is_path_file(char *path)
+static int	is_path_file(char *path)
 {
-	struct stat buf;
+	struct stat	buf;
 
 	stat(path, &buf);
 	if (S_ISREG(buf.st_mode))
