@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:52:52 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/15 02:21:05 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/15 07:45:50 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ static int	ft_cd_home(t_list *env_list, t_bool *unset_oldpwd)
 	if (!home)
 		return (cd_err_msg_home());
 	if (access(home, F_OK) == -1)
-		return (cd_err_msg_file(home));
+		return (cd_err_msg_no_file(home));
 	if (access(home, X_OK) == -1)
 		return (cd_err_msg_permission(home));
 	if (chdir(home) == -1)
-		return (cd_err_msg_file(home));
+		return (cd_err_msg_no_file(home));
 	exit_status = update_oldpwd_env(env_list, unset_oldpwd);
 	if (exit_status != EXIT_S_SUCCESS)
 		return (exit_status);
