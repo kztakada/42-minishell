@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_msg_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
+/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:58:06 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/02 05:28:54 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/15 18:36:44 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ static t_err	identify_redirection_error(char *file_name)
 {
 	struct stat	buf;
 
-	stat(file_name, &buf);
-	if (S_ISDIR(buf.st_mode))
-		return (create_t_err(EXIT_S_FAILURE, ERRMSG_IS_DIRECTORY, file_name));
-	if (access(file_name, F_OK) == 0)
-		return (create_t_err(EXIT_S_FAILURE, ERRMSG_PERM_DENIED, file_name));
-	else
-		return (create_t_err(EXIT_S_FAILURE, ERRMSG_NO_SUCH_FILE, file_name));
+	if (stat(file_name, &buf) == 0)
+	{
+		if (S_ISDIR(buf.st_mode))
+			return (create_t_err(EXIT_S_FAILURE, ERRMSG_IS_DIRECTORY,
+					file_name));
+		if (access(file_name, X_OK) == -1)
+			return (create_t_err(EXIT_S_FAILURE, ERRMSG_PERM_DENIED,
+					file_name));
+	}
+	return (create_t_err(EXIT_S_FAILURE, ERRMSG_NO_SUCH_FILE, file_name));
 }
 
 int	err_msg_redirection(char *filename)
