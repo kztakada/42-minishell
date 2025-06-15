@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:41 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/15 07:55:51 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/15 13:07:36 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_pwd(t_list *env_list)
 {
 	char	*path;
 
-	path = get_env_value(env_list, "PWD");
+	path = ft_strdup(get_env_value(env_list, "PWD"));
 	if (!path)
 	{
 		path = getcwd(NULL, 0);
