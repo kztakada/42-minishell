@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 01:32:47 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/15 14:48:35 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:00:11 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	ft_exit(char **args, t_env *env, t_exit_status exit_s);
 int		exec_cd(char *path, t_list *env_list, t_bool *unset_oldpwd);
 int		update_oldpwd_env(t_list *env_list, t_bool *unset_oldpwd);
 int		update_pwd_env(t_list *env_list);
+int		access_check(char *path);
+int		ft_cd_parent(t_list *env_list, t_bool *unset_oldpwd);
 
 // export_utils.c
 t_bool	is_valid_env_name(char *name, t_bool is_interactive);
