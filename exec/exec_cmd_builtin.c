@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_builtin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 03:58:56 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/14 23:25:32 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:45:52 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	exec_cmd_builtin(char **args, t_env *env)
 	else if (ft_strcmp(args[0], "unset") == 0)
 		return (ft_unset(args, env->env_vars, env->unset_oldpwd));
 	else if (ft_strcmp(args[0], "pwd") == 0)
-		return (ft_pwd());
+		return (ft_pwd(env->env_vars));
 	else if (ft_strcmp(args[0], "exit") == 0)
 		ft_exit(args, env, *(env->exit_status));
 	return (EXIT_S_FAILURE);
