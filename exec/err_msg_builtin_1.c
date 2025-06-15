@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_msg_builtin_1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:10:44 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/15 00:10:11 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/15 07:44:44 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,37 @@ int	env_err_msg_path_env(void)
 	return (EXIT_S_CMD_NOT_FOUND);
 }
 
-// cd
-int	cd_err_msg_file(char *path)
+// exit
+int	exit_err_msg_digit(char *arg)
 {
-	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-	ft_putstr_fd(path, STDERR_FILENO);
-	ft_putendl_fd(": No such file or directory", STDERR_FILENO);
+	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putendl_fd(": numeric argument required", STDERR_FILENO);
+	return (EXIT_S_SYNTAX_ERROR);
+}
+
+int	exit_err_msg_format(void)
+{
+	ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
 	return (EXIT_S_FAILURE);
 }
 
-int	cd_err_msg_permission(char *path)
+// export
+int	export_err_msg(char *arg)
 {
-	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-	ft_putstr_fd(path, STDERR_FILENO);
-	ft_putendl_fd(": Permission denied", STDERR_FILENO);
+	ft_putstr_fd("minishell: export: ", STDERR_FILENO);
+	ft_putstr_fd("`", STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putendl_fd("\': not a valid identifier", STDERR_FILENO);
 	return (EXIT_S_FAILURE);
 }
 
-int	cd_err_msg_home(void)
+// unset
+int	unset_err_msg(char *arg)
 {
-	ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
-	return (EXIT_S_FAILURE);
-}
-
-int	cd_err_msg_args(void)
-{
-	ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
+	ft_putstr_fd("minishell: unset: ", STDERR_FILENO);
+	ft_putstr_fd("`", STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putendl_fd("\': not a valid identifier", STDERR_FILENO);
 	return (EXIT_S_FAILURE);
 }
