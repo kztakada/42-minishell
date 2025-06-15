@@ -6,7 +6,7 @@
 /*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:52:52 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/15 13:25:47 by kharuya          ###   ########.fr       */
+/*   Updated: 2025/06/15 13:49:38 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,6 @@ static int	ft_cd_home(t_list *env_list, t_bool *unset_oldpwd)
 	return (EXIT_S_SUCCESS);
 }
 
-static int	ft_cd_parent(t_list *env_list, t_bool *unset_oldpwd)
-{
-	char	*parent;
-	char	*tmp;
-	int		exit_status;
-
-	parent = getcwd(NULL, 0);
-	if (!parent)
-		return (perror(ERROR_GETCWD), EXIT_S_FAILURE);
-	tmp = ft_strrchr(parent, '/');
-	if (tmp != NULL)
-		*tmp = '\0';
-	exit_status = exec_cd(parent, env_list, unset_oldpwd, "..");
-	free(parent);
-	return (exit_status);
-}
-
 int	ft_cd(char **args, t_list *env_list, t_bool *unset_oldpwd)
 {
 	char	*path;
@@ -107,7 +90,5 @@ int	ft_cd(char **args, t_list *env_list, t_bool *unset_oldpwd)
 	}
 	if (!path)
 		return (ft_cd_home(env_list, unset_oldpwd));
-	if (ft_strcmp(path, "..") == 0)
-		return (ft_cd_parent(env_list, unset_oldpwd));
 	return (exec_cd(path, env_list, unset_oldpwd, path));
 }
