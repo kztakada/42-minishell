@@ -3,22 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kharuya <haruya.0411.k@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:53:41 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 21:07:33 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/15 07:55:51 by kharuya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-int	ft_pwd(void)
+int	ft_pwd(t_list *env_list)
 {
 	char	*path;
 
-	path = getcwd(NULL, 0);
+	path = get_env_value(env_list, "PWD");
 	if (!path)
-		return (perror(ERROR_GETCWD), EXIT_S_FAILURE);
+	{
+		path = getcwd(NULL, 0);
+		if (!path)
+			return (perror(ERROR_GETCWD), EXIT_S_FAILURE);
+	}
 	ft_putstr_fd(path, STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	free(path);
