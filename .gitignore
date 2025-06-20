@@ -1,0 +1,10 @@
+minishell
+
+*.o
+*.a
+.DS_Store
+.github
+.github/*
+
+settings.json
+test
