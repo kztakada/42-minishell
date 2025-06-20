@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 00:13:08 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 17:26:17 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:53:49 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	exec(t_env *env)
 		return ;
 	}
 	std = save_std();
-	set_sig_handlers_in_exec_parent();
+	if (env->is_interactive)
+		set_sig_handlers_in_exec_parent();
 	result = exec_abs(env->abs_tree, env, &std, FALSE);
 	*(env->exit_status) = result;
 	return ;

@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 21:28:21 by katakada          #+#    #+#             */
-/*   Updated: 2025/06/13 21:40:49 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:16:44 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,11 @@ void	dialog_minishell(t_env env)
 		input = readline(PROMPT);
 		reset_g_sig(env);
 		if (safe_add_history(input, env) == FALSE)
+		{
+			rl_on_new_line();
 			continue ;
+		}
 		execute_command(input, env);
+		rl_on_new_line();
 	}
 }

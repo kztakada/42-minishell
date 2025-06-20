@@ -6,7 +6,7 @@
 /*   By: katakada <katakada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:22:32 by kharuya           #+#    #+#             */
-/*   Updated: 2025/06/13 22:30:10 by katakada         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:34:00 by katakada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	get_exit_status(int status)
 	if (WIFSIGNALED(status))
 	{
 		if (sig == SIGQUIT)
-			ft_putstr_fd("Quit\n", STDERR_FILENO);
+			ft_putstr_fd("Quit", STDERR_FILENO);
+		ft_putchar_fd('\n', STDERR_FILENO);
 		return (128 + WTERMSIG(status));
 	}
 	return (WEXITSTATUS(status));
